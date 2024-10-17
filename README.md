@@ -26,9 +26,9 @@ TTRPG Finder aplikacija trebala bi implementirati registraciju i prijavu dvije v
 
 Ovisno o tipu korisnika, TTRPG Finder aplikacija trebala bi implementirati sustav pretraživanja igara kroz različite filtere povezane s vrstom igre, datumom, lokacijom, te tekstualno pretraživanje pojmova u imenu ili opisu igre.
 
-### Kreiranje i upravljanje igrama
+### Kreiranje, upravljanje, i pridruživanje igrama
 
-TTRPG Finder aplikacija treba omogućiti korisnicima stvaranje i upravljanje stvorenim igrama, eventualno uređivanje informacija, odobravanje/odbijanje prijava drugih korisnika, stvaranje prilagođenih upita za prijavu na igre, ili brisanje igara.
+TTRPG Finder aplikacija treba omogućiti korisnicima stvaranje i upravljanje stvorenim igrama, eventualno uređivanje informacija, odobravanje/odbijanje prijava drugih korisnika, stvaranje prilagođenih upita za prijavu na igre, ili brisanje igara. Korisnici isto tako trebaju imati mogućnost slanja prijave na igre.
 
 ### Različiti tipovi igara
 

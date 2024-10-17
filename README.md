@@ -62,6 +62,7 @@ TTRPG Finder aplikacija treba biti intuitivna i laka za korištenje—želimo ko
 - Backend: Spring Boot (Java)
 - Baza podataka: PostgreSQL
 - Dizajn: Figma, Canva
+- Dokumentacija: Astah UML
 
 # Instalacija 📦⬇️
 

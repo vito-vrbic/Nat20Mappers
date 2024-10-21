@@ -58,7 +58,7 @@ TTRPG Finder aplikacija treba biti intuitivna i laka za korištenje—želimo ko
 
 # Tehnologije 💻
 
-- Frontend: React, implementacija OpenStreetMap API-a
+- Frontend: React, Nominatim API-a, Fetch API
 - Backend: Spring Boot (Java)
 - Baza podataka: PostgreSQL
 - Dizajn: Figma, Canva

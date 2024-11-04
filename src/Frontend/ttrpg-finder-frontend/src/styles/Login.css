@@ -1,0 +1,99 @@
+/*Imported Roboto Font*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+/*General Text Styling*/
+div {
+   color:whitesmoke;
+   font-weight: bold;
+   font-family:'Roboto',sans-serif;
+}
+
+/*Container for the 'Log in' layout*/
+.LogInBox{
+   display:flex;
+   background-color: #082567;
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+}
+
+/*Style for the 'Sign up' title*/
+.Title{
+   font-size:39px;
+   margin-top:15px;
+   margin-bottom: 15px;
+}
+
+/*Styling for every input field*/
+.inputs input{
+   border-radius: 0.5rem;
+   padding-top:20px;
+   padding-bottom: 20px;
+   padding-left:20px;
+   padding-right: 70px;
+   margin:5px;
+}
+
+/*Styling for the category name above the input field, example: Email*/
+.inputTag{
+   font-size: 23px;
+   margin-bottom: 5px;
+}
+
+/*Styling for the placeholder text inside every input field*/
+.input input::placeholder{
+   color:gray;
+   font-weight: bold;
+   font-style: italic;
+   font-size:15px;
+}
+
+/*Additional input styling required for the Password category*/
+.input{
+   position:relative;
+}
+
+.input input[type="password"]{
+   box-sizing: border-box;
+}
+.input img{
+   position: absolute;
+   right:15px;
+   bottom:20px;
+   cursor:pointer;
+}
+
+/*Styling for the 'Forgot Password' prompt*/
+.forgotPassword{
+   margin-top:5px;
+   margin-bottom: 5px;
+}
+
+/*Styling for the sumbit button for logging in*/
+.submit{
+   text-align: center;
+   align-items: center;
+   background-color: white;
+   border-radius: 10px;
+   color:black;
+   font-size:23px;
+   font-weight: bold;
+   margin:10px;
+   width:6rem;
+   padding:0.5rem;
+}
+
+/*Styling the go to Sign up section*/
+.gotoSignup{
+   margin-top:5px;
+   margin-bottom:10px;
+}
+.gotoSignup a {
+   color: #F6EB61;
+   text-decoration: none;
+ }
+ 
+ .gotoSignup a:hover {
+   color:darkturquoise;
+ }

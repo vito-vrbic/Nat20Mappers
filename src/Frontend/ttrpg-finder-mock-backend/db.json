@@ -1,9 +1,0 @@
-{
-    "users": [
-      { "id": 1, "name": "John Doe" },
-      { "id": 2, "name": "Jane Smith" }
-    ],
-    "posts": [
-      { "id": 1, "title": "Hello World", "content": "This is my first post!" }
-    ]
-  }

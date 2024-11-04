@@ -1,1 +1,0 @@
-Used for static assets like images, icons, fonts, or SVGs that are used within the React components.

@@ -1,0 +1,1 @@
+Used for components that represent entire pages or views in the application.

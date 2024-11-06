@@ -1,0 +1,46 @@
+.Search-bar{
+    background-color: #082567;
+    border: 5px solid #bbb;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.Search-bar input{
+    border-radius: 5px;
+    height: 50px;
+    width: 250px;
+    font-size: 1rem;
+}
+
+.Search-bar button{
+    border-radius: 25px;
+    height: 50px;
+    width: 50px;
+}
+
+.Search-bar button:hover{
+    background-color: #bbb;
+}
+
+.Search-bar img{
+    height: 25px;
+    width: 25px;
+}
+
+.List-of-games ul{
+    padding-left: 0;
+}
+
+.List-of-games{
+    background-color: #082567;
+    padding: 25px;
+    border: 5px solid #bbb;
+    height: 100vh;
+}
+
+.List-of-games h1{
+    margin-top: 0;
+}

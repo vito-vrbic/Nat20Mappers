@@ -1,35 +1,24 @@
-// IMPORTS
+// App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-// COMPONENTS
+import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import { AuthProvider } from './utils/AuthContext';
+import AppRoutes from './utils/AppRoutes';
 
-// PAGES
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Search from './pages/Search';
-
-// CSS
 import './styles/Globals.css';
 
 function App() {
   return (
-    <Router> {/* Wrapping the app in Router */}
-      <div className="app">
-        <Navbar />
-
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/search" element={<Search />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <main className="main-content">
+            <AppRoutes /> {/* Ensure this is being rendered */}
+          </main>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

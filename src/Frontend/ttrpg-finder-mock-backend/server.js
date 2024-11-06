@@ -32,6 +32,7 @@ const users = [
 // Store active tokens
 let activeTokens = {};
 
+
 // This GET was added to allow getting data from db.json
 app.get('/api/db', (req, res) => {
   fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {

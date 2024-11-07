@@ -1,5 +1,5 @@
 package com.ttrpg.model;
 
-public class Igra {
+public class Sistem {
     
 }

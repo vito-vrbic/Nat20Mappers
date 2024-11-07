@@ -27,6 +27,37 @@ const users = [
   }
 ];
 
+// Sample game data (to be filtered)
+const games = [
+  {
+    id: "1",
+    title: "Chess",
+    type: "online",
+    location: { lat: 45.8131, lng: 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true
+  },
+  {
+    id: "2",
+    title: "Monopoly",
+    type: "local",
+    location: { lat: 45.8131, lng: 15.978 },
+    availability: "private",
+    createdBy: "private",
+    applicationRequired: false
+  },
+  {
+    id: "3",
+    title: "Scrabble",
+    type: "online",
+    location: { lat: 45.8131, lng: 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: false
+  }
+];
+
 // Store active tokens
 let activeTokens = {};
 
@@ -145,6 +176,85 @@ app.post('/api/signup', (req, res) => {
     }
   });
 });
+
+// Search Game Form Endpoint
+app.post('/api/search-game-form', (req, res) => {
+  const { 
+    gameTitle, 
+    gameType, 
+    includeFullGames, 
+    applicationRequired, 
+    includeUserMadeGames, 
+    includeBusinessMadeGames, 
+    gameAvailability, 
+    mapLocation, 
+    radius, 
+    page 
+  } = req.body;
+
+  // Filtering logic
+  let filteredGames = games;
+
+  // Filter by game title (if provided)
+  if (gameTitle) {
+    filteredGames = filteredGames.filter(game => game.title.toLowerCase().includes(gameTitle.toLowerCase()));
+  }
+
+  // Filter by game type (online/local)
+  if (gameType && gameType !== 'All Types') {
+    filteredGames = filteredGames.filter(game => game.type.toLowerCase() === gameType.toLowerCase());
+  }
+
+  // Filter by availability
+  if (gameAvailability && gameAvailability !== 'All Games') {
+    filteredGames = filteredGames.filter(game => game.availability.toLowerCase() === gameAvailability.toLowerCase());
+  }
+
+  // Filter by application required
+  if (applicationRequired !== undefined) {
+    filteredGames = filteredGames.filter(game => game.applicationRequired === applicationRequired);
+  }
+
+  // Filter by map location (simple proximity check for this example)
+  if (mapLocation && radius) {
+    const radiusInKm = parseFloat(radius);
+    filteredGames = filteredGames.filter(game => {
+      const distance = getDistance(game.location, mapLocation);
+      return distance <= radiusInKm;
+    });
+  }
+
+  // Pagination logic (simple implementation for page and limit)
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const end = page * pageSize;
+  filteredGames = filteredGames.slice(start, end);
+
+  // Return filtered games and pagination info
+  res.json({
+    games: filteredGames,
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(filteredGames.length / pageSize),
+      totalItems: filteredGames.length,
+    }
+  });
+});
+
+// Helper function to calculate distance (basic approximation, can be improved)
+function getDistance(loc1, loc2) {
+  const lat1 = loc1.lat;
+  const lon1 = loc1.lng;
+  const lat2 = loc2.lat;
+  const lon2 = loc2.lng;
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; // Distance in km
+  return distance;
+}
 
 // Start server
 app.listen(5000, () => {

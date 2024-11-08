@@ -78,6 +78,7 @@ const games = [
 // Store active tokens
 let activeTokens = {};
 
+
 // This GET was added to allow getting data from server.js
 app.get('/api/games', (req, res) => {
   res.json({games});

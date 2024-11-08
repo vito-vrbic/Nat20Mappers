@@ -1,6 +1,6 @@
 package com.ttrpg.model;
 
-import jakarta.annotation.Nonnull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +15,7 @@ public class Materijal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int materialId;
 
-    @Nonnull
+    @Column(nullable = false)
     private String materialName;
 
     @ManyToOne
@@ -36,5 +36,13 @@ public class Materijal {
 
     public String getMaterialName() {
         return materialName;
+    }
+
+    @Override
+    public String toString() {
+        return
+            "Material { "
+            + "id: '" +  materialId + "', "
+            + "name: '" + materialName + "'}";
     }
 }

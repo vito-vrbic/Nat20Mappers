@@ -2,8 +2,8 @@ package com.ttrpg.model;
 
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +17,7 @@ public class Sistem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sysId;
 
-    @Nonnull
+    @Column(nullable = false)
     private String sysName;
 
     @OneToMany(mappedBy = "system", cascade = CascadeType.ALL)
@@ -41,5 +41,13 @@ public class Sistem {
 
     public List<Pravilnik> getAllRulesets() {
         return rulesets;
+    }
+
+    @Override
+    public String toString() {
+        return
+            "System { "
+            + "id: '" + sysId + "', "
+            + "name: '" + sysName + "'}";
     }
 }

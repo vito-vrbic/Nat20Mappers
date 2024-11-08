@@ -2,8 +2,8 @@ package com.ttrpg.model;
 
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +19,7 @@ public class Pravilnik {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rulesetId;
 
-    @Nonnull
+    @Column(nullable = false)
     private String rulesetName;
     
     @ManyToOne
@@ -48,5 +48,13 @@ public class Pravilnik {
 
     public List<Materijal> getAllMaterials() {
         return materials;
+    }
+
+    @Override
+    public String toString() {
+        return
+            "Ruleset { "
+            + "id: '" + rulesetId + "', "
+            + "name: '" + rulesetName + "'}";
     }
 }

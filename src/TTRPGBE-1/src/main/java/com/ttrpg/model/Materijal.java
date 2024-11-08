@@ -20,14 +20,14 @@ public class Materijal {
 
     @ManyToOne
     @JoinColumn(name = "ruleset_id")
-    private Pravilnik pravilnik;
+    private Pravilnik ruleset;
 
     public Materijal() {}
 
-    public Materijal(int materialId, String materialName, Pravilnik pravilnik) {
+    public Materijal(int materialId, String materialName, Pravilnik ruleset) {
         this.materialId = materialId;
         this.materialName = materialName;
-        this.pravilnik = pravilnik;
+        this.ruleset = ruleset;
     }
 
     public int getMaterialId() {

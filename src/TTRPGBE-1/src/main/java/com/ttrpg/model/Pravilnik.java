@@ -31,9 +31,10 @@ public class Pravilnik {
 
     public Pravilnik () {}
 
-    public Pravilnik(int rulesetId, String rulesetName, List<Materijal> materials) {
+    public Pravilnik(int rulesetId, String rulesetName, Sistem system, List<Materijal> materials) {
         this.rulesetId = rulesetId;
         this.rulesetName = rulesetName;
+        this.system = system;
         this.materials = materials; 
     }
 

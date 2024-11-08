@@ -73,28 +73,6 @@ const Home = () => {
     </div>
     <div className='End-text'>
       <h1>What are you waiting for? <br/> Sign Up and start your next adventure!</h1>
-      <h1>...Or join some of the public games</h1>
-    </div>
-
-    <div className='Public-games'>
-    <h1 id="search">List of currently public games:</h1>
-      <ul>
-          {games.filter(game => game.applicationRequired !== false).map((game, index) => (
-            <li key={index} className='Game-container'>
-              <div className='Left-group'>
-              {game.type.toLowerCase() === "online" && <img src="./src/assets/wi-fi.png" alt="Online Game" />}
-              {game.type.toLowerCase() === "private" && <img src="./src/assets/home.png" alt="Private Game" />}
-              {game.type.toLowerCase() === "business" && <img src="./src/assets/building.png" alt="Business Game"/>}
-              {game.type + " game: " + game.name}
-              </div>
-              <div className='Right-group'>
-              {/* <button className='Join-button'>JOIN</button> */}
-              <button className='More-info-button'><img src="./src/assets/more.png" alt="More Info"/></button>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
     </div>
     </>
   )

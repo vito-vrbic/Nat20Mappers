@@ -1,8 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
-const fs = require('fs');  // This was added to allow getting data from db.json
-const path = require('path'); // This was added to allow getting data from db.json
 const app = express();
 
 // Enable CORS
@@ -29,19 +27,62 @@ const users = [
   }
 ];
 
+const games = [
+  {
+    id: "12345",
+    title: "fezPass",
+    type: "local",
+    location: {"lat": 1 ,"lng": 2},
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true
+  },
+  {
+    id: "04322",
+    title: "ferGame",
+    type: "online",
+    location: {"lat": 1 ,"lng": 2},
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true
+  },
+  {
+    id: "54352",
+    title: "nemozesOvoVidjetAkoNisiRegistriran",
+    type: "local",
+    location: {"lat": 1 ,"lng": 2},
+    availability: "private",
+    createdBy: "user",
+    applicationRequired: true
+  },
+  {
+    id: "89897",
+    title: "kasandra",
+    type: "local",
+    location: {"lat": 1 ,"lng": 2},
+    availability: "private",
+    createdBy: "business",
+    applicationRequired: false
+  },
+  {
+    id: "99999",
+    title: "akoOvoVidisPrijavljenSi",
+    type: "local",
+    location: {"lat": 1 ,"lng": 2},
+    availability: "private",
+    createdBy: "user",
+    applicationRequired: false
+  },
+];
+
 // Store active tokens
 let activeTokens = {};
 
-// This GET was added to allow getting data from db.json
-app.get('/api/db', (req, res) => {
-  fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error reading db.json' });
-    }
-    res.json(JSON.parse(data)); // Return the parsed JSON data
-  });
+// This GET was added to allow getting data from server.js
+app.get('/api/games', (req, res) => {
+  res.json({games});
 });
-// This End of added GET that allows getting data from db.json
+// This End of added GET that allows getting data from server.js
 
 // Login endpoint with password comparison
 app.post('/api/login-submit', (req, res) => {

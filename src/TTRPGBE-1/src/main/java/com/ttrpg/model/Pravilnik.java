@@ -1,11 +1,37 @@
 package com.ttrpg.model;
 
-public class Pravilnik {
-    private int rulesetId;
-    private String rulesetName;
-    private Materijal[] materials;
+import java.util.List;
 
-    public Pravilnik(int rulesetId, String rulesetName, Materijal[] materials) {
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+@Entity
+public class Pravilnik {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int rulesetId;
+
+    @Nonnull
+    private String rulesetName;
+    
+    @ManyToOne
+    @JoinColumn(name = "sys_id")
+    private Sistem system;
+
+    @OneToMany(mappedBy = "ruleset", cascade = CascadeType.ALL)
+    private List<Materijal> materials;
+
+    public Pravilnik () {}
+
+    public Pravilnik(int rulesetId, String rulesetName, List<Materijal> materials) {
         this.rulesetId = rulesetId;
         this.rulesetName = rulesetName;
         this.materials = materials; 
@@ -19,7 +45,7 @@ public class Pravilnik {
         return rulesetName;
     }
 
-    public Materijal[] getAllMaterials() {
+    public List<Materijal> getAllMaterials() {
         return materials;
     }
 }

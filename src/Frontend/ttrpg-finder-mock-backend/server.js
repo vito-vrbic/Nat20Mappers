@@ -14,52 +14,91 @@ const users = [
     username: "fez",
     role: "business",
     email: "fez@cassandra.hr",
-    password: "password123",  // Example plaintext password
+    password: "password123", // Example plaintext password
     organizationName: "fez enterprises"
   },
   {
     id: "a104",
     username: "greg",
     email: "greg@gregscakes.com",
-    password: "password456",  // Example plaintext password
+    password: "password456", // Example plaintext password
     role: "private",
     organizationName: null
   }
 ];
 
-// Sample game data (to be filtered)
+// Sample game data
 const games = [
   {
-    id: "1",
-    title: "Chess",
-    type: "online",
-    location: { lat: 45.8131, lng: 15.978 },
+    id: "12345",
+    title: "fezPass",
+    type: "local",
+    location: { "lat": 1, "lng": 2 },
     availability: "public",
     createdBy: "business",
     applicationRequired: true
   },
   {
-    id: "2",
-    title: "Monopoly",
+    id: "04322",
+    title: "ferGame",
+    type: "online",
+    location: { "lat": 1, "lng": 2 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true
+  },
+  {
+    id: "54352",
+    title: "nemozesOvoVidjetAkoNisiRegistriran",
     type: "local",
-    location: { lat: 45.8131, lng: 15.978 },
+    location: { "lat": 1, "lng": 2 },
     availability: "private",
-    createdBy: "private",
+    createdBy: "user",
+    applicationRequired: true
+  },
+  {
+    id: "89897",
+    title: "kasandra",
+    type: "local",
+    location: { "lat": 1, "lng": 2 },
+    availability: "private",
+    createdBy: "business",
     applicationRequired: false
   },
   {
-    id: "3",
-    title: "Scrabble",
-    type: "online",
-    location: { lat: 45.8131, lng: 15.978 },
-    availability: "public",
-    createdBy: "business",
+    id: "99999",
+    title: "akoOvoVidisPrijavljenSi",
+    type: "local",
+    location: { "lat": 1, "lng": 2 },
+    availability: "private",
+    createdBy: "user",
     applicationRequired: false
   }
 ];
 
 // Store active tokens
 let activeTokens = {};
+
+// Helper function to calculate distance (basic approximation)
+function getDistance(loc1, loc2) {
+  const lat1 = loc1.lat;
+  const lon1 = loc1.lng;
+  const lat2 = loc2.lat;
+  const lon2 = loc2.lng;
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // Distance in km
+}
+
+// GET Games (unfiltered) for testing
+app.get('/api/games', (req, res) => {
+  res.json({ games });
+});
 
 // Login endpoint with password comparison
 app.post('/api/login-submit', (req, res) => {
@@ -68,20 +107,13 @@ app.post('/api/login-submit', (req, res) => {
   // Find user by username
   const user = users.find(user => user.username === username);
 
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
-
-  // Compare plaintext password with input password
-  if (password !== user.password) {
+  if (!user || password !== user.password) {
     return res.status(400).json({ message: 'Invalid credentials' });
   }
 
   // Generate a unique token (for session management)
   const token = crypto.randomBytes(16).toString('hex');
   activeTokens[token] = user;
-
-  console.log(activeTokens);
 
   // Respond with success, user data, and token
   res.json({
@@ -98,41 +130,30 @@ app.post('/api/login-submit', (req, res) => {
 
 // Token verification endpoint
 app.get('/api/verify-token', (req, res) => {
-  // Extract the token from the Authorization header
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Get the token part after "Bearer"
+  const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) {
-    return res.status(400).json({ message: 'Token missing' });
-  }
-
-  if (activeTokens[token]) {
-    return res.json({
-      message: 'Token is valid',
-      userData: activeTokens[token],
-    });
-  } else {
+  if (!token || !activeTokens[token]) {
     return res.status(401).json({ message: 'Invalid or expired token' });
   }
+
+  return res.json({
+    message: 'Token is valid',
+    userData: activeTokens[token]
+  });
 });
 
 // Logout endpoint to invalidate token
 app.post('/api/logout-submit', (req, res) => {
-  // Extract the token from the Authorization header
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Get the token part after "Bearer"
+  const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) {
-    return res.status(400).json({ message: 'Token missing' });
-  }
-
-  // Check if the token is in the activeTokens list
-  if (activeTokens[token]) {
-    delete activeTokens[token]; // Invalidate the token by deleting it
-    return res.json({ message: 'Logout successful' });
-  } else {
+  if (!token || !activeTokens[token]) {
     return res.status(400).json({ message: 'No active session' });
   }
+
+  delete activeTokens[token];
+  res.json({ message: 'Logout successful' });
 });
 
 // Signup endpoint to register a new user
@@ -146,7 +167,6 @@ app.post('/api/signup', (req, res) => {
 
   // Check if username or email already exists
   const existingUser = users.find(user => user.username === username || user.email === email);
-
   if (existingUser) {
     return res.status(400).json({ message: 'Username or email already taken' });
   }
@@ -161,10 +181,7 @@ app.post('/api/signup', (req, res) => {
     organizationName: role === 'business' ? organizationName : null,
   };
 
-  // Save user (In a real application, save to database)
   users.push(newUser);
-
-  // Send response with user data
   res.status(201).json({
     message: 'Signup successful',
     userData: {
@@ -177,62 +194,61 @@ app.post('/api/signup', (req, res) => {
   });
 });
 
-// Search Game Form Endpoint
+// Game Search Form Endpoint
 app.post('/api/search-game-form', (req, res) => {
-  const { 
-    gameTitle, 
-    gameType, 
-    includeFullGames, 
-    applicationRequired, 
-    includeUserMadeGames, 
-    includeBusinessMadeGames, 
-    gameAvailability, 
-    mapLocation, 
-    radius, 
-    page 
+  const {
+    gameTitle,
+    gameType,
+    includeFullGames,
+    applicationRequired,
+    includeUserMadeGames,
+    includeBusinessMadeGames,
+    gameAvailability,
+    mapLocation,
+    radius,
+    page = 1
   } = req.body;
 
-  // Filtering logic
   let filteredGames = games;
 
-  // Filter by game title (if provided)
   if (gameTitle) {
-    filteredGames = filteredGames.filter(game => game.title.toLowerCase().includes(gameTitle.toLowerCase()));
+    filteredGames = filteredGames.filter(game =>
+      game.title.toLowerCase().includes(gameTitle.toLowerCase())
+    );
   }
 
-  // Filter by game type (online/local)
   if (gameType && gameType !== 'All Types') {
-    filteredGames = filteredGames.filter(game => game.type.toLowerCase() === gameType.toLowerCase());
+    filteredGames = filteredGames.filter(game =>
+      game.type.toLowerCase() === gameType.toLowerCase()
+    );
   }
 
-  // Filter by availability
   if (gameAvailability && gameAvailability !== 'All Games') {
-    filteredGames = filteredGames.filter(game => game.availability.toLowerCase() === gameAvailability.toLowerCase());
+    filteredGames = filteredGames.filter(game =>
+      game.availability.toLowerCase() === gameAvailability.toLowerCase()
+    );
   }
 
-  // Filter by application required
   if (applicationRequired !== undefined) {
-    filteredGames = filteredGames.filter(game => game.applicationRequired === applicationRequired);
+    filteredGames = filteredGames.filter(game =>
+      game.applicationRequired === applicationRequired
+    );
   }
 
-  // Filter by map location (simple proximity check for this example)
   if (mapLocation && radius) {
     const radiusInKm = parseFloat(radius);
-    filteredGames = filteredGames.filter(game => {
-      const distance = getDistance(game.location, mapLocation);
-      return distance <= radiusInKm;
-    });
+    filteredGames = filteredGames.filter(game =>
+      getDistance(game.location, mapLocation) <= radiusInKm
+    );
   }
 
-  // Pagination logic (simple implementation for page and limit)
   const pageSize = 10;
   const start = (page - 1) * pageSize;
   const end = page * pageSize;
-  filteredGames = filteredGames.slice(start, end);
+  const paginatedGames = filteredGames.slice(start, end);
 
-  // Return filtered games and pagination info
   res.json({
-    games: filteredGames,
+    games: paginatedGames,
     pagination: {
       currentPage: page,
       totalPages: Math.ceil(filteredGames.length / pageSize),
@@ -240,21 +256,6 @@ app.post('/api/search-game-form', (req, res) => {
     }
   });
 });
-
-// Helper function to calculate distance (basic approximation, can be improved)
-function getDistance(loc1, loc2) {
-  const lat1 = loc1.lat;
-  const lon1 = loc1.lng;
-  const lat2 = loc2.lat;
-  const lon2 = loc2.lng;
-  const R = 6371; // Earth's radius in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c; // Distance in km
-  return distance;
-}
 
 // Start server
 app.listen(5000, () => {

@@ -1,46 +1,186 @@
-.Search-bar{
-    background-color: #082567;
-    border: 5px solid #bbb;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 10px;
+/* General Styles */
+.search {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.Search-bar input{
-    border-radius: 5px;
-    height: 50px;
-    width: 250px;
-    font-size: 1rem;
+/* Search Filters Section */
+.search-filters {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
 
-.Search-bar button{
-    border-radius: 25px;
-    height: 50px;
-    width: 50px;
+.search-filters__title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.Search-bar button:hover{
-    background-color: #bbb;
+.search-filters__input,
+.search-filters__select,
+.search-filters__checkbox {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
-.Search-bar img{
-    height: 25px;
-    width: 25px;
+.search-filters__input:focus,
+.search-filters__select:focus,
+.search-filters__checkbox:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
-.List-of-games ul{
-    padding-left: 0;
+.search-filters__checkbox {
+  width: auto;
+  margin-right: 10px;
 }
 
-.List-of-games{
-    background-color: #082567;
-    padding: 25px;
-    border: 5px solid #bbb;
-    height: 100vh;
+.search-filters__apply-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s;
 }
 
-.List-of-games h1{
-    margin-top: 0;
+.search-filters__apply-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Map Styles */
+.react-leaflet-container {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-filters label {
+  font-size: 1.1rem;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Search Results Section */
+.search-results {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-results h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-results ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.search-results li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  font-size: 1rem;
+}
+
+.search-results li:last-child {
+  border-bottom: none;
+}
+
+.search-results h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.search-results p {
+  color: #666;
+}
+
+/* Pagination Styles */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s;
+}
+
+.pagination-controls button:hover {
+  background-color: #0056b3;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .search {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .search-filters__title {
+    font-size: 1.3rem;
+  }
+
+  .search-filters__input,
+  .search-filters__select,
+  .search-filters__checkbox {
+    font-size: 0.9rem;
+  }
+
+  .search-filters__apply-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .search-results h2 {
+    font-size: 1.5rem;
+  }
+
+  .search-results li {
+    font-size: 0.9rem;
+  }
+
+  .pagination-controls button {
+    font-size: 0.9rem;
+  }
 }

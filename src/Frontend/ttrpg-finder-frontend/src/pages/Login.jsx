@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
-import FormInput from '../components/login/FormInput';
-import PasswordVisibilityToggle from '../components/login/PasswordVisibilityToggle';
-import SubmitButton from '../components/login/SubmitButton';
+import FormInput from '../components/login and signup/FormInput';
+import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
+import SubmitButton from '../components/login and signup/SubmitButton';
 import '../styles/Login.css';
 
 const Login = () => {

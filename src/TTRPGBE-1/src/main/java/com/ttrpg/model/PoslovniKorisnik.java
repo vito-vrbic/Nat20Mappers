@@ -1,9 +1,11 @@
 package com.ttrpg.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@DiscriminatorValue("PoslovniKorisnik") 
 public class PoslovniKorisnik extends Korisnik {
     
     @OneToOne(mappedBy = "business_user")

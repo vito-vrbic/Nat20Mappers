@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@DiscriminatorValue("PrivatniKorisnik") 
 public class PrivatniKorisnik extends Korisnik {
 
     @OneToMany(mappedBy = "privateUser", cascade = CascadeType.ALL)  // Use "privateUser" here

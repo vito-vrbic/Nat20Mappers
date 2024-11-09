@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Clicking the logo will conditionally redirect */}
       <div onClick={handleLogoClick} className="navbar-brand">
-        MyApp
+        TTRPG FINDER
       </div>
       
       <ul className="navbar-links">

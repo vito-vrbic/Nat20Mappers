@@ -1,6 +1,9 @@
+/*Imported Roboto Font*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 /* General Styles */
 .search {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -10,7 +13,7 @@
 
 /* Search Filters Section */
 .search-filters {
-  background-color: #fff;
+  background-color: lightgray;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

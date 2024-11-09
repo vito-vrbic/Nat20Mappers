@@ -181,11 +181,11 @@ const Signup = () => {
           </div>
         )}
         {errorMessage && <div className="error-message">{errorMessage}</div>} {/* Show error message */}
-        <div className="submit">
+        {/*<div className="submit">*/}
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Signing Up...' : 'Sign up'}
           </button>
-        </div>
+        {/*</div>*/}
       </form>
     </div>
   );

@@ -1,7 +1,11 @@
+/*Imported Roboto Font*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 /* Navbar.css */
 .navbar {
     display: flex;
     justify-content: space-between;
+    font-family: 'Roboto',sans-serif;
     align-items: center;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #007bff, #6610f2);
@@ -65,6 +69,24 @@
     transform: scaleX(1);
 }
 
+.navbar-logout{
+   text-align: center;
+   align-items: center;
+   color:#ffffff;
+   font-weight: bold;
+   background-color:rgb(196, 41, 72);
+   border-radius: 5px;
+   padding-top:5px;
+   padding-bottom: 5px;
+   padding-left: 10px;
+   padding-right: 10px;
+   border-width: 1px;
+}
+.navbar-logout:hover{
+    color:#ffdd57;
+    cursor: pointer;
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
     .navbar {
@@ -87,5 +109,8 @@
         padding: 0.8rem 1rem;
         width: 100%;
         text-align: left;
+    }
+    .navbar-logout{
+        margin-left:20px;
     }
 }

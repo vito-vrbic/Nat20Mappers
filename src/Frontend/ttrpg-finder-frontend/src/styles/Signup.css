@@ -24,7 +24,13 @@ div {
    margin-top:15px;
    margin-bottom: 15px;
 }
-
+/*Style for the inputs group, basic centering*/
+.inputs{
+   display:flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
 /*Styling for every input field*/
 .inputs input{
    border-radius: 0.5rem;
@@ -80,7 +86,7 @@ input#orgCheckbox{
 }
 
 /*Styling for the sumbit button for signing up*/
-.submit{
+.inputs button{
    text-align: center;
    align-items: center;
    background-color: white;
@@ -91,4 +97,10 @@ input#orgCheckbox{
    margin:10px;
    width:6rem;
    padding:0.5rem;
+}
+
+.error-message{
+   color:rgb(180, 6, 41);
+   font-weight: bold;
+   font-style: italic;
 }

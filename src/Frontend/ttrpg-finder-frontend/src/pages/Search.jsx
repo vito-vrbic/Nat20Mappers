@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios'; // Import axios
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { useAuth } from '../utils/AuthContext';
 import '../styles/Search.css';
 
 const Search = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user } = useAuth(); // Destructure isAuthenticated and user from auth context
+
+  //#region STATES
   const [gameTitle, setGameTitle] = useState('');
   const [gameType, setGameType] = useState('All Types');
   const [includeFullGames, setIncludeFullGames] = useState(false);
@@ -13,14 +15,13 @@ const Search = () => {
   const [includeUserMadeGames, setIncludeUserMadeGames] = useState(true);
   const [includeBusinessMadeGames, setIncludeBusinessMadeGames] = useState(true);
   const [gameAvailability, setGameAvailability] = useState('All Games');
-  const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 });
+  const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 }); // Default location (Zagreb)
   const [radius, setRadius] = useState('');
   const [page, setPage] = useState(1);
-  const [results, setResults] = useState([]);
-  const [isMapVisible, setIsMapVisible] = useState(true); // Track map visibility
-  const [totalPages, setTotalPages] = useState(1); // Track the total number of pages
+  const [results, setResults] = useState([]); // Store search results
+  //#endregion
 
-  // Handle changes for various inputs
+  //#region HANDLERS
   const handleTitleChange = (e) => setGameTitle(e.target.value);
   const handleTypeChange = (e) => setGameType(e.target.value);
   const handleIncludeFullGamesChange = (e) => setIncludeFullGames(e.target.checked);
@@ -41,10 +42,10 @@ const Search = () => {
     return null;
   };
 
-  // ----- SEARCH RESULTS HANDLER -----
+  // ----- APPLY FILTERS AND FETCH GAMES -----
   const handleApplyFilters = async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
       const filters = {
         gameTitle,
         gameType,
@@ -63,13 +64,11 @@ const Search = () => {
       });
 
       if (response.status === 200) {
-        setResults(response.data.games); // Update results
-        setTotalPages(response.data.totalPages); // Update the total number of pages
-        setIsMapVisible(true); // Keep map visible after fetch
-        // Optional: Reset gameType or other logic if required after fetching
-        if (response.data.games.length > 0 && gameType !== 'All Types') {
-          setGameType('All Types'); // Adjust the gameType to ensure map visibility
-        }
+        const { games, pagination } = response.data;
+        
+        // Set the results with the fetched games
+        setResults(games);
+
       } else {
         console.error('Failed to fetch games:', response);
       }
@@ -80,29 +79,21 @@ const Search = () => {
 
   // ----- PAGINATION HANDLER -----
   const handlePageChange = (newPage) => {
-    if (newPage > 0 && newPage <= totalPages) {
-      setPage(newPage); // Update the page number
-      handleApplyFilters(); // Apply filters with the new page
-    }
+    setPage(newPage);
   };
 
   // Determine if the Map Filter should be shown based on gameType
   const showMapFilter = gameType === 'All Types' || gameType === 'Local';
 
-  useEffect(() => {
-    // Ensure map visibility is preserved
-    if (results.length > 0) {
-      setIsMapVisible(true); // Ensure the map remains visible if results are present
-    }
-  }, [results]); // Trigger map visibility adjustment when results change
-
   return (
     <div className="search">
+      {/* Filter Form */}
       <div className="search-filters">
         <h2 className="search-filters__title">
           {isAuthenticated ? 'Advanced Game Filters' : 'Basic Game Filters'}
         </h2>
 
+        {/* Game Title Input */}
         <label>Game Title:
           <input
             type="text"
@@ -113,6 +104,7 @@ const Search = () => {
           />
         </label>
 
+        {/* Game Type Select */}
         <label>Game Type:
           <select
             className="search-filters__select"
@@ -126,7 +118,7 @@ const Search = () => {
         </label>
 
         {/* Map Location Filter */}
-        {showMapFilter && isMapVisible && (
+        {showMapFilter && (
           <>
             <label>Map Location:
               <MapContainer
@@ -159,11 +151,65 @@ const Search = () => {
           </>
         )}
 
+        {/* Checkbox Filters */}
+        <label>Include Full Games:
+          <input
+            type="checkbox"
+            className="search-filters__checkbox"
+            checked={includeFullGames}
+            onChange={handleIncludeFullGamesChange}
+          />
+        </label>
+
+        <label>Application Required:
+          <input
+            type="checkbox"
+            className="search-filters__checkbox"
+            checked={applicationRequired}
+            onChange={handleApplicationRequiredChange}
+          />
+        </label>
+
+        <label>Include User-Made Games:
+          <input
+            type="checkbox"
+            className="search-filters__checkbox"
+            checked={includeUserMadeGames}
+            onChange={handleIncludeUserMadeChange}
+          />
+        </label>
+
+        <label>Include Business-Made Games:
+          <input
+            type="checkbox"
+            className="search-filters__checkbox"
+            checked={includeBusinessMadeGames}
+            onChange={handleIncludeBusinessMadeChange}
+          />
+        </label>
+
+        {/* Game Availability Select for advanced users */}
+        {isAuthenticated && (
+          <label>Game Availability:
+            <select
+              className="search-filters__select"
+              value={gameAvailability}
+              onChange={handleAvailabilityChange}
+            >
+              <option>All Games</option>
+              <option>Public</option>
+              <option>Private</option>
+            </select>
+          </label>
+        )}
+
+        {/* Apply Filters Button */}
         <button className="search-filters__apply-btn" onClick={handleApplyFilters}>
           Apply Filters
         </button>
       </div>
 
+      {/* Search Results Section */}
       <div className="search-results">
         <h2>Search Results</h2>
         {results.length > 0 ? (
@@ -172,6 +218,7 @@ const Search = () => {
               <li key={index}>
                 <h3>{result.title}</h3>
                 <p>{result.description}</p>
+                {/* Render other result details */}
               </li>
             ))}
           </ul>
@@ -179,20 +226,16 @@ const Search = () => {
           <p>No results found.</p>
         )}
 
+        {/* Pagination Controls */}
         <div className="pagination-controls">
           <button
             onClick={() => handlePageChange(page - 1)}
-            disabled={page === 1}
+            disabled={page === 1} // Disable if on the first page
           >
             Previous
           </button>
           <span>Page {page}</span>
-          <button
-            onClick={() => handlePageChange(page + 1)}
-            disabled={page === totalPages}
-          >
-            Next
-          </button>
+          <button onClick={() => handlePageChange(page + 1)}>Next</button>
         </div>
       </div>
     </div>

@@ -1,85 +1,85 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../utils/AuthContext'; // Assuming AuthContext is being used correctly
+import { useAuth } from '../utils/AuthContext';
+import FormInput from '../components/login/FormInput';
+import PasswordVisibilityToggle from '../components/login/PasswordVisibilityToggle';
+import SubmitButton from '../components/login/SubmitButton';
 import '../styles/Login.css';
-import showPass from '../assets/ShowPassword.png';
-import hidePass from '../assets/HidePassword.png';
 
-// Login Page
 const Login = () => {
-  const { login } = useAuth(); // Get login function from AuthContext
-  const navigate = useNavigate(); // Use to navigate after successful login
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  // Define state for username, password, loading, and error messages
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const [error, setError] = useState(''); // State to capture error message
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Handle password visibility toggle
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the page from reloading
+    e.preventDefault();
+    if (!username || !password) {
+      setError('Both fields are required.');
+      return;
+    }
 
-    // Clear previous error message
     setError('');
-    setLoading(true); // Set loading to true when starting the login attempt
+    setLoading(true);
 
     const credentials = { username, password };
-    try {
-      await login(credentials); // Use login function from context
 
-      // Redirect to dashboard on successful login
+    try {
+      await login(credentials);
       navigate('/dashboard');
     } catch (error) {
-      console.error('Login failed', error);
-      setError('Invalid username or password. Please try again.'); // Set error message
-      setLoading(false); // Reset loading state
+      console.error('Login failed:', error);
+      setError('Invalid username or password. Please try again.');
+      setLoading(false);
     }
   };
 
-  // Return JSX for the login form
   return (
     <div className="LogInBox">
       <div className="Title">Log in</div>
-      <form className="inputs" onSubmit={handleSubmit}> {/* Handle form submission */}
+      <form className="inputs" onSubmit={handleSubmit}>
         <div className="input">
-          <div className="inputTag">Username</div>
-          <input
+          <FormInput
+            label="Username"
             type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             id="user"
             placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)} // Update state on input change
           />
         </div>
+
         <div className="input">
-          <div className="inputTag">Password</div>
-          <input
-            type={isPasswordVisible ? "text" : "password"} // Toggle input type based on state
+          <FormInput
+            label="Password"
+            type={isPasswordVisible ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             id="Password"
             placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)} // Update state on password change
           />
-          <img
-            src={isPasswordVisible ? hidePass : showPass}
-            alt="Toggle Password Visibility"
-            onClick={togglePasswordVisibility} // Toggle password visibility
-            className="toggle-pass"
+          <PasswordVisibilityToggle
+            isPasswordVisible={isPasswordVisible}
+            togglePasswordVisibility={togglePasswordVisibility}
           />
         </div>
-        {error && <div className="error-message">{error}</div>} {/* Display error message */}
+
         <div className="forgotPassword">Forgot password?</div>
-        <button type="submit" className="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Log in'} {/* Display loading text */}
-        </button> {/* Submit the form */}
+
+        {/* Submit Button with loading and disabled handling */}
+        <SubmitButton loading={loading} disabled={loading || !username || !password}>
+          Log in
+        </SubmitButton>
       </form>
+
       <div className="gotoSignup">
         No account? <Link to="/signup">Sign up</Link>
       </div>

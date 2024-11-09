@@ -1,1 +1,0 @@
-Used for layout components that define the structure for one or more pages (e.g., a sidebar, header, and footer layout for a dashboard).

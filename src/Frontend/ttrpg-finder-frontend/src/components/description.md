@@ -1,1 +1,0 @@
-Used for components that represent parts of pages in the application.

@@ -7,6 +7,7 @@ import AppRoutes from './utils/AppRoutes';
 
 import './styles/Globals.css';
 
+
 function App() {
   return (
     <AuthProvider>

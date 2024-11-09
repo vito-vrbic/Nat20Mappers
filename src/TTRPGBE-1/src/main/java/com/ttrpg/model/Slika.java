@@ -1,11 +1,9 @@
 package com.ttrpg.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -13,35 +11,43 @@ public class Slika {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String imgLoc;
+    private int id;
 
-    @Column(nullable = false)
-    private String imgName;
+    private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
     private OrgProfil orgProfil;
 
+    // Constructors, getters, setters
     public Slika() {}
 
-    public Slika(String imgLoc, String imgName) {
-        this.imgLoc = imgLoc;
-        this.imgName = imgName;
+    public Slika(String imageUrl, OrgProfil orgProfil) {
+        this.imageUrl = imageUrl;
+        this.orgProfil = orgProfil;
     }
 
-    public String getImgLoc() {
-        return imgLoc;
+    public int getId() {
+        return id;
     }
 
-    public String getImgName() {
-        return imgName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Slika { " +
-                "imgLoc: '" + imgLoc + "', " +
-                "imgName: '" + imgName + "' " +
-                "}";
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public OrgProfil getOrgProfil() {
+        return orgProfil;
+    }
+
+    public void setOrgProfil(OrgProfil orgProfil) {
+        this.orgProfil = orgProfil;
     }
 }
+

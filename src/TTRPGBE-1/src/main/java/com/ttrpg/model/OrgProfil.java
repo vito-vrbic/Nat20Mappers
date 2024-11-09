@@ -1,7 +1,5 @@
 package com.ttrpg.model;
 
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import java.util.List;
 
 @Entity
 public class OrgProfil {
@@ -32,9 +32,15 @@ public class OrgProfil {
     @Column(nullable = false)
     private String companyAdress;
 
-    @OneToMany(mappedBy = "org_profile", cascade = CascadeType.ALL)
+    // OneToMany mapping to Slika using the field "orgProfil" in Slika as the mappedBy
+    @OneToMany(mappedBy = "orgProfil", cascade = CascadeType.ALL)
     private List<Slika> companyLogos;
 
+    // OneToOne relationship to PoslovniKorisnik (mappedBy on business_user)
+    @OneToOne
+    private PoslovniKorisnik business_user;
+
+    // Constructors, getters, setters, toString
     public OrgProfil() {}
 
     public OrgProfil(int companyId, String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, List<Slika> companyLogos) {
@@ -51,7 +57,7 @@ public class OrgProfil {
         return companyId;
     }
 
-    public void setCompanyName(String companyName){
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
@@ -94,7 +100,15 @@ public class OrgProfil {
     public void setLogo(Slika companyLogo) {
         companyLogos.add(companyLogo);
     }
-    
+
+    public PoslovniKorisnik getBusiness_user() {
+        return business_user;
+    }
+
+    public void setBusiness_user(PoslovniKorisnik business_user) {
+        this.business_user = business_user;
+    }
+
     @Override
     public String toString() {
         return "OrgProfil { "
@@ -103,7 +117,7 @@ public class OrgProfil {
                 + "companyPhone: '" + companyPhone + "', "
                 + "companyDes: '" + companyDes + "', "
                 + "companyWeb: '" + companyWeb + "', "
-                + "companyAdress: '" + companyAdress + "', "
-                + " }";
+                + "companyAdress: '" + companyAdress + "' "
+                + "}";
     }
 }

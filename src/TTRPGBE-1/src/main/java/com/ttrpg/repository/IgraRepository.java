@@ -13,7 +13,7 @@ import com.ttrpg.model.Igra;
 public interface IgraRepository extends JpaRepository <Igra,Long>{
 	
 	
-/*	List<Korisnik> findByUsername(String username);
+    /*List<Korisnik> findByUsername(String username);
 	List<Korisnik> findByEmailContaining(String email);
 	Optional<Korisnik> findByUsernameAndEmail(String username, String email);
 	*/

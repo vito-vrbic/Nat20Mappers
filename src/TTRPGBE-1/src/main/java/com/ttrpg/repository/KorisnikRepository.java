@@ -13,9 +13,9 @@ import com.ttrpg.model.Korisnik;
 public interface KorisnikRepository extends JpaRepository <Korisnik,Long>{
 	
 	
-/*	List<Korisnik> findByUsername(String username);
-	List<Korisnik> findByEmailContaining(String email);
-	Optional<Korisnik> findByUsernameAndEmail(String username, String email);
-	*/
+     List<Korisnik> findByUsername(String username);
+	/*List<Korisnik> findByEmailContaining(String email);
+	Optional<Korisnik> findByUsernameAndEmail(String username, String email);*/
+	
 
 }

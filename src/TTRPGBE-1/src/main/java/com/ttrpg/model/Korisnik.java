@@ -1,5 +1,6 @@
 package com.ttrpg.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ public class Korisnik {
 
     @Id
     private int userId;
-
+    @Column(unique=true)
     private String username;
     private String password;
 

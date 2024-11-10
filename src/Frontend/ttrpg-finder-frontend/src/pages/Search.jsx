@@ -37,7 +37,7 @@ const Search = () => {
         page,
       };
 
-      const response = await axios.post('/api/search-game-form', filters, {
+      const response = await axios.post('/api/data/search', filters, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

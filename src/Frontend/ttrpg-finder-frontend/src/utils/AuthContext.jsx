@@ -29,41 +29,9 @@ export const AuthProvider = ({ children }) => {
   }, 
   []);
 
-  /*
-    TOKEN VERIFICATION
-    -----
-    Address: ./verify-token
-    Type: GET
-    Header:
-      Authorization: Bearer {authToken} // The token that needs to be verified for validity
-    Body: {} // No body content is required for token verification
-    -----
-    Expected response:
-      SUCCESS (Status Code 200 OK):
-        Body: {
-          "message": "Token is valid",
-          "userData": {
-            "id": "a104", 
-            "username": "john_doe", 
-            "email": "john.doe@example.com", 
-            "role": "private",
-            "organizationName": null
-          }
-        }
-
-      FAILURE (401 Unauthorized):
-        Body: {
-          "message": "Invalid or expired token"
-        }
-
-      FAILURE (400 Bad Request):
-        Body: {
-          "message": "Token missing"
-        }
-  */
   const verifyToken = (token) => {
     axios
-      .get('api/verify-token', {
+      .get('api/auth/verify-token', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -100,41 +68,9 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
-  /*
-    FORM SUBMISSION
-    -----
-    Address: ./login-submit
-    Type: POST
-    Header:
-      Content-Type: application/json
-      Authorization: Bearer {authToken} (if required for an authenticated API)
-    Body:
-      {
-        "username": "john_doe",
-        "password": "password123"
-      }
-    -----
-    Expected response:
-      SUCCESS (Status Code 200):
-        Body: {
-          "message": "Login successful",
-          "token": "fake-jwt-token", // The token to be stored in localStorage for future requests
-          "userData": {
-            "id": "a104",
-            "username": "john_doe",
-            "email": "john.doe@example.com",
-            "role": "private",
-            "organizationName": null
-          }
-        }
-      FAILURE (400 Bad Request):
-        Body: {
-          "message": "Issue to showcase on frontend to user"
-        }
-  */
   const login = async (credentials) => {
     try {
-      const response = await axios.post('api/login-submit', credentials);
+      const response = await axios.post('api/auth/login', credentials);
 
       if (response.status === 200) {
         localStorage.setItem('authToken', response.data.token);
@@ -163,38 +99,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /*
-    FORM SUBMISSION
-    -----
-    Address: ./logout-submit
-    Type: POST
-    Header:
-      Content-Type: application/json
-      Authorization: Bearer {authToken} (required to verify the current session)
-    Body: {} // No additional body content is required for logout
-    -----
-    Expected response:
-      SUCCESS (Status Code 200 OK):
-        Body: {
-          "message": "Logout successful" // Confirmation that the user has logged out
-        }
-
-      FAILURE (400 Bad Request):
-        Body: {
-          "message": "Logout failed, please try again" // Error message if logout fails due to an issue with the request
-        }
-
-      FAILURE (401 Unauthorized):
-        Body: {
-          "message": "Authentication required" // User is not authenticated or the provided token is invalid
-        }
-  */
   const logout = async () => {
     const token = localStorage.getItem('authToken');
 
     if (token) {
       try {
-        const response = await axios.post('api/logout-submit', {}, {
+        const response = await axios.post('api/auth/logout', {}, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

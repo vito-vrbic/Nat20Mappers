@@ -101,7 +101,7 @@ app.get('/api/games', (req, res) => {
 });
 
 // Login endpoint with password comparison
-app.post('/api/login-submit', (req, res) => {
+app.post('/api/auth/login', (req, res) => {
   const { username, password } = req.body;
 
   // Find user by username
@@ -129,7 +129,7 @@ app.post('/api/login-submit', (req, res) => {
 });
 
 // Token verification endpoint
-app.get('/api/verify-token', (req, res) => {
+app.get('/api/auth/verify-token', (req, res) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
@@ -144,7 +144,7 @@ app.get('/api/verify-token', (req, res) => {
 });
 
 // Logout endpoint to invalidate token
-app.post('/api/logout-submit', (req, res) => {
+app.post('/api/auth/logout', (req, res) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
@@ -157,7 +157,7 @@ app.post('/api/logout-submit', (req, res) => {
 });
 
 // Signup endpoint to register a new user
-app.post('/api/signup', (req, res) => {
+app.post('/api/auth/signup', (req, res) => {
   const { username, email, password, role, organizationName } = req.body;
 
   // Validate required fields
@@ -195,7 +195,7 @@ app.post('/api/signup', (req, res) => {
 });
 
 // Game Search Form Endpoint
-app.post('/api/search-game-form', (req, res) => {
+app.post('/api/data/search', (req, res) => {
   const {
     gameTitle,
     gameType,

@@ -4,6 +4,7 @@ import { useAuth } from '../utils/AuthContext'; // Assuming AuthContext is being
 import '../styles/Login.css';
 import showPass from '../assets/ShowPassword.png';
 import hidePass from '../assets/HidePassword.png';
+import picture from '../assets/dice.jpg'
 
 // Login Page
 const Login = () => {
@@ -45,6 +46,8 @@ const Login = () => {
 
   // Return JSX for the login form
   return (
+    <>
+    <div className='loginContainer'>
     <div className="LogInBox">
       <div className="Title">Log in</div>
       <form className="inputs" onSubmit={handleSubmit}> {/* Handle form submission */}
@@ -84,6 +87,9 @@ const Login = () => {
         No account? <Link to="/signup">Sign up</Link>
       </div>
     </div>
+    <img className="image" src={picture} alt="picture"></img>
+    </div>
+    </>
   );
 };
 

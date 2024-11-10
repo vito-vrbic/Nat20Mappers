@@ -1,15 +1,13 @@
 /* Imported Roboto Font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/*Adding a background image*/
-.main-content {
+/*Overall styling of the page*/
+.homepageContainer{
    background-image: url('../assets/dragon-background.png');
    background-size: cover;
    background-position: center; 
    background-repeat: no-repeat; 
 }
-
-/*Overall styling of the page*/
 .about-page {
    font-family: 'Roboto', sans-serif;
    color: #3d3d3d; 
@@ -21,6 +19,8 @@
    grid-auto-rows: auto;
    gap: 3rem;
    grid-auto-flow:dense;
+   justify-content: center;
+   align-items: center;
 }
 
 /*Stylizing the text inside the grid boxes*/
@@ -84,6 +84,18 @@
 @media (max-width: 768px) {
    .about-page {
      grid-template-columns: 1fr; /* Switch to single column */
+   }
+   .about-project{
+      order:1;
+   }
+   .about-goal{
+      order:2;
+   }
+   .about-features{
+      order:3;
+   }
+   .contact-section{
+      order:4;
    }
 }
 

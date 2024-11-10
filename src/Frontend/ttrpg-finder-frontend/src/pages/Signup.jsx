@@ -5,6 +5,7 @@ import axios from 'axios'; // Import axios for API requests
 import '../styles/Signup.css';
 import showPass from '../assets/ShowPassword.png';
 import hidePass from '../assets/HidePassword.png';
+import picture from '../assets/dice2.jpg'
 //#endregion
 
 // Signup Page
@@ -104,6 +105,8 @@ const Signup = () => {
 
   //#region RETURN
   return (
+    <>
+    <div className='signupContainer'>
     <div className='SignUpBox'>
       <div className="Title">Sign up</div>
       <form className='inputs' onSubmit={handleSubmit}> {/* Form submission handler */}
@@ -188,7 +191,10 @@ const Signup = () => {
         {/*</div>*/}
       </form>
     </div>
-  );
+    <img className="image" src={picture} alt="picture"></img>
+    </div>
+  </> 
+ );
   //#endregion
 };
 

@@ -9,6 +9,23 @@ div {
    font-family:'Roboto',sans-serif;
 }
 
+/*Container for the page*/
+.loginContainer{
+   display:grid;
+   grid-template-rows: 1fr;
+   grid-template-columns: 40vw 60vw;
+   gap:10px;
+   overflow: hidden;
+   padding-top:0.5rem;
+}
+/*Styling the image next to the form*/
+.image{
+   object-fit:cover;
+   width: 100%;
+   height: 100%;
+   opacity: 0.9;
+}
+
 /*Container for the 'Log in' layout*/
 .LogInBox{
    display:flex;
@@ -38,6 +55,7 @@ div {
 /*Styling for the category name above the input field, example: Email*/
 .inputTag{
    font-size: 23px;
+   margin-left:8px;
    margin-bottom: 5px;
 }
 
@@ -52,6 +70,7 @@ div {
 /*Additional input styling required for the Password category*/
 .input{
    position:relative;
+   margin-bottom:5px;
 }
 
 .input input[type="password"]{
@@ -96,4 +115,17 @@ div {
  
  .gotoSignup a:hover {
    color:darkturquoise;
+ }
+
+ @media (max-width: 768px){
+   .loginContainer{
+      grid-template-rows: 20vw 1fr;
+      grid-template-columns: 1fr;
+   }
+   .LogInBox{
+      order:2;
+   }
+   .image{
+      order:1;
+   }
  }

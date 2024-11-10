@@ -3,7 +3,8 @@ import '../styles/Home.css';
 const Home = () => {
   return (
     <>
-<div class="about-page">
+    <div className='homepageContainer'>
+    <div class="about-page">
         <section class="about-project">
             <h1>What is TTRPG?</h1>
             <p>TTRPG stands for Tabletop Role-Playing Game. 
@@ -75,6 +76,7 @@ const Home = () => {
                 </p>
             </ul>
         </section>
+</div>
 </div>
     </>
   )

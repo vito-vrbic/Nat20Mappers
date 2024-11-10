@@ -8,6 +8,17 @@ div {
    font-weight: bold;
    font-family:'Roboto',sans-serif;
 }
+/*Container for the page*/
+.signupContainer{
+   display:grid;
+   grid-template-rows: 1fr;
+   grid-template-columns: 40vw 60vw;
+   gap:10px;
+   overflow: hidden;
+   padding-top:0.5rem;
+}
+
+/*Styling for the picture is in the Login.css file*/
 
 /*Container for the 'Sign up' layout*/
 .SignUpBox{
@@ -104,3 +115,16 @@ input#orgCheckbox{
    font-weight: bold;
    font-style: italic;
 }
+
+@media (max-width: 768px){
+   .signupContainer{
+      grid-template-rows: 20vw 1fr;
+      grid-template-columns: 1fr;
+   }
+   .SignUpBox{
+      order:2;
+   }
+   .image{
+      order:1;
+   }
+ }

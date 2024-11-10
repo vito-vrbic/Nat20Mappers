@@ -17,66 +17,6 @@
   margin-bottom: 30px;
 }
 
-.search-filters__title {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.search-filters__input,
-.search-filters__select,
-.search-filters__checkbox {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.search-filters__input:focus,
-.search-filters__select:focus,
-.search-filters__checkbox:focus {
-  outline: none;
-  border-color: #007bff;
-}
-
-.search-filters__checkbox {
-  width: auto;
-  margin-right: 10px;
-}
-
-.search-filters__apply-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.3s;
-}
-
-.search-filters__apply-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Map Styles */
-.react-leaflet-container {
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.search-filters label {
-  font-size: 1.1rem;
-  color: #555;
-  display: block;
-  margin-bottom: 5px;
-}
-
 /* Search Results Section */
 .search-results {
   background-color: #fff;
@@ -150,7 +90,138 @@
   color: #333;
 }
 
-/* Media Queries for Responsiveness */
+/* Game Card Styles */
+.game-card {
+  display: flex;
+  flex-direction: column; /* Allow content to stack vertically */
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.game-summary {
+  display: flex;
+  align-items: center;
+}
+
+.game-image {
+  width: 80px;
+  height: 80px;
+  margin-right: 16px;
+}
+
+.game-details {
+  flex: 1;
+}
+
+.game-extra-details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+  opacity: 0; /* Initially hidden */
+  max-height: 0; /* Initially collapsed */
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+/* Styles when the card is expanded */
+.game-card.expanded .game-extra-details {
+  opacity: 1; /* Make visible when expanded */
+  max-height: 1000px; /* Set a max-height large enough to show the content */
+}
+
+/* Hover and active state for game card */
+.game-card:hover {
+  background-color: #f9f9f9;
+}
+
+.game-card:active {
+  background-color: #ececec;
+}
+
+/* General Styles */
+.search {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Filters Section */
+.search-filters {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.search-filters__title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Inputs */
+.search-filters__input,
+.search-filters__select,
+.search-filters__checkbox {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.search-filters__input:focus,
+.search-filters__select:focus,
+.search-filters__checkbox:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.search-filters__checkbox {
+  width: auto;
+  margin-right: 10px;
+}
+
+.search-filters__apply-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.search-filters__apply-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Map Styles */
+.react-leaflet-container {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-filters label {
+  font-size: 1.1rem;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .search {
     margin: 10px;
@@ -169,18 +240,6 @@
 
   .search-filters__apply-btn {
     padding: 10px;
-    font-size: 0.9rem;
-  }
-
-  .search-results h2 {
-    font-size: 1.5rem;
-  }
-
-  .search-results li {
-    font-size: 0.9rem;
-  }
-
-  .pagination-controls button {
     font-size: 0.9rem;
   }
 }

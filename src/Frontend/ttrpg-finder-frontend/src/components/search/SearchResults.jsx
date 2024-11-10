@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchGameCard from './SearchGameCard';
 
 const SearchResults = ({ results, page, handlePageChange }) => {
   return (
@@ -8,9 +9,13 @@ const SearchResults = ({ results, page, handlePageChange }) => {
         <ul>
           {results.map((result, index) => (
             <li key={index}>
-              <h3>{result.title}</h3>
-              <p>{result.description}</p>
-              {/* Render other result details */}
+              <SearchGameCard
+                title={result.title}
+                description={result.description}
+                image={result.image}
+                genre={result.genre}
+                releaseDate={result.releaseDate}
+              />
             </li>
           ))}
         </ul>
@@ -22,7 +27,7 @@ const SearchResults = ({ results, page, handlePageChange }) => {
       <div className="pagination-controls">
         <button
           onClick={() => handlePageChange(page - 1)}
-          disabled={page === 1} // Disable if on the first page
+          disabled={page === 1}
         >
           Previous
         </button>

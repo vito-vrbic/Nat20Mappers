@@ -31,7 +31,8 @@ const SearchFilters = ({
       </h2>
 
       {/* Game Title Input */}
-      <label>Game Title:
+      <label>
+        Game Title:
         <input
           type="text"
           placeholder="Search by title..."
@@ -42,15 +43,16 @@ const SearchFilters = ({
       </label>
 
       {/* Game Type Select */}
-      <label>Game Type:
+      <label>
+        Game Type:
         <select
           className="search-filters__select"
           value={gameType}
           onChange={(e) => setGameType(e.target.value)}
         >
-          <option>All Types</option>
-          <option>Online</option>
-          <option>Local</option>
+          <option value="All Types">All Types</option>
+          <option value="Online">Online</option>
+          <option value="Local">Local</option>
         </select>
       </label>
 
@@ -61,7 +63,8 @@ const SearchFilters = ({
 
       {/* Radius Input */}
       {gameType === 'All Types' || gameType === 'Local' ? (
-        <label>Radius (km):
+        <label>
+          Radius (km):
           <input
             type="number"
             placeholder="Leave empty for no radius filter..."
@@ -74,7 +77,8 @@ const SearchFilters = ({
       ) : null}
 
       {/* Checkbox Filters */}
-      <label>Include Full Games:
+      <label>
+        Include Full Games:
         <input
           type="checkbox"
           className="search-filters__checkbox"
@@ -83,7 +87,8 @@ const SearchFilters = ({
         />
       </label>
 
-      <label>Application Required:
+      <label>
+        Application Required:
         <input
           type="checkbox"
           className="search-filters__checkbox"
@@ -92,7 +97,8 @@ const SearchFilters = ({
         />
       </label>
 
-      <label>Include User-Made Games:
+      <label>
+        Include User-Made Games:
         <input
           type="checkbox"
           className="search-filters__checkbox"
@@ -101,7 +107,8 @@ const SearchFilters = ({
         />
       </label>
 
-      <label>Include Business-Made Games:
+      <label>
+        Include Business-Made Games:
         <input
           type="checkbox"
           className="search-filters__checkbox"
@@ -112,15 +119,16 @@ const SearchFilters = ({
 
       {/* Game Availability Select for advanced users */}
       {isAuthenticated && (
-        <label>Game Availability:
+        <label>
+          Game Availability:
           <select
             className="search-filters__select"
             value={gameAvailability}
             onChange={(e) => setGameAvailability(e.target.value)}
           >
-            <option>All Games</option>
-            <option>Public</option>
-            <option>Private</option>
+            <option value="All Games">All Games</option>
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
           </select>
         </label>
       )}

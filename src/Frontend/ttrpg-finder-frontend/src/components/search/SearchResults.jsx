@@ -15,6 +15,15 @@ const SearchResults = ({ results, page, handlePageChange }) => {
                 image={result.image}
                 genre={result.genre}
                 releaseDate={result.releaseDate}
+                complexity={result.complexity}
+                estimatedLength={result.estimatedLength}
+                startTimestamp={result.startTimestamp}
+                pravilnik={result.pravilnik}
+                requiresForm={result.requiresForm}
+                currentPlayerCount={result.currentPlayerCount}
+                maxPlayerCount={result.maxPlayerCount}
+                communicationChannel={result.communicationChannel}
+                isHomebrew={result.isHomebrew}
               />
             </li>
           ))}

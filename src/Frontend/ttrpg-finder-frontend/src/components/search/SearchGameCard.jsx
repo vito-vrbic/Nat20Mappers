@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
 import '../../styles/Search.css';
 
-const SearchGameCard = ({ title, description, image, genre, releaseDate }) => {
+const SearchGameCard = ({
+  title,
+  description,
+  image,
+  genre,
+  releaseDate,
+  complexity,
+  estimatedLength,
+  startTimestamp,
+  pravilnik,
+  requiresForm,
+  currentPlayerCount,
+  maxPlayerCount,
+  communicationChannel,
+  isHomebrew
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
@@ -22,8 +37,14 @@ const SearchGameCard = ({ title, description, image, genre, releaseDate }) => {
       {/* Conditionally render extra details based on isExpanded state */}
       {isExpanded && (
         <div className="game-extra-details">
-          {genre && <p><strong>Genre:</strong> {genre}</p>}
-          {releaseDate && <p><strong>Release Date:</strong> {releaseDate}</p>}
+          {complexity && <p><strong>Complexity:</strong> {complexity}</p>}
+          {estimatedLength && <p><strong>Estimated Length:</strong> {estimatedLength}</p>}
+          {startTimestamp && <p><strong>Start Time:</strong> {new Date(startTimestamp).toLocaleString()}</p>}
+          {pravilnik && <p><strong>Rules:</strong> {pravilnik}</p>}
+          <p><strong>Players:</strong> {currentPlayerCount}/{maxPlayerCount}</p>
+          {communicationChannel && <p><strong>Communication Channel:</strong> {communicationChannel}</p>}
+          <p><strong>Homebrew:</strong> {isHomebrew ? 'Yes' : 'No'}</p>
+          {requiresForm && <p><strong>Form Required:</strong> Yes</p>}
         </div>
       )}
     </div>

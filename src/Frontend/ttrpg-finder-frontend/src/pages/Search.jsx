@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import { useAuth } from '../utils/AuthContext';
 import SearchFilters from '../components/search/SearchFilters';
 import SearchResults from '../components/search/SearchResults';

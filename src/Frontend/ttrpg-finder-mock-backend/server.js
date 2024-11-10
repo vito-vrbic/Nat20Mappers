@@ -27,52 +27,45 @@ const users = [
   }
 ];
 
-// Sample game data
+// Sample game data with added details like complexity, estimated length, start timestamp, description, etc.
 const games = [
   {
     id: "12345",
-    title: "fezPass",
-    type: "local",
-    location: { "lat": 1, "lng": 2 },
-    availability: "public",
-    createdBy: "business",
-    applicationRequired: true
-  },
-  {
-    id: "04322",
-    title: "ferGame",
+    title: "Game 1",
     type: "online",
-    location: { "lat": 1, "lng": 2 },
+    location: { "lat": 45.8131, "lng": 15.978 },
     availability: "public",
-    createdBy: "business",
-    applicationRequired: true
-  },
-  {
-    id: "54352",
-    title: "nemozesOvoVidjetAkoNisiRegistriran",
-    type: "local",
-    location: { "lat": 1, "lng": 2 },
-    availability: "private",
     createdBy: "user",
-    applicationRequired: true
+    applicationRequired: true,
+    complexity: "Medium",              // Added complexity level
+    estimatedLength: "2 hours",        // Added estimated game length
+    startTimestamp: "2024-11-10T15:00:00Z",  // Added start timestamp
+    description: "A fun and engaging online strategy game.",  // Game description
+    pravilnik: "Rules: Players must strategize to defeat opponents.",  // Rules or guidelines (pravilnik)
+    requiresForm: true,               // Indicates if a form is required to join
+    currentPlayerCount: 5,            // Current number of players in the game
+    maxPlayerCount: 20,               // Max player count allowed in the game
+    communicationChannel: "Discord",  // Channel for game communication (e.g., Discord, Zoom, etc.)
+    isHomebrew: false                 // Indicates if the game is homebrewed
   },
   {
-    id: "89897",
-    title: "kasandra",
+    id: "67890",
+    title: "Game 2",
     type: "local",
-    location: { "lat": 1, "lng": 2 },
+    location: { "lat": 45.8131, "lng": 15.978 },
     availability: "private",
     createdBy: "business",
-    applicationRequired: false
-  },
-  {
-    id: "99999",
-    title: "akoOvoVidisPrijavljenSi",
-    type: "local",
-    location: { "lat": 1, "lng": 2 },
-    availability: "private",
-    createdBy: "user",
-    applicationRequired: false
+    applicationRequired: false,
+    complexity: "Easy",              // Added complexity level
+    estimatedLength: "1 hour",       // Added estimated game length
+    startTimestamp: "2024-11-10T16:00:00Z",  // Added start timestamp
+    description: "A casual party game for all ages.",  // Game description
+    pravilnik: "Rules: Players take turns answering questions.",  // Rules or guidelines (pravilnik)
+    requiresForm: false,              // Indicates if a form is required to join
+    currentPlayerCount: 10,           // Current number of players in the game
+    maxPlayerCount: 15,               // Max player count allowed in the game
+    communicationChannel: "In-person",  // Channel for game communication (e.g., Discord, Zoom, etc.)
+    isHomebrew: true                 // Indicates if the game is homebrewed
   }
 ];
 
@@ -247,14 +240,39 @@ app.post('/api/data/search', (req, res) => {
   const end = page * pageSize;
   const paginatedGames = filteredGames.slice(start, end);
 
-  res.json({
-    games: paginatedGames,
+  // Prepare the response with detailed game data
+  const response = {
+    games: paginatedGames.map(game => ({
+      id: game.id,
+      title: game.title,
+      type: game.type,
+      location: game.location,
+      availability: game.availability,
+      createdBy: game.createdBy,
+      applicationRequired: game.applicationRequired,
+      complexity: game.complexity,
+      estimatedLength: game.estimatedLength,
+      startTimestamp: game.startTimestamp,
+      description: game.description,
+      pravilnik: game.pravilnik,
+      requiresForm: game.requiresForm,
+      currentPlayerCount: game.currentPlayerCount,
+      maxPlayerCount: game.maxPlayerCount,
+      communicationChannel: game.communicationChannel,
+      isHomebrew: game.isHomebrew
+    })),
     pagination: {
       currentPage: page,
       totalPages: Math.ceil(filteredGames.length / pageSize),
       totalItems: filteredGames.length,
     }
-  });
+  };
+
+  // Log the response JSON to the console
+  console.log(JSON.stringify(response, null, 2));
+
+  // Send the response
+  res.json(response);
 });
 
 // Start server

@@ -1,0 +1,95 @@
+.Home-page{
+    color: white;
+    background-color: #082567;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 5px solid #bbb;
+}
+
+.Welcome-text{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Welcome-text h1{
+    font-size: 3rem;
+}
+
+.Info-text{
+    border: 5px solid #bbb;
+    background-color: #082567;
+
+}
+
+.Info-text p{
+    margin-top: 0;
+}
+
+.Info-text h1{
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.Purpose-text{
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 10px;
+    margin-top: 20px;
+    padding-right: 200px;
+    padding-left: 200px;
+}
+
+.Purpose-text p:nth-of-type(2){
+    font-size: 1.8rem;
+}
+
+.Features-conatainer{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    gap: 20px;
+    margin: 10px;
+}
+
+.Features-conatainer div{
+    background-color: #bbb;
+    border-radius: 25px;
+    margin: 15px;
+    color: black;
+}
+
+
+.End-text{
+    background-color: #082567;
+    border: 5px solid #bbb;
+    text-align: center;
+}
+
+.End-text h1:nth-of-type(1){
+    padding: 100px;
+    font-size: 4rem;
+}
+
+.Public-games{
+    background-color: #082567;
+    border: 5px solid #bbb;
+}
+
+.Public-games h1{
+    margin: 0;
+    padding: 15px;
+}
+
+.Public-games ul{
+    padding-left: 0;
+}
+
+.Home-page img{
+    max-width: 50%;
+    height: auto;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%);
+}
+

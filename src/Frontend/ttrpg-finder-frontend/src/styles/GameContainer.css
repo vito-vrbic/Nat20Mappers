@@ -1,0 +1,38 @@
+.Game-container{
+    background-color: #bbb;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Game-container img{
+    max-width: 25px;
+    height: 25px;
+}
+
+.Left-group{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: black;
+}
+
+.Right-group{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.Join-button{
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.More-info-button{
+    border-radius: 5px;
+}

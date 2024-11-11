@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { useAuth } from '../utils/AuthContext'; 
-import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import '../styles/GameContainer.css';
+import welcome_picture from '../assets/welcome-picture.png';  // Import the image
 
 const Home = () => {
 
@@ -32,7 +32,7 @@ const Home = () => {
         <h1>Welcome to TTRPG Finder!</h1>
         <h2>"Your next session is just a click away!"</h2> 
       </div>
-      <img src='./src/assets/welcome-picture.png' alt="Welcome picture"></img>
+      <img src={welcome_picture} alt="Welcome picture"></img>
     </div>
     <div className='Info-text'>
       <div className='Purpose-text'>

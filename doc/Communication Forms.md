@@ -1,7 +1,7 @@
 # Token Verification
 
 Endpoint: 
-  `GET ./auth/verify-token`
+  `GET /api/auth/verify-token`
 
 Header:
   ```
@@ -60,7 +60,7 @@ Body: (No body content is required for this request)
 # Login Submission
 
 Endpoint: 
-  `POST ./auth/login`
+  `POST /api/auth/login`
 
 Headers:
 ```
@@ -111,7 +111,7 @@ Body:
 # Logout Submission
 
 Endpoint: 
-  `POST ./auth/logout`
+  `POST /api/auth/logout`
 
 Headers:
   ```
@@ -162,7 +162,7 @@ Body: (No additional body content is required for logout)
 # Signup Submission
 
 Endpoint: 
-  ```POST ./auth/signup```
+  ```POST /api/auth/signup```
 
 Headers:
 ```
@@ -216,7 +216,7 @@ Search Submission
 ===================
 
 Endpoint: 
-  `POST ./data/search`
+  `POST /api/data/search`
 
 Headers:
 ```

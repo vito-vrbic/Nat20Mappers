@@ -8,16 +8,8 @@ const Dashboard = () => {
   
   const { isAuthenticated, user, logout } = useAuth(); // Use the useAuth hook to get authentication state, user, and logout function
 
-  const [games, setGames] = useState([]); //USed for testing
-  
-  //Get data from dummy database
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/games')
-      .then(response => {
-        console.log('Fetched data:', response.data.games); 
-      setGames(response.data.games)})
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  const [games, setGames] = useState([]); //Used for testing
+
 
   return (
   <>

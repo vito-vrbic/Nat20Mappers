@@ -59,7 +59,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post('api/auth/signup', userData);
+      const response = await axios.post('/api/auth/signup', userData);
       if (response.status === 201) {
         navigate('/login');
       } else {

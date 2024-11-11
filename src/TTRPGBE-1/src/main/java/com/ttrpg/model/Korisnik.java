@@ -20,14 +20,35 @@ public class Korisnik {
     @Column(unique=true)
     private String username;
     private String password;
+    private String role;
+    private String email;
+    
+    
+    public String getEmail() {
+		return email;
+	}
 
-    // Constructors, getters, and setters
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		role = role;
+	}
+
+	// Constructors, getters, and setters
     public Korisnik() {}
 
-    public Korisnik(int userId, String username, String password) {
+    public Korisnik(int userId, String username,String email, String password, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
+        this.role=role;
+        this.email=email;
     }
 
     public int getUserId() {

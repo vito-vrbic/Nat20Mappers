@@ -31,8 +31,8 @@ public class KorisnikService {
 	public void sramotaDataLoader () {
 		
 		
-		kr.save(new Korisnik(1, "Marko58","Apple"));
-	    kr.save(new Korisnik(2, "Marko59","Apple2"));
+		kr.save(new Korisnik(1, "Marko58","beb1@gmail.com","Apple","Private"));
+	    kr.save(new Korisnik(2, "Marko59","beb2@gmail.com","Apple2","Private"));
 		
 		
 	}

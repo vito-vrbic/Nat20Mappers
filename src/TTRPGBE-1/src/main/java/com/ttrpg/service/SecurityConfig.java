@@ -1,4 +1,5 @@
 package com.ttrpg.service;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,9 +13,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for unrestricted access (for development only)
+            .csrf(csrf -> csrf.disable()) // Only for development
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Allow access to all endpoints without authentication
+                .anyRequest().permitAll() // Restrict this for production
             )
             .build();
     }

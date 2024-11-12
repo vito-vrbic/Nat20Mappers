@@ -282,13 +282,7 @@ Body:
       "isHomebrew": true
     }
     // More game objects as needed
-  ],
-  "pagination": {
-    "currentPage": 1,
-    "totalPages": 10,
-    "totalResults": 100,
-    "resultsPerPage": 10
-  }
+  ]
 }
    ```
 

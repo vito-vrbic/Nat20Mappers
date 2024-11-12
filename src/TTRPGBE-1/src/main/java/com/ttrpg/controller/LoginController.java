@@ -26,7 +26,7 @@ public class LoginController {
         logger.info("Login attempt for user: {}", korisnik.getUsername());
 
         if (userService.authenticate(korisnik.getUsername(), korisnik.getPassword())) {
-            // Generate or fetch token (replace with secure method)
+            
             String token = "9472037428374928372387498237498237";
 
             UserData ud = new UserData(

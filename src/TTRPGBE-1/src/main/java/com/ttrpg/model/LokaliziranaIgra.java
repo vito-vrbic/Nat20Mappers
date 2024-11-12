@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 @DiscriminatorValue("LokaliziranaIgra") 
 public class LokaliziranaIgra extends Igra {
 	
+	public LokaliziranaIgra() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	@Column(name="radius")
 	private int radiussy;
 	@Column(name="center-coordinate", length=20)

@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 @DiscriminatorValue("OnlineIgra") 
 public class OnlineIgra extends Igra{
 
+	
+	
 	@Column(name="timezone",length=20)
 	private String timezone;
 }

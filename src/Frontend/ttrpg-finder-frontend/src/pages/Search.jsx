@@ -36,7 +36,7 @@ const Search = () => {
         page,
       };
 
-      const response = await axios.post('/api/data/search', filters, {
+      const response = await axios.post('http://localhost:5000/api/data/search', filters, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -37,7 +37,7 @@ public class Igra {
 	    private Boolean requiresForm;
 
 	    @Column(name = "start_ts")
-	    private Timestamp startTs;
+	    private String startTs;
 
 	    @Column(name = "est_length", length = 30)
 	    private String estLength;
@@ -59,7 +59,148 @@ public class Igra {
 
 	    @Column(name = "template_loc", length = 50)
 	    private String templateLoc;
+
+		public Integer getGameId() {
+			return gameId;
+		}
+
+		public void setGameId(Integer gameId) {
+			this.gameId = gameId;
+		}
+
+		public String getGameName() {
+			return gameName;
+		}
+
+		public void setGameName(String gameName) {
+			this.gameName = gameName;
+		}
+
+		public String getGameDes() {
+			return gameDes;
+		}
+
+		public void setGameDes(String gameDes) {
+			this.gameDes = gameDes;
+		}
+
+		public Integer getMaxPlayer() {
+			return maxPlayer;
+		}
+
+		public void setMaxPlayer(Integer maxPlayer) {
+			this.maxPlayer = maxPlayer;
+		}
+
+		public Boolean getIsPrivate() {
+			return isPrivate;
+		}
+
+		public void setIsPrivate(Boolean isPrivate) {
+			this.isPrivate = isPrivate;
+		}
+
+		public Boolean getIsHomebrew() {
+			return isHomebrew;
+		}
+
+		public void setIsHomebrew(Boolean isHomebrew) {
+			this.isHomebrew = isHomebrew;
+		}
+
+		public Boolean getRequiresForm() {
+			return requiresForm;
+		}
+
+		public void setRequiresForm(Boolean requiresForm) {
+			this.requiresForm = requiresForm;
+		}
+
+		public String getStartTs() {
+			return startTs;
+		}
+
+		public void setStartTs(String startTs) {
+			this.startTs = startTs;
+		}
+
+		public String getEstLength() {
+			return estLength;
+		}
+
+		public void setEstLength(String estLength) {
+			this.estLength = estLength;
+		}
+
+		public String getRecExp() {
+			return recExp;
+		}
+
+		public void setRecExp(String recExp) {
+			this.recExp = recExp;
+		}
+
+		public String getCommChannel() {
+			return commChannel;
+		}
+
+		public void setCommChannel(String commChannel) {
+			this.commChannel = commChannel;
+		}
+
+		public Integer getRulesetId() {
+			return rulesetId;
+		}
+
+		public void setRulesetId(Integer rulesetId) {
+			this.rulesetId = rulesetId;
+		}
+
+		public Integer getSysId() {
+			return sysId;
+		}
+
+		public void setSysId(Integer sysId) {
+			this.sysId = sysId;
+		}
+
+		public Integer getGmUserId() {
+			return gmUserId;
+		}
+
+		public void setGmUserId(Integer gmUserId) {
+			this.gmUserId = gmUserId;
+		}
+
+		public String getTemplateLoc() {
+			return templateLoc;
+		}
+
+		public void setTemplateLoc(String templateLoc) {
+			this.templateLoc = templateLoc;
+		}
+
+		public Igra(Integer gameId, String gameName, String gameDes, Integer maxPlayer, Boolean isPrivate,
+				Boolean isHomebrew, Boolean requiresForm, String startTs, String estLength, String recExp,
+				String commChannel, Integer rulesetId, Integer sysId, Integer gmUserId, String templateLoc) {
+			super();
+			this.gameId = gameId;
+			this.gameName = gameName;
+			this.gameDes = gameDes;
+			this.maxPlayer = maxPlayer;
+			this.isPrivate = isPrivate;
+			this.isHomebrew = isHomebrew;
+			this.requiresForm = requiresForm;
+			this.startTs = startTs;
+			this.estLength = estLength;
+			this.recExp = recExp;
+			this.commChannel = commChannel;
+			this.rulesetId = rulesetId;
+			this.sysId = sysId;
+			this.gmUserId = gmUserId;
+			this.templateLoc = templateLoc;
+		}
 	
-	
+	 public Igra() {}
 
 }

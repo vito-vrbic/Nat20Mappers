@@ -49,7 +49,7 @@ public class Ttrpgbe1Application {
 		
 		
 		
-		korisnikService.sramotaDataLoader();
+		korisnikService.sDataLoader();
 	}
 
 }

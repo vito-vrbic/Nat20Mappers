@@ -248,28 +248,48 @@ Body:
    Body:
    ```json
    {
-     "games": [   // Array of <=25 game results matching filters
-       {
-         "id": "12345",
-         "title": "Game 1",
-         "type": "online",
-         "location": { "lat": 45.8131, "lng": 15.978 },
-         "availability": "public",
-         "createdBy": "user",
-         "applicationRequired": true
-       },
-       {
-         "id": "67890",
-         "title": "Game 2",
-         "type": "local",
-         "location": { "lat": 45.8131, "lng": 15.978 },
-         "availability": "private",
-         "createdBy": "business",
-         "applicationRequired": false
-       },
-       ...
-     ]
-   }
+  "games": [
+    {
+      "title": "Game Title Example",
+      "description": "A brief description of the game.",
+      "image": "https://example.com/image.jpg",
+      "genre": "Adventure",
+      "releaseDate": "2023-01-01",
+      "complexity": "Medium",
+      "estimatedLength": "2 hours",
+      "startTimestamp": "2023-01-01T12:00:00Z",
+      "pravilnik": "Link to rules or guidelines",
+      "requiresForm": true,
+      "currentPlayerCount": 3,
+      "maxPlayerCount": 5,
+      "communicationChannel": "Discord",
+      "isHomebrew": false
+    },
+    {
+      "title": "Another Game Title",
+      "description": "Another game description.",
+      "image": "https://example.com/another-image.jpg",
+      "genre": "Puzzle",
+      "releaseDate": "2022-06-15",
+      "complexity": "High",
+      "estimatedLength": "3 hours",
+      "startTimestamp": "2022-06-15T14:00:00Z",
+      "pravilnik": "Another link to rules",
+      "requiresForm": false,
+      "currentPlayerCount": 2,
+      "maxPlayerCount": 4,
+      "communicationChannel": "Zoom",
+      "isHomebrew": true
+    }
+    // More game objects as needed
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 10,
+    "totalResults": 100,
+    "resultsPerPage": 10
+  }
+}
    ```
 
 ### 2. FAILURE - Bad Request

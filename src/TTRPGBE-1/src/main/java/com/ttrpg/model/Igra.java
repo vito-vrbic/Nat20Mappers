@@ -1,6 +1,8 @@
 package com.ttrpg.model;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 @Entity
 @Table(name = "Igra")  // The name of the table in the database
@@ -18,13 +20,16 @@ public class Igra {
 	    @Column(name = "game_id")
 	    private Integer gameId;
 
-	    @Column(name = "game_name", length = 50, nullable = false)
-	    private String gameName;
+	    @Column(name = "title", length = 50, nullable = false)
+	   
+	    private String title;
 
 	    @Column(name = "game_des", length = 400)
+	    @JsonProperty("description")
 	    private String gameDes;
 
 	    @Column(name = "max_player")
+	    @JsonProperty("maxPlayerCount")
 	    private Integer maxPlayer;
 
 	    @Column(name = "is_private")
@@ -34,18 +39,22 @@ public class Igra {
 	    private Boolean isHomebrew;
 
 	    @Column(name = "requires_form")
+	    @JsonProperty("applicationRequired")
 	    private Boolean requiresForm;
 
 	    @Column(name = "start_ts")
+	    @JsonProperty("startTimeStamp")
 	    private String startTs;
 
 	    @Column(name = "est_length", length = 30)
+	    @JsonProperty("estimatedLength")
 	    private String estLength;
 
 	    @Column(name = "rec_exp", length = 20)
 	    private String recExp;
 
 	    @Column(name = "comm_channel", length = 100)
+	    @JsonProperty("communicationChannel")
 	    private String commChannel;
 
 	    @Column(name = "ruleset_id")
@@ -58,9 +67,12 @@ public class Igra {
 	    private Integer gmUserId;
 
 	    @Column(name = "template_loc", length = 50)
+	    @JsonProperty("location")
 	    private String templateLoc;
+	    
+	    @Column 
 
-		public Integer getGameId() {
+		public Integer getId() {
 			return gameId;
 		}
 
@@ -68,15 +80,15 @@ public class Igra {
 			this.gameId = gameId;
 		}
 
-		public String getGameName() {
-			return gameName;
+		public String getTitle() {
+			return title;
 		}
 
-		public void setGameName(String gameName) {
-			this.gameName = gameName;
+		public void setTitle(String gameName) {
+			this.title = gameName;
 		}
 
-		public String getGameDes() {
+		public String getDescription() {
 			return gameDes;
 		}
 
@@ -116,7 +128,7 @@ public class Igra {
 			this.requiresForm = requiresForm;
 		}
 
-		public String getStartTs() {
+		public String getStartTimestamp() {
 			return startTs;
 		}
 
@@ -124,7 +136,7 @@ public class Igra {
 			this.startTs = startTs;
 		}
 
-		public String getEstLength() {
+		public String getEstimatedLength() {
 			return estLength;
 		}
 
@@ -140,7 +152,7 @@ public class Igra {
 			this.recExp = recExp;
 		}
 
-		public String getCommChannel() {
+		public String getCommunicationChannel() {
 			return commChannel;
 		}
 
@@ -180,12 +192,12 @@ public class Igra {
 			this.templateLoc = templateLoc;
 		}
 
-		public Igra(Integer gameId, String gameName, String gameDes, Integer maxPlayer, Boolean isPrivate,
+		public Igra(Integer gameId, String title, String gameDes, Integer maxPlayer, Boolean isPrivate,
 				Boolean isHomebrew, Boolean requiresForm, String startTs, String estLength, String recExp,
 				String commChannel, Integer rulesetId, Integer sysId, Integer gmUserId, String templateLoc) {
 			super();
 			this.gameId = gameId;
-			this.gameName = gameName;
+			this.title = title;
 			this.gameDes = gameDes;
 			this.maxPlayer = maxPlayer;
 			this.isPrivate = isPrivate;

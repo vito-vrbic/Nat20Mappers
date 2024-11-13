@@ -11,7 +11,7 @@ import java.security.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/data/search")
 public class SearchController {
 
     @Autowired
@@ -19,9 +19,9 @@ public class SearchController {
 
     
 
-       @PostMapping("/data/search")
+       @PostMapping
         public ResponseEntity<List<Igra>> searchIgre(
-                @RequestParam(required = false) String gameName,
+                @RequestParam(required = false) String title,
                 @RequestParam(required = false) Integer maxPlayer,
                 @RequestParam(required = false) Boolean isPrivate,
                 @RequestParam(required = false) Boolean isHomebrew,
@@ -35,7 +35,7 @@ public class SearchController {
                 @RequestParam(required = false) Integer gmUserId,
                 @RequestParam(required = false) String templateLoc) {
 
-            List<Igra> results = IgraService.searchIgre(gameName, maxPlayer, isPrivate, isHomebrew, requiresForm, 
+            List<Igra> results = IgraService.searchIgre(title, maxPlayer, isPrivate, isHomebrew, requiresForm, 
                                                          startTs, estLength, recExp, commChannel, rulesetId, 
                                                          sysId, gmUserId, templateLoc);
             return ResponseEntity.ok(results);

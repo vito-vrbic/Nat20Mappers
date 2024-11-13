@@ -18,7 +18,7 @@ public interface IgraRepository extends JpaRepository <Igra,Long>{
 	
    
 	@Query("SELECT i FROM Igra i WHERE " +
-		       "(:gameName IS NULL OR i.gameName LIKE %:gameName%) AND " +
+		       "(:title IS NULL OR i.title LIKE %:title%) AND " +
 		       "(:maxPlayer IS NULL OR i.maxPlayer = :maxPlayer) AND " +
 		       "(:isPrivate IS NULL OR i.isPrivate = :isPrivate) AND " +
 		       "(:isHomebrew IS NULL OR i.isHomebrew = :isHomebrew) AND " +
@@ -32,7 +32,7 @@ public interface IgraRepository extends JpaRepository <Igra,Long>{
 		       "(:gmUserId IS NULL OR i.gmUserId = :gmUserId) AND " +
 		       "(:templateLoc IS NULL OR i.templateLoc LIKE %:templateLoc%)")
 		List<Igra> searchIgre(
-		        @Param("gameName") String gameName,
+		        @Param("title") String title,
 		        @Param("maxPlayer") Integer maxPlayer,
 		        @Param("isPrivate") Boolean isPrivate,
 		        @Param("isHomebrew") Boolean isHomebrew,

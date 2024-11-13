@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import com.ttrpg.model.Korisnik;
 import com.ttrpg.repository.KorisnikRepository;
+import com.ttrpg.service.IgraService;
 import com.ttrpg.service.KorisnikService;
 
 
@@ -43,13 +44,14 @@ public class Ttrpgbe1Application {
 	        // Retrieve the KorisnikService bean from the context
 	        KorisnikService korisnikService = context.getBean(KorisnikService.class);
 		
-		
+	        IgraService  igraService= context.getBean(IgraService.class);
 		
 		
 		
 		
 		
 		korisnikService.sDataLoader();
+		igraService.s2DataLoader();
 	}
 
 }

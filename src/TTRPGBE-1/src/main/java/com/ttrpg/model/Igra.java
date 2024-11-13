@@ -18,201 +18,224 @@ public class Igra {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "game_id")
-	    private Integer gameId;
+	    
+	    private Long id;
 
-	    @Column(name = "title", length = 50, nullable = false)
-	   
-	    private String title;
+	    @JsonProperty("title")
+	    private String gameName;
 
-	    @Column(name = "game_des", length = 400)
-	    @JsonProperty("description")
-	    private String gameDes;
+	    @JsonProperty("type")
+	    private String type;
 
-	    @Column(name = "max_player")
-	    @JsonProperty("maxPlayerCount")
-	    private Integer maxPlayer;
+	    @Embedded
+	    private MapLocation location;
 
-	    @Column(name = "is_private")
-	    private Boolean isPrivate;
+	    @JsonProperty("availability")
+	    private String availability;
 
-	    @Column(name = "is_homebrew")
-	    private Boolean isHomebrew;
+	    @JsonProperty("createdBy")
+	    private String createdBy;
 
-	    @Column(name = "requires_form")
 	    @JsonProperty("applicationRequired")
+	    private Boolean applicationRequired;
+
+	    @JsonProperty("complexity")
+	    private String complexity;
+
+	    @JsonProperty("estimatedLength")
+	    private String estimatedLength;
+
+	    @JsonProperty("startTimestamp")
+	    private String startTimestamp;
+
+	    @JsonProperty("description")
+	    private String description;
+
+	    @JsonProperty("pravilnik")
+	    private String pravilnik;
+
+	    @JsonProperty("requiresForm")
 	    private Boolean requiresForm;
 
-	    @Column(name = "start_ts")
-	    @JsonProperty("startTimeStamp")
-	    private String startTs;
+	    @JsonProperty("currentPlayerCount")
+	    private Integer currentPlayerCount;
 
-	    @Column(name = "est_length", length = 30)
-	    @JsonProperty("estimatedLength")
-	    private String estLength;
+	    @JsonProperty("maxPlayerCount")
+	    private Integer maxPlayerCount;
 
-	    @Column(name = "rec_exp", length = 20)
-	    private String recExp;
-
-	    @Column(name = "comm_channel", length = 100)
 	    @JsonProperty("communicationChannel")
-	    private String commChannel;
+	    private String communicationChannel;
 
-	    @Column(name = "ruleset_id")
-	    private Integer rulesetId;
+	    @JsonProperty("isHomebrew")
+	    private Boolean isHomebrew;
 
-	    @Column(name = "sys_id")
-	    private Integer sysId;
+	    // Getters and Setters
 
-	    @Column(name = "gm_user_id")
-	    private Integer gmUserId;
+	    public Long getId() {
+	        return id;
+	    }
 
-	    @Column(name = "template_loc", length = 50)
-	    @JsonProperty("location")
-	    private String templateLoc;
-	    
-	    @Column 
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-		public Integer getId() {
-			return gameId;
-		}
+	    public String getTitle() {
+	        return gameName;
+	    }
 
-		public void setGameId(Integer gameId) {
-			this.gameId = gameId;
-		}
+	    public void setGameName(String gameName) {
+	        this.gameName = gameName;
+	    }
 
-		public String getTitle() {
-			return title;
-		}
+	    public String getType() {
+	        return type;
+	    }
 
-		public void setTitle(String gameName) {
-			this.title = gameName;
-		}
+	    public void setType(String type) {
+	        this.type = type;
+	    }
 
-		public String getDescription() {
-			return gameDes;
-		}
+	    public MapLocation getLocation() {
+	        return location;
+	    }
 
-		public void setGameDes(String gameDes) {
-			this.gameDes = gameDes;
-		}
+	    public void setLocation(MapLocation location) {
+	        this.location = location;
+	    }
 
-		public Integer getMaxPlayer() {
-			return maxPlayer;
-		}
+	    public String getAvailability() {
+	        return availability;
+	    }
 
-		public void setMaxPlayer(Integer maxPlayer) {
-			this.maxPlayer = maxPlayer;
-		}
+	    public void setAvailability(String availability) {
+	        this.availability = availability;
+	    }
 
-		public Boolean getIsPrivate() {
-			return isPrivate;
-		}
+	    public String getCreatedBy() {
+	        return createdBy;
+	    }
 
-		public void setIsPrivate(Boolean isPrivate) {
-			this.isPrivate = isPrivate;
-		}
+	    public void setCreatedBy(String createdBy) {
+	        this.createdBy = createdBy;
+	    }
 
-		public Boolean getIsHomebrew() {
-			return isHomebrew;
-		}
+	    public Boolean getApplicationRequired() {
+	        return applicationRequired;
+	    }
 
-		public void setIsHomebrew(Boolean isHomebrew) {
-			this.isHomebrew = isHomebrew;
-		}
+	    public void setApplicationRequired(Boolean applicationRequired) {
+	        this.applicationRequired = applicationRequired;
+	    }
 
-		public Boolean getRequiresForm() {
-			return requiresForm;
-		}
+	    public String getComplexity() {
+	        return complexity;
+	    }
 
-		public void setRequiresForm(Boolean requiresForm) {
-			this.requiresForm = requiresForm;
-		}
+	    public void setComplexity(String complexity) {
+	        this.complexity = complexity;
+	    }
 
-		public String getStartTimestamp() {
-			return startTs;
-		}
+	    public String getEstimatedLength() {
+	        return estimatedLength;
+	    }
 
-		public void setStartTs(String startTs) {
-			this.startTs = startTs;
-		}
+	    public void setEstimatedLength(String estimatedLength) {
+	        this.estimatedLength = estimatedLength;
+	    }
 
-		public String getEstimatedLength() {
-			return estLength;
-		}
+	    public String getStartTimestamp() {
+	        return startTimestamp;
+	    }
 
-		public void setEstLength(String estLength) {
-			this.estLength = estLength;
-		}
+	    public void setStartTimestamp(String startTimestamp) {
+	        this.startTimestamp = startTimestamp;
+	    }
 
-		public String getRecExp() {
-			return recExp;
-		}
+	    public String getDescription() {
+	        return description;
+	    }
 
-		public void setRecExp(String recExp) {
-			this.recExp = recExp;
-		}
+	    public void setDescription(String description) {
+	        this.description = description;
+	    }
 
-		public String getCommunicationChannel() {
-			return commChannel;
-		}
+	    public String getPravilnik() {
+	        return pravilnik;
+	    }
 
-		public void setCommChannel(String commChannel) {
-			this.commChannel = commChannel;
-		}
+	    public void setPravilnik(String pravilnik) {
+	        this.pravilnik = pravilnik;
+	    }
 
-		public Integer getRulesetId() {
-			return rulesetId;
-		}
+	    public Boolean getRequiresForm() {
+	        return requiresForm;
+	    }
 
-		public void setRulesetId(Integer rulesetId) {
-			this.rulesetId = rulesetId;
-		}
+	    public void setRequiresForm(Boolean requiresForm) {
+	        this.requiresForm = requiresForm;
+	    }
 
-		public Integer getSysId() {
-			return sysId;
-		}
+	    public Integer getCurrentPlayerCount() {
+	        return currentPlayerCount;
+	    }
 
-		public void setSysId(Integer sysId) {
-			this.sysId = sysId;
-		}
+	    public void setCurrentPlayerCount(Integer currentPlayerCount) {
+	        this.currentPlayerCount = currentPlayerCount;
+	    }
 
-		public Integer getGmUserId() {
-			return gmUserId;
-		}
+	    public Integer getMaxPlayerCount() {
+	        return maxPlayerCount;
+	    }
 
-		public void setGmUserId(Integer gmUserId) {
-			this.gmUserId = gmUserId;
-		}
+	    public void setMaxPlayerCount(Integer maxPlayerCount) {
+	        this.maxPlayerCount = maxPlayerCount;
+	    }
 
-		public String getTemplateLoc() {
-			return templateLoc;
-		}
+	    public String getCommunicationChannel() {
+	        return communicationChannel;
+	    }
 
-		public void setTemplateLoc(String templateLoc) {
-			this.templateLoc = templateLoc;
-		}
+	    public void setCommunicationChannel(String communicationChannel) {
+	        this.communicationChannel = communicationChannel;
+	    }
 
-		public Igra(Integer gameId, String title, String gameDes, Integer maxPlayer, Boolean isPrivate,
-				Boolean isHomebrew, Boolean requiresForm, String startTs, String estLength, String recExp,
-				String commChannel, Integer rulesetId, Integer sysId, Integer gmUserId, String templateLoc) {
-			super();
-			this.gameId = gameId;
-			this.title = title;
-			this.gameDes = gameDes;
-			this.maxPlayer = maxPlayer;
-			this.isPrivate = isPrivate;
-			this.isHomebrew = isHomebrew;
-			this.requiresForm = requiresForm;
-			this.startTs = startTs;
-			this.estLength = estLength;
-			this.recExp = recExp;
-			this.commChannel = commChannel;
-			this.rulesetId = rulesetId;
-			this.sysId = sysId;
-			this.gmUserId = gmUserId;
-			this.templateLoc = templateLoc;
-		}
+	    public Boolean getIsHomebrew() {
+	        return isHomebrew;
+	    }
+
+	    public void setIsHomebrew(Boolean isHomebrew) {
+	        this.isHomebrew = isHomebrew;
+	    }
 	
-	 public Igra() {}
+	    
+	    
+	    
+	    
+	    
+	 public Igra(Long id, String gameName, String type, MapLocation location, String availability, String createdBy,
+				Boolean applicationRequired, String complexity, String estimatedLength, String startTimestamp,
+				String description, String pravilnik, Boolean requiresForm, Integer currentPlayerCount,
+				Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew) {
+			super();
+			this.id = id;
+			this.gameName = gameName;
+			this.type = type;
+			this.location = location;
+			this.availability = availability;
+			this.createdBy = createdBy;
+			this.applicationRequired = applicationRequired;
+			this.complexity = complexity;
+			this.estimatedLength = estimatedLength;
+			this.startTimestamp = startTimestamp;
+			this.description = description;
+			this.pravilnik = pravilnik;
+			this.requiresForm = requiresForm;
+			this.currentPlayerCount = currentPlayerCount;
+			this.maxPlayerCount = maxPlayerCount;
+			this.communicationChannel = communicationChannel;
+			this.isHomebrew = isHomebrew;
+		}
+
+	public Igra() {}
 
 }

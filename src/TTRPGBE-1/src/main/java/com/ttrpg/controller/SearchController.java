@@ -2,6 +2,7 @@ package com.ttrpg.controller;
 
 
 import com.ttrpg.model.Igra;
+import com.ttrpg.model.MapLocation;
 import com.ttrpg.service.IgraService;
 import com.ttrpg.service.SearchRequest;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Timestamp;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/data/search")
@@ -25,14 +28,57 @@ public class SearchController {
     @PostMapping
     public ResponseEntity<HashMap<String,List<Igra>>> searchIgre22(@RequestBody SearchRequest sr){
     	
-    	
+    	String available =sr.getGameAvailability();
+    	String tipIgre  = sr.getGameType();
+    	Boolean trebaPrijavnica= sr.getApplicationRequired();
+    	Boolean ukljucipune =sr.getIncludeFullGames();
+    	Integer radius=  Integer.parseInt(  sr.getRadius() );
+        MapLocation ml=	  sr.getMapLocation();
+    	Boolean ukljucenePoslovnoe=       sr.getIncludeBusinessMadeGames();
+    	Boolean ukljucenePrivatne= sr.getIncludeUserMadeGames();
     	List<Igra> li= igraService.searchIgraService(sr.getGameTitle());
+    	Integer stranica= sr.getPage();
+    	
+    	
+    	Stream <Igra> liStream =li.stream();
+    	
+    			
+    	li=	liStream.filter(s ->{
+    		Boolean puna;
+    		Boolean punamoze=sr.getIncludeFullGames();
+    		Boolean fail;
+    		if (s.getCurrentPlayerCount()< s.getMaxPlayerCount()) {
+    			puna=false;
+    			
+    		}else  puna=true;
+    		if(puna==true && punamoze==false) {
+    			fail=false;
+    		}else fail=true;
+    	
+    		
+    		return (s.getApplicationRequired()== trebaPrijavnica)&&(!s.getAvailability().equals("private") )&&(fail)
+    			;
+    			
+    				
+    		
+    	}).collect(Collectors.toList());
+    	
+    	
+    	
     	HashMap<String,List<Igra>> hm = new HashMap<>();
+    	
+    	
+    	
+    	
     	hm.put("games", li);
     	System.out.println("Ovo se izvršava " + li.size() +" "+sr.getGameTitle());
-		return ResponseEntity.ok( hm);
+		return ResponseEntity.ok(hm);
     	
     	
+		
+		
+		
+		
     }
     
     

@@ -52,6 +52,8 @@ public class Ttrpgbe1Application {
 		
 		korisnikService.sDataLoader();
 		igraService.s2DataLoader();
+		igraService.s3DataLoader();
+		igraService.s4DataLoader();
 	}
 
 }

@@ -103,15 +103,17 @@ public class SearchController {
     		
     	  }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77
-          if(sr.getGameAvailability().contains("all games")) {
+          System.out.println(sr.getGameType());
+          if(sr.getGameType().contains("All games")) {
         	  
           }
-          else if( sr.getGameType().contains("online")) {
+          else if( sr.getGameType().contains("Online")) {
+        	  System.out.println("Je je tu je prepoznao Online");
         	  	it=li.iterator();
         	  	while(it.hasNext()) {
         		
         		Igra igraIt= it.next();
-        			if(  igraIt.getType().equals("offline")) {
+        			if(  igraIt.getType().contains("offline")) {
         			
         				it.remove();
         	     		}
@@ -120,12 +122,13 @@ public class SearchController {
         	  
         	  
           }
-          else if( sr.getGameType().contains("local")) {
+          else if( sr.getGameType().contains("Local")) {
+        	  System.out.println("Je je tu je prepoznao Offline");
       	  	it=li.iterator();
       	  	while(it.hasNext()) {
       		
       		Igra igraIt= it.next();
-      			if(  igraIt.getType().equals("online")) {
+      			if(  igraIt.getType().contains("online")) {
       			
       				it.remove();
       	     		}

@@ -40,7 +40,37 @@ public class MapLocation {
 	}
 
     
+	@Override
+	public boolean equals(Object o) {
+		MapLocation mapLoc= (MapLocation)o;
+		return  mapLoc.lat.equals(this.lat) && mapLoc.lng.equals(this.lng);
+		
+	}
 	
-	
+	public boolean inRadius(MapLocation ml, Double radiusTrazenja) {
+		
+		
+		
+		/*Preko Haversinove formule */
+		final double R = 6371.0;
+	    Double lat1 = Math.toRadians(ml.lat);
+	    Double   lon1 = Math.toRadians(ml.lng);
+	    Double   lat2 = Math.toRadians(this.lat);
+	    Double lon2 = Math.toRadians(this.lng);
+
+	        // Haversine formula
+	        double dlat = lat2 - lat1;
+	        double dlon = lon2 - lon1;
+	        double a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+	                   Math.cos(lat1) * Math.cos(lat2) *
+	                   Math.sin(dlon / 2) * Math.sin(dlon / 2);
+	        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	        // Distance in kilometers
+	       return   R*c < radiusTrazenja ;
+		
+		
+		
+	}
     // Getters and setters
 }

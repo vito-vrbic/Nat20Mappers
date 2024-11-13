@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Timestamp;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,9 +33,16 @@ public class SearchController {
     	String tipIgre  = sr.getGameType();
     	Boolean trebaPrijavnica= sr.getApplicationRequired();
     	Boolean ukljucipune =sr.getIncludeFullGames();
-    	Integer radius=  Integer.parseInt(  sr.getRadius() );
+    	Double radius=0.0;
+    	try {
+    		 radius=  Double.parseDouble(  sr.getRadius() );
+    	}catch(IllegalArgumentException e) {
+    		  radius=0.0;
+    		
+    	}
+    	
         MapLocation ml=	  sr.getMapLocation();
-    	Boolean ukljucenePoslovnoe=       sr.getIncludeBusinessMadeGames();
+    	Boolean ukljucenePoslovne=       sr.getIncludeBusinessMadeGames();
     	Boolean ukljucenePrivatne= sr.getIncludeUserMadeGames();
     	List<Igra> li= igraService.searchIgraService(sr.getGameTitle());
     	Integer stranica= sr.getPage();
@@ -47,24 +55,87 @@ public class SearchController {
     		Boolean puna;
     		Boolean punamoze=sr.getIncludeFullGames();
     		Boolean fail;
-    		if (s.getCurrentPlayerCount()< s.getMaxPlayerCount()) {
-    			puna=false;
-    			
-    		}else  puna=true;
-    		if(puna==true && punamoze==false) {
-    			fail=false;
-    		}else fail=true;
+    		
+    		if (s.getCurrentPlayerCount()< s.getMaxPlayerCount()) { puna=false; }  else  puna=true;
+    		
+    		if(puna==true && punamoze==false) {fail=false;}else fail=true;
     	
     		
-    		return (s.getApplicationRequired()== trebaPrijavnica)&&(!s.getAvailability().equals("private") )&&(fail)
-    			;
-    			
+    		
+    		if(!sr.getGameTitle().equals("")) {
+    				return (s.getApplicationRequired()== trebaPrijavnica)&&(fail)
+    		&&(s.getTitle().equals(sr.getGameTitle()))	;
+    		}
+    		else	
+    		{
+    			return (s.getApplicationRequired()== trebaPrijavnica)&&(fail);
+    		    		
+    		}
     				
     		
     	}).collect(Collectors.toList());
     	
+    	Iterator<Igra> it = li.iterator();
     	
-    	
+    	while(it.hasNext()) {
+    		Igra igraIt= it.next();
+    		if( !igraIt.getLocation().inRadius(ml, radius)) {
+    			it.remove();
+    	     	}
+    
+           }
+    	it= li.iterator();
+    	while(it.hasNext()) {
+    		
+    		Igra igraIt= it.next();
+    		if( !sr.getIncludeBusinessMadeGames() && igraIt.getCreatedBy().contains("business")) {
+    			it.remove();
+    	     	}
+    		
+    	}
+    	it=li.iterator();
+          while(it.hasNext()) {
+    		
+    		Igra igraIt= it.next();
+    		if( !sr.getIncludeUserMadeGames() && igraIt.getCreatedBy().contains("user")) {
+    			it.remove();
+    	     	}
+    		
+    	  }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77
+          if(sr.getGameAvailability().contains("all games")) {
+        	  
+          }
+          else if( sr.getGameType().contains("online")) {
+        	  	it=li.iterator();
+        	  	while(it.hasNext()) {
+        		
+        		Igra igraIt= it.next();
+        			if(  igraIt.getType().equals("offline")) {
+        			
+        				it.remove();
+        	     		}
+        		
+        	  }
+        	  
+        	  
+          }
+          else if( sr.getGameType().contains("local")) {
+      	  	it=li.iterator();
+      	  	while(it.hasNext()) {
+      		
+      		Igra igraIt= it.next();
+      			if(  igraIt.getType().equals("online")) {
+      			
+      				it.remove();
+      	     		}
+      		
+      	  }
+      	  
+      	  
+        }
+          ////////////////////////////////////////////////////////
+            
     	HashMap<String,List<Igra>> hm = new HashMap<>();
     	
     	

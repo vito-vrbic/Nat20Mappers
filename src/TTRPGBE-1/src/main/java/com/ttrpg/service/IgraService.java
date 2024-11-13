@@ -87,19 +87,19 @@ return igraRepository.searchIgre(title,      // gameName
     
     public void s3DataLoader() {
         Igra game1 = new Igra(
-            1L, "Game 11", "online", new MapLocation(45.8131, 15.978), "public", "user1", 
+            11L, "Game 11", "online", new MapLocation(45.8131, 15.978), "public", "user1", 
             true, "Medium", "2 hours", "2024-11-10T15:00:00Z", "A fun and engaging online strategy game.", 
             "Rules: Players must strategize to defeat opponents.", true, 5, 20, "Discord", false
         );
 
         Igra game2 = new Igra(
-            2L, "Game 22", "offline", new MapLocation(44.8131, 16.978), "private", "user2", 
+            12L, "Game 12", "offline", new MapLocation(44.8131, 16.978), "private", "user2", 
             false, "Easy", "1 hour", "2024-11-12T18:00:00Z", "A quick and fun card game.", 
             "Rules: Be the first to get rid of all your cards.", false, 3, 10, "Zoom", true
         );
 
         Igra game3 = new Igra(
-            3L, "Game 13", "online", new MapLocation(46.8131, 17.978), "public", "user3", 
+            13L, "Game 13", "online", new MapLocation(46.8131, 17.978), "public", "user3", 
             true, "Hard", "3 hours", "2024-11-14T16:00:00Z", "A complex online strategy game with multiple factions.", 
             "Rules: Work with your team to control the board.", true, 10, 30, "Discord", false
         );
@@ -208,7 +208,7 @@ return igraRepository.searchIgre(title,      // gameName
         );
 
         Igra game28 = new Igra(
-            28L, "Game 28", "offline", new MapLocation(45.7131, 15.278), "private", "user9", 
+            28L, "Game 28", "offline", new MapLocation(45.7131, 15.278), "private", "business9", 
             true, "Medium", "3 hours", "2024-11-30T17:00:00Z", "An escape room challenge.", 
             "Rules: Solve clues to escape.", true, 3, 8, "In-person", false
         );
@@ -221,13 +221,13 @@ return igraRepository.searchIgre(title,      // gameName
 
         // Full Games with combined details
         Igra combinedGame30 = new Igra(
-            30L, "Combined Game 30", "online", new MapLocation(45.5001, 15.978), "public", "user11", 
+            30L, "Combined Game 30", "online", new MapLocation(45.5001, 15.978), "public", "business11", 
             true, "Hard", "4 hours", "2024-12-05T19:00:00Z", "An intense team-building strategy game with real-time PvP.", 
             "Rules: Work in teams to solve challenges while defending your base.", true, 8, 20, "Discord", false
         );
 
         Igra combinedGame31 = new Igra(
-            31L, "Combined Game 31", "offline", new MapLocation(46.5001, 16.978), "private", "user12", 
+            31L, "Combined Game 31", "offline", new MapLocation(46.5001, 16.978), "private", "business12", 
             false, "Easy", "1 hour", "2024-12-07T16:00:00Z", "A mix of charades and trivia, fun for parties.", 
             "Rules: Act out clues and answer questions to score points.", true, 10, 15, "In-person", true
         );
@@ -245,7 +245,7 @@ return igraRepository.searchIgre(title,      // gameName
         );
 
         Igra combinedGame34 = new Igra(
-            34L, "Combined Game 34", "offline", new MapLocation(44.5001, 15.878), "public", "user15", 
+            34L, "Combined Game 34", "offline", new MapLocation(44.5001, 15.878), "public", "business15", 
             true, "Medium", "1.5 hours", "2024-12-15T17:00:00Z", "A combination of role-playing and board game.", 
             "Rules: Complete quests in a story-driven board game.", true, 3, 12, "In-person", true
         );
@@ -258,13 +258,13 @@ return igraRepository.searchIgre(title,      // gameName
         );
 
         Igra combinedGame36 = new Igra(
-            36L, "Combined Game 36", "offline", new MapLocation(46.8001, 16.478), "private", "user17", 
+            36L, "Combined Game 36", "offline", new MapLocation(46.8001, 16.478), "private", "business17", 
             true, "Hard", "3.5 hours", "2024-12-20T14:00:00Z", "An immersive tabletop game with combat and puzzle-solving.", 
             "Rules: Role-play characters, defeat enemies, and solve complex puzzles.", true, 5, 15, "In-person", true
         );
 
         Igra combinedGame37 = new Igra(
-            37L, "Combined Game 37", "online", new MapLocation(44.6001, 15.978), "public", "user18", 
+            37L, "Combined Game 37", "online", new MapLocation(44.6001, 15.978), "public", "business18", 
             false, "Easy", "1 hour", "2024-12-22T11:00:00Z", "A fast-paced trivia game with a timer.", 
             "Rules: Answer questions quickly to score the highest.", false, 10, 30, "Discord", false
         );
@@ -274,6 +274,8 @@ return igraRepository.searchIgre(title,      // gameName
         		combinedGame31,combinedGame32,combinedGame33,combinedGame34,combinedGame35,combinedGame36,combinedGame37
         		
         		));
+        
+        
        
     }
     

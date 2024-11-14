@@ -15,7 +15,7 @@ function App() {
         <div className="app">
           <Navbar />
           <main className="main-content">
-            <AppRoutes /> {/* Ensure this is being rendered */}
+            <AppRoutes />
           </main>
         </div>
       </Router>

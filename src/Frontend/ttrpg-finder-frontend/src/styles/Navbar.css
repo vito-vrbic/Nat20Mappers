@@ -1,4 +1,4 @@
-/* Navbar.css */
+/* Main Navbar Styling */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -6,6 +6,7 @@
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #007bff, #6610f2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 
 .navbar-brand {
@@ -13,11 +14,18 @@
     font-weight: bold;
     color: #ffffff;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-brand:hover {
     color: #ffdd57;
+    transform: scale(1.05); /* Slight scale effect on hover */
 }
 
 .navbar-links {
@@ -36,11 +44,13 @@
     font-size: 1.1rem;
     font-weight: 500;
     padding: 0.5rem;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
 }
 
 .navbar-links a:hover {
     color: #ffdd57;
+    transform: translateY(-2px); /* Lift effect on hover */
 }
 
 .navbar-links .active {
@@ -70,6 +80,7 @@
     .navbar {
         flex-direction: column;
         align-items: flex-start;
+        padding: 1rem;
     }
 
     .navbar-links {
@@ -87,5 +98,45 @@
         padding: 0.8rem 1rem;
         width: 100%;
         text-align: left;
+    }
+
+    .navbar-links a::after {
+        width: 0; /* Remove the underline in mobile */
+    }
+}
+
+/* Logo Button Styling - Slightly Improved */
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    background-color: rgba(255, 221, 87, 0.2); /* Add subtle background on hover */
+    transform: scale(1.05); /* Make it more interactive */
+}
+
+.navbar-brand:focus {
+    outline: none;
+}
+
+/* Button-like hover effect */
+.navbar-brand:focus, .navbar-brand:hover {
+    opacity: 0.9;
+    outline: none;
+}
+
+/* Responsive adjustment for logo */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.6rem;
+        padding: 0.5rem 0;
     }
 }

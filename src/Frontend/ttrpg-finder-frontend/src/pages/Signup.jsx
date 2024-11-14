@@ -1,34 +1,32 @@
-//#region IMPORTS
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios for API requests
+import axios from 'axios';
+import SubmitButton from '../components/login and signup/SubmitButton';
+import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
+import InputField from '../components/login and signup/InputField';
+import FormInput from '../components/login and signup/FormInput';
+import CheckboxInput from '../components/login and signup/CheckboxInput';
 import '../styles/Signup.css';
-import showPass from '../assets/ShowPassword.png';
-import hidePass from '../assets/HidePassword.png';
-//#endregion
 
-// Signup Page
 const Signup = () => {
-  const navigate = useNavigate(); // Use to navigate after successful signup
-
-  //#region STATES
+  const navigate = useNavigate();
+  
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('private'); // Default role is 'private'
+  const [role, setRole] = useState('private');
   const [organizationName, setOrganizationName] = useState('');
-  const [isChecked, setIsChecked] = useState(false); // Checkbox for business role
+  const [isChecked, setIsChecked] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // New state for loading
-  const [errorMessage, setErrorMessage] = useState(''); // State for error messages
-  //#endregion
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Handle checkbox change
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
-    setRole(event.target.checked ? 'business' : 'private'); // Set role based on checkbox
+    setRole(event.target.checked ? 'business' : 'private');
   };
 
   // Handle password visibility toggle
@@ -40,30 +38,6 @@ const Signup = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
-  /*
-    FORM SUBMISSION
-    -----
-    Address: ./signup-submit
-    Type: POST
-    Header:
-      Content-Type: application/json
-      Authorization: Bearer {authToken} (if required for an authenticated API)
-    Body:
-      {
-        "username": "john_doe",
-        "email": "john.doe@example.com",
-        "password": "password123",
-        "role": "business || private"
-        "organizationName": "name || null"
-      }
-    -----
-    Expected response:
-      SUCCESS (Status Code 201).
-      FAILURE (400 Bad Request):
-        Body: {
-          "message": "Issue to showcase on frontend to user"
-        }
-  */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -73,22 +47,19 @@ const Signup = () => {
       return;
     }
 
-    // Set loading state to true to show loading indicator or disable button
     setIsLoading(true);
-    setErrorMessage(''); // Clear previous error messages
+    setErrorMessage('');
 
     const userData = {
       username,
       email,
       password,
       role,
-      organizationName: role === 'business' ? organizationName : null, // Include organization name only for business role
+      organizationName: role === 'business' ? organizationName : null,
     };
 
-    // POST request using axios to backend
     try {
-      const response = await axios.post('api/signup', userData);
-
+      const response = await axios.post('/api/auth/signup', userData);
       if (response.status === 201) {
         navigate('/login');
       } else {
@@ -102,94 +73,91 @@ const Signup = () => {
     }
   };
 
-  //#region RETURN
   return (
-    <div className='SignUpBox'>
+    <div className="SignUpBox">
       <div className="Title">Sign up</div>
-      <form className='inputs' onSubmit={handleSubmit}> {/* Form submission handler */}
-        <div className='input'>
-          <div className='inputTag'>Username</div>
-          <input
-            type="text"
-            id="user"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className='input'>
-          <div className='inputTag'>Email</div>
-          <input
-            type="email"
-            id="E-mail"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className='input'>
-          <div className='inputTag'>Password</div>
-          <input
-            type={isPasswordVisible ? "text" : "password"}
-            id="Password"
-            placeholder="Enter password"
+      <form className="inputs" onSubmit={handleSubmit}>
+        {/* Username Input */}
+        <FormInput
+          label="Username"
+          type="text"
+          id="user"
+          placeholder="Enter username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        {/* Email Input */}
+        <FormInput
+          label="Email"
+          type="email"
+          id="E-mail"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        {/* Password Input with PasswordVisibilityToggle */}
+        <div className="input">
+          <InputField
+            label="Password"
+            type={isPasswordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            id="Password"
           />
-          <img
-            src={isPasswordVisible ? hidePass : showPass}
-            alt="Toggle Password Visibility"
-            onClick={togglePasswordVisibility}
-            className="toggle-pass"
+          <PasswordVisibilityToggle
+            isPasswordVisible={isPasswordVisible}
+            togglePasswordVisibility={togglePasswordVisibility}
           />
         </div>
-        <div className='input'>
-          <div className='inputTag'>Confirm password</div>
-          <input
-            type={isConfirmPasswordVisible ? "text" : "password"}
-            id="PasswordRepeat"
-            placeholder="Confirm password"
+
+        {/* Confirm Password Input with PasswordVisibilityToggle */}
+        <div className="input">
+          <InputField
+            label="Confirm password"
+            type={isConfirmPasswordVisible ? 'text' : 'password'}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm password"
+            id="PasswordRepeat"
           />
-          <img
-            src={isConfirmPasswordVisible ? hidePass : showPass}
-            alt="Toggle Password Visibility"
-            onClick={toggleConfirmPasswordVisibility}
-            className="toggle-pass"
+          <PasswordVisibilityToggle
+            isPasswordVisible={isConfirmPasswordVisible}
+            togglePasswordVisibility={toggleConfirmPasswordVisibility}
           />
         </div>
-        <div className='inputOptional'>
-          <input
-            type="checkbox"
-            id="orgCheckbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-          <span>Representing an organization?</span>
-        </div>
+
+        {/* Checkbox Input for Organization Role */}
+        <CheckboxInput
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          label="Representing an organization?"
+        />
+
+        {/* Organization Name input if checkbox is checked */}
         {isChecked && (
-          <div className='input'>
-            <div className='inputTag'>Organization name</div>
-            <input
-              id="orgName"
-              type="text"
-              placeholder="Enter organization name"
-              value={organizationName}
-              onChange={(e) => setOrganizationName(e.target.value)}
-            />
-          </div>
+          <FormInput
+            label="Organization name"
+            type="text"
+            value={organizationName}
+            onChange={(e) => setOrganizationName(e.target.value)}
+            placeholder="Enter organization name"
+            id="orgName"
+          />
         )}
-        {errorMessage && <div className="error-message">{errorMessage}</div>} {/* Show error message */}
-        <div className="submit">
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Signing Up...' : 'Sign up'}
-          </button>
-        </div>
+
+        {/* Error Message */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+        {/* Submit Button */}
+        <SubmitButton loading={isLoading} disabled={isLoading}>
+          Sign up
+        </SubmitButton>
       </form>
     </div>
   );
-  //#endregion
 };
 
 export default Signup;

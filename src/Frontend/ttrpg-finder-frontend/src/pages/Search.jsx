@@ -1,50 +1,96 @@
-import React, { useState, useEffect} from 'react';
-import '../styles/Search.css';
-import '../styles/GameContainer.css';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../utils/AuthContext'; // Importing the custom hook from AuthContext
-
-
+import { useAuth } from '../utils/AuthContext';
+import SearchFilters from '../components/search/SearchFilters';
+import SearchResults from '../components/search/SearchResults';
+import '../styles/Search.css';
 
 const Search = () => {
+  const { isAuthenticated } = useAuth();
 
-  const { isAuthenticated, user, logout } = useAuth(); // Use the useAuth hook to get authentication state, user, and logout function
-  
-  const [games, setGames] = useState([]); //USed for testing
-  
-  //Get data from dummy database
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/games')
-      .then(response => {
-        console.log('Fetched data:', response.data.games); 
-      setGames(response.data.games)})
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  const [gameTitle, setGameTitle] = useState('');
+  const [gameType, setGameType] = useState('All Types');
+  const [includeFullGames, setIncludeFullGames] = useState(false);
+  const [applicationRequired, setApplicationRequired] = useState(false);
+  const [includeUserMadeGames, setIncludeUserMadeGames] = useState(true);
+  const [includeBusinessMadeGames, setIncludeBusinessMadeGames] = useState(true);
+  const [gameAvailability, setGameAvailability] = useState('All Games');
+  const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 }); // Default location (Zagreb)
+  const [radius, setRadius] = useState('');
+  const [page, setPage] = useState(1);
+  const [results, setResults] = useState([]);
+
+  const handleApplyFilters = async () => {
+    try {
+      const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
+      const filters = {
+        gameTitle,
+        gameType,
+        includeFullGames,
+        applicationRequired,
+        includeUserMadeGames,
+        includeBusinessMadeGames,
+        gameAvailability,
+        mapLocation,
+        radius,
+        page,
+      };
+
+      const response = await axios.post('/api/data/search', filters, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 200) {
+        const { games, pagination } = response.data;
+        // Set the results with the fetched games
+        setResults(games);
+      } else {
+        console.error('Failed to fetch games:', response);
+      }
+    } catch (error) {
+      console.error('Error sending request:', error);
+    }
+  };
+
+  // ----- PAGINATION HANDLER -----
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   return (
-    <>
-    <div className='List-of-games'>
-      <h1>List of active games:</h1>
-      <ul>
-          {(user ? games : games.filter(game => game.availability === "public")).map((game, index) => (
-            <li key={index} className='Game-container'>
-              <div className='Left-group'>
-              {game.type.toLowerCase() === "online" && <img src="./src/assets/wi-fi.png" alt="Online Game" />}
-              {game.type.toLowerCase() === "local" && game.createdBy === "user" && <img src="./src/assets/home.png" alt="Private Game" />}
-              {game.type.toLowerCase() === "local" && game.createdBy === "business" && <img src="./src/assets/building.png" alt="Business Game"/>}
-              {game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1) + " game: " + game.title}
-              </div>
-              <div className='Right-group'>
-              {user?.role === 'private' && <button className='Join-button'>JOIN</button>}
-              <button className='More-info-button'><img src="./src/assets/more.png" alt="More Info"/></button>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    </>
-  )
-}
+    <div className="search">
+      {/* Filter Form */}
+      <SearchFilters
+        isAuthenticated={isAuthenticated}
+        gameTitle={gameTitle}
+        setGameTitle={setGameTitle}
+        gameType={gameType}
+        setGameType={setGameType}
+        includeFullGames={includeFullGames}
+        setIncludeFullGames={setIncludeFullGames}
+        applicationRequired={applicationRequired}
+        setApplicationRequired={setApplicationRequired}
+        includeUserMadeGames={includeUserMadeGames}
+        setIncludeUserMadeGames={setIncludeUserMadeGames}
+        includeBusinessMadeGames={includeBusinessMadeGames}
+        setIncludeBusinessMadeGames={setIncludeBusinessMadeGames}
+        gameAvailability={gameAvailability}
+        setGameAvailability={setGameAvailability}
+        mapLocation={mapLocation}
+        setMapLocation={setMapLocation}
+        radius={radius}
+        setRadius={setRadius}
+        handleApplyFilters={handleApplyFilters}
+      />
 
-export default Search
+      {/* Search Results Section */}
+      <SearchResults
+        results={results}
+        page={page}
+        handlePageChange={handlePageChange}
+      />
+    </div>
+  );
+};
+
+export default Search;

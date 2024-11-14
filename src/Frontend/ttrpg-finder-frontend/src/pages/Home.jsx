@@ -1,25 +1,14 @@
 import React, { useState, useEffect} from 'react';
 import { useAuth } from '../utils/AuthContext'; 
-import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import '../styles/GameContainer.css';
+import welcome_picture from '../assets/welcome-picture.png';  // Import the image
 
 const Home = () => {
 
   const { isAuthenticated, user, logout } = useAuth(); // Use the useAuth hook to get authentication state, user, and logout function
   const navigate = useNavigate(); // Using navigate hook to programmatically redirect
-
-  const [games, setData] = useState([]); //Used for testing
-  
-  //Get data from dummy database
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/db')
-      .then(response => {
-        console.log('Fetched data:', response.data.games); 
-      setData(response.data.games)})
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
 
   //Simulates when user is not suppost to go where it isnt suppost to be
   useEffect(() => {
@@ -43,7 +32,7 @@ const Home = () => {
         <h1>Welcome to TTRPG Finder!</h1>
         <h2>"Your next session is just a click away!"</h2> 
       </div>
-      <img src='./src/assets/welcome-picture.png' alt="Welcome picture"></img>
+      <img src={welcome_picture} alt="Welcome picture"></img>
     </div>
     <div className='Info-text'>
       <div className='Purpose-text'>

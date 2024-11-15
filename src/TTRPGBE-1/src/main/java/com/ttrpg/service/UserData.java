@@ -7,7 +7,7 @@ public class UserData {
     private String role;
     private String organizationName;
 
-    // Constructor
+    // Konstruktor
     public UserData(String id, String username, String email, String role, String organizationName) {
         this.id = id;
         this.username = username;
@@ -16,7 +16,7 @@ public class UserData {
         this.organizationName = organizationName;
     }
 
-    // Getters and setters
+    // Getteri i setteri
     public String getId() { return id; }
     public String getUsername() { return username; }
     public String getEmail() { return email; }

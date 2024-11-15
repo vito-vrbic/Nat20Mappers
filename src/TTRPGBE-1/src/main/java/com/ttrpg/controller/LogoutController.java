@@ -7,15 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ttrpg.model.Korisnik;
+
 @RestController
-@RequestMapping("api/auth/logout")
-
+@RequestMapping("api/auth/logout") // Definira osnovnu rutu za odjavu korisnika
 public class LogoutController {
-	
-	@PostMapping
-    public ResponseEntity<?> login(@RequestBody Korisnik korisnik) {
-		return ResponseEntity.ok("Logout Successful");
-}
 
-	
+    @PostMapping // Obrada POST zahtjeva za odjavu
+    public ResponseEntity<?> login(@RequestBody Korisnik korisnik) { // Prijem korisničkih podataka (ako su potrebni)
+        return ResponseEntity.ok("Logout Successful"); // Vraća poruku o uspješnoj odjavi
+    }
 }

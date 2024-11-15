@@ -18,7 +18,7 @@ public class Slika {
     @ManyToOne
     private OrgProfil orgProfil;
 
-    // Constructors, getters, setters
+    // Konstruktori, getteri setteri
     public Slika() {}
 
     public Slika(String imageUrl, OrgProfil orgProfil) {

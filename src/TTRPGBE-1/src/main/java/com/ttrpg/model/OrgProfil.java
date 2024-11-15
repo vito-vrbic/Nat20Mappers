@@ -32,15 +32,15 @@ public class OrgProfil {
     @Column(nullable = false)
     private String companyAdress;
 
-    // OneToMany mapping to Slika using the field "orgProfil" in Slika as the mappedBy
+    // OneToMany veza sa slikama, gdje "orgProfil" u klasi Slika označava mappedBy
     @OneToMany(mappedBy = "orgProfil", cascade = CascadeType.ALL)
     private List<Slika> companyLogos;
 
-    // OneToOne relationship to PoslovniKorisnik (mappedBy on business_user)
+    // OneToOne veza s PoslovnimKorisnikom, mappedBy na polje business_user
     @OneToOne
     private PoslovniKorisnik business_user;
 
-    // Constructors, getters, setters, toString
+    // Konstruktor, getter-i, setter-i, toString
     public OrgProfil() {}
 
     public OrgProfil(int companyId, String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, List<Slika> companyLogos) {
@@ -118,6 +118,6 @@ public class OrgProfil {
                 + "companyDes: '" + companyDes + "', "
                 + "companyWeb: '" + companyWeb + "', "
                 + "companyAdress: '" + companyAdress + "' "
-                + "}";
+                + "}"; // Metoda za ispis objekta kao string
     }
 }

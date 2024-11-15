@@ -10,47 +10,52 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Korisnik")  // The name of the table in the database
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
+@Table(name = "Korisnik")  // Ime tablice u bazi podataka
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Strategija naslijeđivanja (jedna tablica za sve klase koje naslijeđuju)
+@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)  // Kolona koja označava vrstu naslijeđene klase
 public class Korisnik {
 
-    @Id
-    private int userId;
-    @Column(unique=true)
-    private String username;
-    private String password;
-    private String role;
-    private String email;
-    
-    
+    @Id  // Označava primarni ključ
+    private int userId;  // ID korisnika
+
+    @Column(unique = true)  // Osigurava da je username jedinstven u bazi
+    private String username;  // Korisničko ime
+
+    private String password;  // Lozinka korisnika
+    private String role;  // Uloga korisnika (npr. admin, korisnik)
+    private String email;  // Email korisnika
+
+    // Getter i Setter za email
     public String getEmail() {
-		return email;
-	}
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    // Getter i Setter za role (uloga korisnika)
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;  // Postavljanje uloge korisnika
+    }
 
-	// Constructors, getters, and setters
+    // Konstruktor bez argumenata
     public Korisnik() {}
 
-    public Korisnik(int userId, String username,String email, String password, String role) {
+    // Konstruktor s parametrima za inicijalizaciju korisničkog objekta
+    public Korisnik(int userId, String username, String email, String password, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role=role;
-        this.email=email;
+        this.role = role;
+        this.email = email;
     }
 
+    // Getter i Setter za userId
     public int getUserId() {
         return userId;
     }
@@ -59,6 +64,7 @@ public class Korisnik {
         this.userId = userId;
     }
 
+    // Getter i Setter za username
     public String getUsername() {
         return username;
     }
@@ -67,6 +73,7 @@ public class Korisnik {
         this.username = username;
     }
 
+    // Getter i Setter za password
     public String getPassword() {
         return password;
     }

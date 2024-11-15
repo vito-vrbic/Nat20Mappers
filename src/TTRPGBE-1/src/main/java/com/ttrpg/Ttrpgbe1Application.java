@@ -12,48 +12,35 @@ import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.service.IgraService;
 import com.ttrpg.service.KorisnikService;
 
-
-
-
-
-
 @SpringBootApplication
 public class Ttrpgbe1Application {
-	
-	
-	@Bean
+
+    // Postavke CORS-a za omogućavanje komunikacije s frontendom
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4173")  // Frontend URL
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
-                        .allowedHeaders("*")  // Allowed headers
-                        .allowCredentials(true);  // Allow credentials (cookies)
+                        .allowedOrigins("http://localhost:4173") // URL frontenda
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
-	}
-	
+    }
 
+    public static void main(String[] args) {
+        // Pokretanje aplikacije
+        ApplicationContext context = SpringApplication.run(Ttrpgbe1Application.class, args);
 
-	public static void main(String[] args) {
-		
-		 ApplicationContext context = SpringApplication.run(Ttrpgbe1Application.class, args);
+        // Inicijalizacija podataka
+        KorisnikService korisnikService = context.getBean(KorisnikService.class);
+        IgraService igraService = context.getBean(IgraService.class);
 
-	        // Retrieve the KorisnikService bean from the context
-	        KorisnikService korisnikService = context.getBean(KorisnikService.class);
-		
-	        IgraService  igraService= context.getBean(IgraService.class);
-		
-		
-		
-		
-		
-		korisnikService.sDataLoader();
-		igraService.s2DataLoader();
-		igraService.s3DataLoader();
-		igraService.s4DataLoader();
-	}
-
+        korisnikService.sDataLoader();
+        igraService.s2DataLoader();
+        igraService.s3DataLoader();
+        igraService.s4DataLoader();
+    }
 }

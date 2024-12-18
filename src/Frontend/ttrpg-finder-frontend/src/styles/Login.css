@@ -118,6 +118,45 @@ div {
    color: darkturquoise;
 }
 
+/*Styling a custom Google log in button*/
+.googleLoginText{
+   position:relative;
+   top:0;
+   color: #757575;
+   font-size: 1rem;
+   font-weight: bold;
+   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+   margin-bottom: 5px;
+}
+.googleLoginButton{
+   cursor: pointer;
+   transition: background-color .3s, box-shadow .3s;
+   padding: 20px 20px 20px 60px;
+   border: none;
+   border-radius: 20px;
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+   background-image: url("../assets/googleButton.png"); /* base64-encoded SVG logo */
+   background-color: white;
+   background-repeat: no-repeat;
+   background-position: 12px 11px;
+   margin-top: 10px;
+   margin-bottom: 20px;
+}
+.googleLoginButton:hover{
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+.googleLoginButton:active{
+   background-color: #eeeeee;
+   outline: none;
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25), 0 0 0 3px #c8dafc;
+}
+.googleLoginButton:disabled{
+   filter: grayscale(100%);
+   background-color: #ebebeb;
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+   cursor: not-allowed;
+}
+
 /* Styling for error message */
 .error-message {
    color: red;

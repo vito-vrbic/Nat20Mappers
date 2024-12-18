@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { AuthProvider } from './utils/AuthContext';
 import AppRoutes from './utils/AppRoutes';
+//import { GoogleAuthProvider } from '@react-oauth/google';
 
 import './styles/Globals.css';
 

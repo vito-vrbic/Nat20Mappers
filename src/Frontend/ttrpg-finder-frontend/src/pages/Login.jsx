@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import FormInput from '../components/login and signup/FormInput';
 import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
 import SubmitButton from '../components/login and signup/SubmitButton';
 import '../styles/Login.css';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+const clientId = "320270492524-ve80c3hmmc1108kcjemrgge0bjgigtku.apps.googleusercontent.com"
 
 const Login = () => {
   const { login } = useAuth();
+  
+  const googleLogin = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      console.log("Logged in")
+      console.log(credentialResponse.credential);
+      //const decoded =jwtDecode(credentialsResponse?.credentials);
+      //console.log(decoded);
+      //navigate('/dashboard');
+    },
+    //flow:'auth-code',
+    onError: () => console.log("Failed to login")
+  })
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -83,6 +98,11 @@ const Login = () => {
       <div className="gotoSignup">
         No account? <Link to="/signup">Sign up</Link>
       </div>
+
+    
+      <div className="googleLoginButton" onClick={()=>googleLogin()}><div className='googleLoginText'>Login in with Google</div></div>
+     
+      
     </div>
   );
 };

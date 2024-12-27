@@ -15,7 +15,12 @@ const users = [
     role: "business",
     email: "fez@cassandra.hr",
     password: "password123", // Example plaintext password
-    organizationName: "fez enterprises"
+    organizationName: "fez enterprises",
+    logo: 'https://example.com/path/to/logo.png',  // Example logo URL
+    companyPhone: '123-456-7890',  // Example phone number
+    companyDescription: 'A description of the company...',  // Business description
+    companyWebsite: 'https://example.com',  // Business website URL
+    companyAddress: '123 Example St, City, Country',  // Business address
   },
   {
     id: "a104",
@@ -23,7 +28,12 @@ const users = [
     email: "greg@gregscakes.com",
     password: "password456", // Example plaintext password
     role: "private",
-    organizationName: null
+    organizationName: null,
+    logo: '',  // No logo for private user
+    companyPhone: '',  // No phone number for private user
+    companyDescription: '',  // No description for private user
+    companyWebsite: '',  // No website for private user
+    companyAddress: '',  // No address for private user
   }
 ];
 
@@ -91,6 +101,132 @@ function getDistance(loc1, loc2) {
 // GET Games (unfiltered) for testing
 app.get('/api/games', (req, res) => {
   res.json({ games });
+});
+
+// Endpoint to fetch user profile data based on token
+app.get('/api/user/profile', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  // If no token is provided or token is invalid, return an error
+  if (!token || !activeTokens[token]) {
+    return res.status(401).json({
+      error: true,
+      message: 'Invalid or expired token',
+      code: 401,
+      data: null
+    });
+  }
+
+  // Get user associated with the token
+  const user = activeTokens[token];
+
+  // Prepare user profile data to send back
+  const profile = {
+    username: user.username,
+    role: user.role,
+    organizationName: user.organizationName || "Not Provided",
+    logo: user.logo || "https://example.com/default-logo.png",  // Default logo if not provided
+    companyPhone: user.companyPhone || "Not Provided",
+    companyDescription: user.companyDescription || "No description available.",
+    companyWebsite: user.companyWebsite || "Not Provided",
+    companyAddress: user.companyAddress || "Not Provided"
+  };
+
+  // Respond with the profile data
+  res.json({
+    error: false,
+    message: 'Profile fetched successfully.',
+    code: 200,
+    data: profile
+  });
+});
+
+// Endpoint to update user profile data
+app.put('/api/user/edit-profile', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  // If no token is provided or token is invalid, return an error
+  if (!token || !activeTokens[token]) {
+    return res.status(401).json({
+      error: true,
+      message: 'Invalid or expired token',
+      code: 401,
+      data: null
+    });
+  }
+
+  // Get user associated with the token
+  const user = activeTokens[token];
+
+  // Extract profile data from the request body
+  const { logo, companyPhone, companyDescription, companyWebsite, companyAddress } = req.body;
+
+  // Update the user profile data (if provided)
+  user.logo = logo || user.logo;
+  user.companyPhone = companyPhone || user.companyPhone;
+  user.companyDescription = companyDescription || user.companyDescription;
+  user.companyWebsite = companyWebsite || user.companyWebsite;
+  user.companyAddress = companyAddress || user.companyAddress;
+
+  // Prepare updated profile data to send back
+  const updatedProfile = {
+    username: user.username,
+    role: user.role,
+    organizationName: user.organizationName || "Not Provided",
+    logo: user.logo,
+    companyPhone: user.companyPhone,
+    companyDescription: user.companyDescription,
+    companyWebsite: user.companyWebsite,
+    companyAddress: user.companyAddress
+  };
+
+  // Respond with the updated profile data
+  res.json({
+    error: false,
+    message: 'Profile updated successfully.',
+    code: 200,
+    data: updatedProfile
+  });
+});
+
+// Get User Profile based on username
+app.get('/api/user/:username', (req, res) => {
+  const { username } = req.params;
+
+  // Find user by username
+  const user = users.find(user => user.username === username);
+
+  // If user not found, send a custom response
+  if (!user || user.role != 'business') {
+    return res.status(404).json({
+      error: true,
+      message: 'This profile hasn\'t been found.',
+      code: 404,
+      data: null
+    });
+  }
+
+  // Prepare custom response for found user
+  const profile = {
+    username: user.username,
+    role: user.role,
+    organizationName: user.organizationName || "Not Provided",
+    logo: user.logo || "https://example.com/default-logo.png",  // Default logo if not provided
+    companyPhone: user.companyPhone || "Not Provided",
+    companyDescription: user.companyDescription || "No description available.",
+    companyWebsite: user.companyWebsite || "Not Provided",
+    companyAddress: user.companyAddress || "Not Provided"
+  };
+
+  // Respond with custom profile data
+  res.json({
+    error: false,
+    message: 'Profile fetched successfully.',
+    code: 200,
+    data: profile
+  });
 });
 
 // Login endpoint with password comparison

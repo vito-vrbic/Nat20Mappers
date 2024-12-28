@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // React Router v6
 import { useAuth } from '../utils/AuthContext';
 
-const EditProfile = () => {
-  const { user, isAuthenticated } = useAuth(); // Access user from Auth context
+const ProfileForm = () => {
+  const { user, isAuthenticated, loading: authLoading } = useAuth(); // Access user from Auth context
   const [profileData, setProfileData] = useState({
     logo: '',
     companyPhone: '',
@@ -13,38 +13,38 @@ const EditProfile = () => {
     companyAddress: ''
   });
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true); // Local loading state for fetching profile data
   const navigate = useNavigate();
+
+  const username = user?.username;
 
   // Fetch existing profile data when the component mounts
   useEffect(() => {
-    const fetchProfileData = async () => {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        setMessage('No token found');
-        return;
-      }
+    if (authLoading || !username) return; // Skip fetch if auth is loading or username is missing
 
+    const fetchProfileData = async () => {
       try {
-        // Request to get current profile data (base URL handled by your environment)
-        const response = await axios.get('/api/user/profile', {
-          headers: { 'Authorization': `Bearer ${token}` }
+        const response = await axios.get(`/api/user/${username}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
 
-        if (response.data.error) {
-          setMessage(response.data.message || 'Error fetching profile data');
-        } else {
+        if (response.status === 200) {
           setProfileData(response.data.data); // Update profileData based on the correct response structure
+        } else {
+          setMessage(response.data.message || 'Error fetching profile data');
         }
       } catch (error) {
         console.log('Error fetching profile:', error);
         setMessage('Error fetching profile data');
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (isAuthenticated) {
-      fetchProfileData(); // Only fetch profile data if the user is authenticated
-    }
-  }, [isAuthenticated]); // Depend on isAuthenticated to trigger when user state changes
+    fetchProfileData();
+  }, [authLoading, username]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -66,7 +66,6 @@ const EditProfile = () => {
     }
 
     try {
-      // PUT request to update profile (base URL handled by your environment)
       const response = await axios.put(
         '/api/user/edit-profile', // Endpoint to update profile
         profileData,
@@ -88,6 +87,30 @@ const EditProfile = () => {
       setMessage(error.response?.data?.message || 'Something went wrong');
     }
   };
+
+  if (authLoading) {
+    return (
+      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+        Authenticating...
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+        Loading profile...
+      </div>
+    );
+  }
+
+  if (!username) {
+    return (
+      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+        <h1>No username provided. Please log in.</h1>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: '#002F6C', color: 'white', padding: '20px', minHeight: '100vh' }}>
@@ -157,4 +180,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default ProfileForm;

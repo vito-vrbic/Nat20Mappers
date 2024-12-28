@@ -1,6 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+/*
+    GET PROFILE DATA
+    -----
+    Address: ./api/user/{username}
+    Type: GET
+    Header: {} // No specific headers required because all users can view profiles
+    Body: {} // No body content required
+    -----
+    Expected response:
+      SUCCESS (Status Code 200 OK):
+        Body: {
+          "message": "Profile retrieved successfully",
+          "data": {
+            "username": "john_doe",                // Username of the user
+            "logo": "https://example.com/logo.png", // URL of the user's logo (optional)
+            "organizationName": "Tech Corp",        // Name of the organization (optional)
+            "companyPhone": "123-456-7890",         // Phone number of the company (optional)
+            "companyDescription": "Leading in innovation.", // Short description of the company (optional)
+            "companyWebsite": "https://example.com", // Company's official website URL (optional)
+            "companyAddress": "123 Tech Blvd, CA"   // Address of the company (optional)
+          }
+        }
+
+      FAILURE (404 Not Found):
+        Body: {
+          "message": "Profile not found"
+        }
+
+      FAILURE (400 Bad Request):
+        Body: {
+          "message": "Invalid username"
+        }
+
+      FAILURE (500 Internal Server Error):
+        Body: {
+          "message": "An unexpected error occurred"
+        }
+*/
+
+
 const UserProfile = () => {
   const { username } = useParams();
 

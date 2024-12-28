@@ -8,7 +8,8 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Search from '../pages/Search';
 import Dashboard from '../pages/Dashboard';
-import Profile from '../pages/Profile';
+import ProfileForm from '../pages/ProfileForm';
+import UserProfile from '../pages/UserProfile';
 
 const AppRoutes = () => {
   const { isAuthenticated, user, loading } = useAuth();
@@ -33,6 +34,7 @@ const AppRoutes = () => {
       {/* Public routes */}
       <Route path="/" element={<Home />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/user/:username" element={<UserProfile />} />
 
       {/* Routes for non-authenticated users */}
       {!isAuthenticated ? (
@@ -59,7 +61,7 @@ const AppRoutes = () => {
           {user.role === 'business' && (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfileForm />} />
             </>
           )}
 

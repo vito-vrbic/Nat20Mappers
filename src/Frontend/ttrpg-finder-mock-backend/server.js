@@ -93,6 +93,13 @@ app.get('/api/games', (req, res) => {
   res.json({ games });
 });
 
+// POST to add game to the list
+app.post('/games', (req,res) => {
+    const newGame = req.body;
+    games.push(newGame);
+    res.status(201).json(newGame);
+});
+
 // Login endpoint with password comparison
 app.post('/api/auth/login', (req, res) => {
   const { username, password } = req.body;

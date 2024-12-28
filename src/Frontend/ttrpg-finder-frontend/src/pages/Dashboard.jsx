@@ -1,15 +1,21 @@
 import React, { useState, useEffect} from 'react';
 import '../styles/Dashboard.css';
 import '../styles/GameContainer.css';
+import MapComponent from '../components/search/MapComponent'; // Import the MapComponent
 import axios from 'axios';
 import { useAuth } from '../utils/AuthContext'; // Importing the custom hook from AuthContext
+import { use } from 'react';
+import CreateNewGame from '../components/create game/CreateNewGame';
 
 const Dashboard = () => {
   
   const { isAuthenticated, user, logout } = useAuth(); // Use the useAuth hook to get authentication state, user, and logout function
-
   const [games, setGames] = useState([]); //Used for testing
+  const [showForm, setShowForm] = useState(false); // Default state for form visibility: flase = form not seen, true = form seen
 
+  const toggleForm = () =>{
+    setShowForm(!showForm);
+  }
 
   return (
   <>
@@ -55,11 +61,13 @@ const Dashboard = () => {
           ))
         }
       </ul>
-      <button className='Create-new-game'><img src="./src/assets/plus-symbol-button.png" alt="Create New Game Button"/></button>
+      <button className='Create-new-game' onClick={toggleForm}><img src="./src/assets/plus-symbol-button.png" alt="Create New Game Button"/></button>
       </div>
     </div>
-    </div>
-    </>
+  </div>
+
+  {showForm && (<CreateNewGame onClose={toggleForm}></CreateNewGame>)}
+  </>
   )
 }
 

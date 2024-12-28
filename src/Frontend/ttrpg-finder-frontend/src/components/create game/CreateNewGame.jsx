@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import '../../styles/Dashboard.css'
 import '../../styles/GameContainer.css';
+import '../../styles/CreateNewGame.css';
 import MapComponent from '../../components/search/MapComponent'; // Import the MapComponent
 import axios from 'axios';
 import { useAuth } from '../../utils/AuthContext'; // Importing the custom hook from AuthContext
@@ -27,6 +28,39 @@ const CreateNewGame = ({onClose}) => {
       const [communicationChannel, setCommunicationChannel] = useState(""); // Communication channel for game
       const [isHomebrew, setIsHomeBrew] = useState(""); // Is Homebrew
 
+      const [questions, setQuestions] = useState([{question: ""}]); //Array for questions
+
+      //Handleaj dodavanje novog pitanja
+      const handleAddQuestion = () => {
+        //provjeri koliko ima pitanja i onemoguci dodavanje novih ako bi bilo iznad maksimuma
+        if(questions.length < 99){
+          setQuestions([...questions, {question: ""}]);
+        }
+        else{
+          alert("You cannot add more than 99 questions.");
+        }
+      };
+
+      //Handleaj brisanje pitanja
+      const handleDeleteQuestion = (indexToRemove) => {
+        //provjeri dali ce ostati barem jedno pitanje i onemoguci da se Requires form stavi na true a da nema nijednog pitanja
+        if(questions.length > 1){
+          const updatedQuestions = questions.filter((_, index) => index !== indexToRemove);
+          setQuestions(updatedQuestions);
+        }
+        else{
+          alert("You must have at least 1 question.");
+        }
+      };
+
+      //Handle question change za svako pojedino pitanje
+      const handleQuestionChange = (index,e) => {
+        const updatedQuestions = questions.map((q, i) => 
+          i === index ? { ...q, question: e.target.value} : q
+        );
+        setQuestions(updatedQuestions);
+      };
+
       const toggleForm = () =>{
         setShowForm(false);
       }
@@ -49,6 +83,9 @@ const CreateNewGame = ({onClose}) => {
           setTimeZone("");
           mapLocation.lat = 45.8131;
           mapLocation.lng = 15.978;
+          if(e.target.value === "local" && user.role === "private"){
+            setApplicationRequired(true);
+          }
         }
       };
     
@@ -61,12 +98,15 @@ const CreateNewGame = ({onClose}) => {
       //Handle game availability change
       const handleGameAvailabilityChange = (e) =>{
         setGameAvailability(e.target.value);
+        console.log("JEL POTREBNA APPLICATION: " + applicationRequired);
       };
     
       //Handle application required change
       const handleApplicationRequiredChange = (e) =>{
-        setApplicationRequired(e.target.value === "true");
-        console.log("Pritisnut event za application required: ", e.target.value);
+        if((user.role === "private" && gameType !== "local") || (user.role === "business")){
+          setApplicationRequired(e.target.value === "true");
+          console.log("Pritisnut event za application required: ", e.target.value);
+        }
       };
     
       //handle game complexity change
@@ -127,6 +167,10 @@ const CreateNewGame = ({onClose}) => {
       //handle submit
       const handleSubmit = async (e) => {
         e.preventDefault();
+        //Ako je korisnik postavio neka pitanje, te je onda ipak stavio Form Required na false makni ona pitanja koja su ostala
+        if(!formRequired){
+          setQuestions([{question: ""}]);
+        }
         const newGame = {
           id: 123, //generira backend?
           title: gameTitle, //string
@@ -142,6 +186,7 @@ const CreateNewGame = ({onClose}) => {
           description: description, //optional string
           pravilnik: rules, //string
           requiresForm: formRequired, //true/false
+          formQuestions: questions, //Array of strings
           currentPlayerCount: 0, //int
           maxPlayerCount: maxNumOfPlayers, //optional int
           communicationChannel: communicationChannel, //string
@@ -163,6 +208,7 @@ const CreateNewGame = ({onClose}) => {
           setRules("");
           setMaxNumOfPlayers("");
           setFormRequired("");
+          setQuestions([{question: ""}]);
           setCommunicationChannel("");
           setIsHomeBrew("");
           onClose();
@@ -180,7 +226,7 @@ const CreateNewGame = ({onClose}) => {
               {/* Unos imena igre*/}
               <label>
                 Game Title:
-                <input type="text" name="title" value={gameTitle} onChange={handleGameTitleChange} required/>
+                <input type="text" name="title" value={gameTitle} onChange={handleGameTitleChange} placeholder="Enter Game Title" required/>
               </label>
               <br />
 
@@ -189,7 +235,7 @@ const CreateNewGame = ({onClose}) => {
                 Game Type:
               </label>
               <br/>
-                <div className="gameType">
+                <div className="radioButton">
                   <label>
                   Online <input type="radio" name="type" value="online" checked={gameType === "online"} onChange={handleGameTypeChange} required/>
                   </label>
@@ -215,6 +261,7 @@ const CreateNewGame = ({onClose}) => {
                   <label>
                     Choose a Timezone:
                   </label>
+                  <br />
                   <select value={timeZone} onChange={handleTimeZoneChange} required>
                     <option value="PST UTC-8">PST UTC-8</option>
                     <option value="MST UTC-7">MST UTC-7</option>
@@ -241,7 +288,7 @@ const CreateNewGame = ({onClose}) => {
                 Availability: 
               </label>
               <br/>
-                <div className="gameAvailability">
+                <div className="radioButton">
                   <label>
                   Private <input type="radio" name="availability" value="private" checked={gameAvailability === "private"} onChange={handleGameAvailabilityChange} required/>
                   </label>
@@ -256,7 +303,7 @@ const CreateNewGame = ({onClose}) => {
                 Application Required:
               </label>
               <br/>
-                <div className="gameAvailability">
+                <div className="radioButton">
                   <label>
                   Yes <input type="radio" name="applicationRequired" value={true} checked={applicationRequired === true} onChange={handleApplicationRequiredChange} required/>
                   </label>
@@ -271,7 +318,7 @@ const CreateNewGame = ({onClose}) => {
                 Complexity Level:
               </label>
               <br/>
-                <div className="gameAvailability">
+                <div className="radioButton">
                   <label>
                   Low <input type="radio" name="complexity" value="Low" checked={complexityLevel === "Low"} onChange={handleGameComplexityChange} required/>
                   </label>
@@ -287,7 +334,7 @@ const CreateNewGame = ({onClose}) => {
                 {/*Postavi koliko duge traje igra */} 
                 <label>
                 Estimated Length:
-                  <input type="text" name="estimatedLength" value={estimatedLength} onChange={handleEstimatedLengthChange} required/>
+                  <input type="text" name="estimatedLength" value={estimatedLength} onChange={handleEstimatedLengthChange} placeholder="Enter estimated length of a game" required/>
                 </label>
                 <br />
 
@@ -301,29 +348,30 @@ const CreateNewGame = ({onClose}) => {
                 {/*Postavi opis igre (opcionalno) */}  
                 <label>
                 Description (Optional):
-                  <input type="text" name="description" value={description} onChange={handleDescriptionChange}/>
+                  <input type="text" name="description" value={description} onChange={handleDescriptionChange} placeholder="Enter a description of a game"/>
                 </label>
                 <br />
 
                 {/*Postavi pravila igre */}
                 <label>
                 Rules:
-                  <input type="text" name="rules" value={rules} onChange={handleRulesChange} required/>
+                  <input type="text" name="rules" value={rules} onChange={handleRulesChange} placeholder="Enter rules of a game" required/>
                 </label>
                 <br />
 
                 {/*Postavi pmax broj igraca (opcionalno) */}
                 <label>
                 Max Number Of Players (Optional):
-                  <input type="number" name="maxPlayerCount" value={maxNumOfPlayers} onChange={handleMaxPlayerChange}/>
+                  <input type="number" name="maxPlayerCount" value={maxNumOfPlayers} onChange={handleMaxPlayerChange} placeholder="Enter maximum number of players for a game"/>
                 </label>
                 <br />
 
-                {/*Odaberi jeli form potreban TODO: napraviti da moze korisnik stvoriti taj form */}
+                {/*Odaberi jeli form potreban  */}
               <label>
               Form Required:
               </label>
-                <div className="gameAvailability">
+              <br></br>
+                <div className="radioButton">
                   <label>
                   Yes <input type="radio" name="formRequired" value={true} checked={formRequired === true} onChange={handleFormRequiredChange} required/>
                   </label>
@@ -333,10 +381,29 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
 
+              {/* Form pitanja */}
+              {(formRequired &&
+              <div>
+                {questions.map((q, index) => (
+                  <div className="formQuestions">
+                    <label>
+                      Question {index + 1}:
+                    </label>
+                    <input type="text" value={q.question} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required></input>
+                    <button type="button" onClick={() => handleDeleteQuestion(index)}>Delete Question</button>
+                  </div>
+                ))}
+                <div className="addQuestionButton">
+                  <button type="button" onClick={handleAddQuestion}>Add Question</button> 
+                </div>
+              </div>
+              
+              )}
+              {(formRequired && <br />)}
               {/*Postavi koji je komunikacijski kanal */}
               <label>
                 Communication Channel:
-                  <input type="text" name="communicationChannel" value={communicationChannel} onChange={handleCommunicationChannelChange} required/>
+                  <input type="text" name="communicationChannel" value={communicationChannel} onChange={handleCommunicationChannelChange} placeholder="Enter a communication channel" required/>
                 </label>
                 <br />
 
@@ -344,7 +411,7 @@ const CreateNewGame = ({onClose}) => {
               <label>
                 Is Homebrew:
               </label>
-                <div className="gameAvailability">
+                <div className="radioButton">
                   <label>
                   Yes <input type="radio" name="isHomebrew" value={true} checked={isHomebrew === true} onChange={handleIsHomebrewChange} required/>
                   </label>
@@ -355,8 +422,10 @@ const CreateNewGame = ({onClose}) => {
               <br />
 
                {/*submiot i cancle gumb*/}
-              <button type="submit">Submit</button>
-              <button type="button" onClick={onClose}> Close </button>
+              <div className="buttonsContainer">
+              <button type="submit" className="submitFormButton">Submit</button>
+              <button type="button" className="cancelFormButton" onClick={onClose}> Close </button>
+              </div>
             </form>
           </div>
         </div>

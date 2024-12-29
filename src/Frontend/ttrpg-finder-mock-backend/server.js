@@ -94,7 +94,7 @@ app.get('/api/games', (req, res) => {
 });
 
 // POST to add game to the list
-app.post('/games', (req,res) => {
+app.post('/api/create-new-game', (req,res) => {
     const newGame = req.body;
     games.push(newGame);
     res.status(201).json(newGame);

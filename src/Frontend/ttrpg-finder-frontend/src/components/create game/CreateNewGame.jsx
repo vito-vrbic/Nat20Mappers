@@ -10,7 +10,7 @@ import { use } from 'react';
 const CreateNewGame = ({onClose}) => {
     const { isAuthenticated, user, logout } = useAuth();
 
-    //Form data
+      //Seters for data that will be collected in a form
       const [showForm, setShowForm] = useState(false); // Default state for form visibility: flase = form not seen, true = form seen
       const [gameTitle, setGameTitle] = useState(""); // Game title
       const [gameType, setGameType] = useState("online"); // Default type of game
@@ -30,9 +30,9 @@ const CreateNewGame = ({onClose}) => {
 
       const [questions, setQuestions] = useState([{question: ""}]); //Array for questions
 
-      //Handleaj dodavanje novog pitanja
+      //Handler for adding a new user question
       const handleAddQuestion = () => {
-        //provjeri koliko ima pitanja i onemoguci dodavanje novih ako bi bilo iznad maksimuma
+        //Check if the maximum number of questions was added
         if(questions.length < 99){
           setQuestions([...questions, {question: ""}]);
         }
@@ -41,9 +41,9 @@ const CreateNewGame = ({onClose}) => {
         }
       };
 
-      //Handleaj brisanje pitanja
+      //Handler for delted a question
       const handleDeleteQuestion = (indexToRemove) => {
-        //provjeri dali ce ostati barem jedno pitanje i onemoguci da se Requires form stavi na true a da nema nijednog pitanja
+        //Check if a user is trying to delete the last question making it so that there is no questions but a form is required
         if(questions.length > 1){
           const updatedQuestions = questions.filter((_, index) => index !== indexToRemove);
           setQuestions(updatedQuestions);
@@ -53,7 +53,7 @@ const CreateNewGame = ({onClose}) => {
         }
       };
 
-      //Handle question change za svako pojedino pitanje
+      //Handler for question change
       const handleQuestionChange = (index,e) => {
         const updatedQuestions = questions.map((q, i) => 
           i === index ? { ...q, question: e.target.value} : q
@@ -65,80 +65,84 @@ const CreateNewGame = ({onClose}) => {
         setShowForm(false);
       }
     
-      //Handle title change
+      //Handler for changing a title of game
       const handleGameTitleChange = (e) =>{
         setGameTitle(e.target.value);
         console.log("Promjena imena igre: ", e.target.value);
       };
     
-      //Handle game type change
+      //Handler for changing a type of game
       const handleGameTypeChange = (e) =>{
         setGameType(e.target.value);
+        //If user wants an online game put latitude and longitude to null since it is not needed
         if(e.target.value === "online"){
           mapLocation.lat = null;
           mapLocation.lng = null;
           setTimeZone("GMT");
         }
+        //If user want and local or exact game put timeZone to "" since it is not needed
         if(e.target.value === "local" || e.target.value === "exact"){
           setTimeZone("");
           mapLocation.lat = 45.8131;
           mapLocation.lng = 15.978;
+          //Forca a private user to eneable applications when creating a local game
           if(e.target.value === "local" && user.role === "private"){
             setApplicationRequired(true);
           }
         }
       };
     
-      //Handle timezone change
+      //Handler for changing a timezone
       const handleTimeZoneChange = (e) =>{
         setTimeZone(e.target.value);
         console.log("Promjena timezone u: ", e.target.value);
       };
     
-      //Handle game availability change
+      //Handler for changing a type of availability for a game
       const handleGameAvailabilityChange = (e) =>{
         setGameAvailability(e.target.value);
         console.log("JEL POTREBNA APPLICATION: " + applicationRequired);
       };
     
-      //Handle application required change
+      //Handler for changing if applications are required for a game
       const handleApplicationRequiredChange = (e) =>{
+        //Prevent private user to turn off applications when creating a local game
         if((user.role === "private" && gameType !== "local") || (user.role === "business")){
           setApplicationRequired(e.target.value === "true");
           console.log("Pritisnut event za application required: ", e.target.value);
         }
       };
     
-      //handle game complexity change
+      //Handler for changing a type of complexity
       const handleGameComplexityChange = (e) =>{
         setComplexityLevel(e.target.value);
       };
     
-      //handle estimated lingth change
+      //Handler for changing estimated length of a game
       const handleEstimatedLengthChange = (e) =>{
         setEstimatedLength(e.target.value);
         console.log("Promjena duljine igre: ", e.target.value);
       };
     
-      //handle start time change
+      //Handler for changing start time (and date) of a game
       const handleStartTimeChange = (e) =>{
         setStartTime(e.target.value);
         console.log("Promjena start vrijeme igre: ", e.target.value);
       };
     
-      //handle description change
+      //Handler for changing description of a game
       const handleDescriptionChange = (e) =>{
         setDescription(e.target.value);
         console.log("Promjena opisa: ", e.target.value);
       };
     
-      //handle rule change
+      //Handler for changing rules of a game
       const handleRulesChange = (e) =>{
         setRules(e.target.value);
         console.log("Promjena pravila: ", e.target.value);
       };
     
-      //handle max player count change
+      //Handler for changing maximum number of players for a game
       const handleMaxPlayerChange = (e) =>{
         if((e.target.value >= 1 && e.target.value <= 9999) || e.target.value === ""){
           setMaxNumOfPlayers(e.target.value);
@@ -146,55 +150,59 @@ const CreateNewGame = ({onClose}) => {
         }
       };
     
-      //handle form required change
+      //Handler for turning on or off user defined form 
       const handleFormRequiredChange = (e) =>{
         setFormRequired(e.target.value === "true");
         console.log("Pritisnut event za form required: ", e.target.value);
       };
     
-      //hanldle communcation channel change
+      //Handler for changing what communication channel will be used for a game
       const handleCommunicationChannelChange = (e) =>{
         setCommunicationChannel(e.target.value);
         console.log("Promjena kanala za komunikaciju: ", e.target.value);
       };
     
-      //handle is homebrew change
+      //Handler for saying if a game is homebrew (yes or no)
       const handleIsHomebrewChange = (e) =>{
         setIsHomeBrew(e.target.value === "true");
         console.log("Pritisnut event za Homebrew: ", e.target.value);
       };
     
-      //handle submit
+      //Handler for submiting a form
       const handleSubmit = async (e) => {
         e.preventDefault();
-        //Ako je korisnik postavio neka pitanje, te je onda ipak stavio Form Required na false makni ona pitanja koja su ostala
+        //If a user made some questions for its form but then decided that the form is not needed clear the questions that were created
         if(!formRequired){
           setQuestions([{question: ""}]);
         }
+
+        //Data of a new game
         const newGame = {
-          id: 123, //generira backend?
-          title: gameTitle, //string
-          type: gameType, //online/local za usera, online/exact za biznis usera
-          location: {"lat": mapLocation.lat, "lng": mapLocation.lng}, //koordinate
-          timezone: timeZone,
-          availability: gameAvailability, //private ili public
-          createdBy: user.role, //private ili biznis user
-          applicationRequired: applicationRequired, //true/false
-          complexity: complexityLevel, //low,medium,high
-          estimatedLength: estimatedLength, //string 
-          startTimestamp: startTime, //optional  datetime-local 
-          description: description, //optional string
-          pravilnik: rules, //string
-          requiresForm: formRequired, //true/false
-          formQuestions: questions, //Array of strings
-          currentPlayerCount: 0, //int
-          maxPlayerCount: maxNumOfPlayers, //optional int
-          communicationChannel: communicationChannel, //string
-          isHomebrew: isHomebrew //true/false
+          title: gameTitle, // String
+          type: gameType, // online/local for private user, online/exact for business user
+          location: {"lat": mapLocation.lat, "lng": mapLocation.lng}, // Coordinates
+          timezone: timeZone, // Timezone
+          availability: gameAvailability, //private or public
+          createdBy: user.role, // private (user) or business (user)
+          applicationRequired: applicationRequired, // true/false
+          complexity: complexityLevel, // low or medium or high
+          estimatedLength: estimatedLength, // String
+          startTimestamp: startTime, // Optional string
+          description: description, // Optional string
+          pravilnik: rules, // String
+          requiresForm: formRequired, // true/false
+          formQuestions: questions, // Array of strings
+          currentPlayerCount: 0, // int
+          maxPlayerCount: maxNumOfPlayers, // Optional int
+          communicationChannel: communicationChannel, // String
+          isHomebrew: isHomebrew // true/false
         };
         try{
-          const response = await axios.post("http://localhost:5000/games", newGame); //Pošalji na server
-          //stavi deafault vrijednosti
+          const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
+          const response = await axios.post("/api/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          if(response.status === 201){
+          //Reset the form
+          console.log("Poslano i spremljeno na server");
           setGameTitle("");
           setGameType("online");
           setMapLocation({ lat: 45.8131, lng: 15.978 });
@@ -212,6 +220,10 @@ const CreateNewGame = ({onClose}) => {
           setCommunicationChannel("");
           setIsHomeBrew("");
           onClose();
+          }
+          else{
+            console.error("NIJE USPIJELO STAVITI SE NA SERVER");
+          }
         } catch(error){
           console.error("Error creating game:", error);
         }
@@ -223,14 +235,14 @@ const CreateNewGame = ({onClose}) => {
             <h2>Create New Game</h2>
 
             <form onSubmit={handleSubmit}>
-              {/* Unos imena igre*/}
+              {/*Enter game name*/}
               <label>
                 Game Title:
                 <input type="text" name="title" value={gameTitle} onChange={handleGameTitleChange} placeholder="Enter Game Title" required/>
               </label>
               <br />
 
-              {/* Odabir tipa igre: online/local(za private usera)/exact(za biznis usera)*/}
+              {/*Pick game type: online/local (for private user) online/exact(for business user)*/}
               <label>
                 Game Type:
               </label>
@@ -252,10 +264,10 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
     
-              {/* Odaberi lokaciju na mapi ako je igra local ili exact*/}
+              {/*Pick a location on a map local/exact*/}
               {(gameType !== "online" && <MapComponent mapLocation={mapLocation} setMapLocation={setMapLocation}></MapComponent>)}
 
-              {/* Odaberi timezone ako je igra online*/}
+              {/*Picak a timezone for online game*/}
               {(gameType === "online" && 
                 <div>
                   <label>
@@ -283,7 +295,7 @@ const CreateNewGame = ({onClose}) => {
               )}
               <br />
 
-              {/* odaberi jel igra private ili public*/}
+              {/*Pick if a game is private or public*/}
               <label>
                 Availability: 
               </label>
@@ -298,7 +310,7 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
 
-              {/* odaberi jeli application potreban*/}
+              {/*Pick if application is needed or not*/}
               <label>
                 Application Required:
               </label>
@@ -313,7 +325,7 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
 
-              {/*Odaberi complexity level */}
+              {/*Pick complexity level*/}
               <label>
                 Complexity Level:
               </label>
@@ -331,42 +343,42 @@ const CreateNewGame = ({onClose}) => {
                 </div>
                 <br />
 
-                {/*Postavi koliko duge traje igra */} 
+                {/*Write what is estimated length of a game*/} 
                 <label>
                 Estimated Length:
                   <input type="text" name="estimatedLength" value={estimatedLength} onChange={handleEstimatedLengthChange} placeholder="Enter estimated length of a game" required/>
                 </label>
                 <br />
 
-                {/*Postavi kada krece igra (opcionalno) */}
+                {/*Pick start time and date (Optional)*/}
                 <label>
                 Start Time (Optional):
                   <input type="datetime-local" name="startTime" value={startTime} onChange={handleStartTimeChange}/>
                 </label>
                 <br />
 
-                {/*Postavi opis igre (opcionalno) */}  
+                {/*Write the description of a game (Optional)*/}  
                 <label>
                 Description (Optional):
                   <input type="text" name="description" value={description} onChange={handleDescriptionChange} placeholder="Enter a description of a game"/>
                 </label>
                 <br />
 
-                {/*Postavi pravila igre */}
+                {/*Write the rules for a game*/}
                 <label>
                 Rules:
                   <input type="text" name="rules" value={rules} onChange={handleRulesChange} placeholder="Enter rules of a game" required/>
                 </label>
                 <br />
 
-                {/*Postavi pmax broj igraca (opcionalno) */}
+                {/*Put a maximum number of allowed players (Optional)*/}
                 <label>
                 Max Number Of Players (Optional):
                   <input type="number" name="maxPlayerCount" value={maxNumOfPlayers} onChange={handleMaxPlayerChange} placeholder="Enter maximum number of players for a game"/>
                 </label>
                 <br />
 
-                {/*Odaberi jeli form potreban  */}
+                {/*Pick if a "custom" form is required*/}
               <label>
               Form Required:
               </label>
@@ -381,11 +393,11 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
 
-              {/* Form pitanja */}
+              {/*"Custom" form question maker*/}
               {(formRequired &&
               <div>
                 {questions.map((q, index) => (
-                  <div className="formQuestions">
+                  <div className="formQuestions" key={index}>
                     <label>
                       Question {index + 1}:
                     </label>
@@ -400,14 +412,15 @@ const CreateNewGame = ({onClose}) => {
               
               )}
               {(formRequired && <br />)}
-              {/*Postavi koji je komunikacijski kanal */}
+              
+              {/*Write what is a communication channel that will be used*/}
               <label>
                 Communication Channel:
                   <input type="text" name="communicationChannel" value={communicationChannel} onChange={handleCommunicationChannelChange} placeholder="Enter a communication channel" required/>
                 </label>
                 <br />
 
-              {/*Odaberi jeli igra homebrew */}
+              {/*Pick if a game is homebrew or not*/}
               <label>
                 Is Homebrew:
               </label>
@@ -421,7 +434,7 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               <br />
 
-               {/*submiot i cancle gumb*/}
+               {/*Submit and cancel buttons*/}
               <div className="buttonsContainer">
               <button type="submit" className="submitFormButton">Submit</button>
               <button type="button" className="cancelFormButton" onClick={onClose}> Close </button>

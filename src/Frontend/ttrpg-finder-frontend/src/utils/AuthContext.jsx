@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, 
   []);
-
   const verifyToken = (token) => {
     axios
       .get('/api/auth/verify-token', {
@@ -133,10 +132,57 @@ export const AuthProvider = ({ children }) => {
       setError("User is not authenticated.");
     }
   };
+  const checkForGoogleLogin = async (userData, isSignIn) => {
+    try {
+      //determine where to send the data
+      var adress="";
+      if(isSignIn)
+        adress="/api/auth/google-signin";
+      else
+        adress="/api/auth/google-login";
+
+      const response = await axios.post(adress, {
+        email: userData.email, // Send email or other identifying fields
+        name: userData.name, // Optionally send other fields like name, picture, etc.
+      });
+  
+      if (response.status === 200) {
+        // Store token from backend (if applicable)
+        localStorage.setItem('authToken', response.data.token);
+  
+        // Update authentication state
+        setIsAuthenticated(true);
+        setUser(response.data.userData);
+  
+        setError(''); // Clear any existing error messages
+      } else {
+        // Handle unexpected responses
+        setError("Unexpected response during Google login.");
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    } catch (error) {
+      // Handle errors during the request
+      
+      if (error.response) {
+        if (error.response.status === 400) {
+          setError("Invalid Google login data. Try signing up with google first.");
+        } else if (error.response.status === 401) {
+          setError("Google authentication failed.");
+        } else {
+          setError("Google login error, please try again.");
+        }
+      } else {
+        setError("Google login error, no response from server.");
+      }
+      setIsAuthenticated(false);
+      setUser(null);
+      }
+  };
 
   // Provide the auth context to children components
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, loading, error }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, checkForGoogleLogin, loading, error }}>
       {children}
     </AuthContext.Provider>
   );

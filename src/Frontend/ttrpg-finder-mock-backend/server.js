@@ -24,6 +24,13 @@ const users = [
     password: "password456", // Example plaintext password
     role: "private",
     organizationName: null
+  },
+  {
+    id:"0001",
+    username:"Maks H",
+    email: "annakin9@gmail.com",
+    role: "private",
+    organizationName: null
   }
 ];
 
@@ -120,6 +127,63 @@ app.post('/api/auth/login', (req, res) => {
     }
   });
 });
+app.post('/api/auth/google-login', (req, res) => {
+  const { email, username } = req.body;
+
+  // Check if the user exists in the database
+  let user = users.find(user => user.email === email);
+
+  if (!user) {
+    return res.status(400).json({ message: 'Invalid credentials' });
+    console.log("Doesn't exist");
+  }
+  else{
+    console.log("Found user");
+  }
+
+  // Generate a unique token (for session management)
+  const token = crypto.randomBytes(16).toString('hex');
+  activeTokens[token] = user;
+
+  // Respond with success, user data, and token
+  res.json({
+    message: 'Google login successful',
+    token,
+    userData: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    }
+  });
+});
+app.post('/api/auth/google-signin', (req, res) => {
+  const { email, name } = req.body;
+  let user = users.find(user => user.email === email);
+  const token = crypto.randomBytes(16).toString('hex');
+  const newUser = {
+    id: crypto.randomBytes(16).toString('hex'),
+    username: name,
+    email: email,
+    password: null, // Store plaintext password
+    role: 'private',
+    organizationName: null,
+  };
+  users.push(newUser);
+  activeTokens[token] = newUser;
+  // Respond with success, user data, and token
+  res.json({
+    message: 'Google login successful',
+    token,
+    userData: {
+      id: newUser.id,
+      username: newUser.username,
+      email: newUser.email,
+      role: newUser.role,
+    }
+  });
+});
+
 
 // Token verification endpoint
 app.get('/api/auth/verify-token', (req, res) => {

@@ -1,34 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Dashboard.css';
 import '../styles/GameContainer.css';
-import MapComponent from '../components/search/MapComponent'; // Import the MapComponent
 import axios from 'axios';
-import { useAuth } from '../utils/AuthContext'; // Importing the custom hook from AuthContext
+import { useAuth } from '../utils/AuthContext';
 import CreateNewGame from '../components/create game/CreateNewGame';
-import plusSymbol from '../assets/plus-symbol-button.png'; // Import the Create New Game button icon
-import wifiIcon from '../assets/wi-fi.png'; // Import the Online Game icon
-import homeIcon from '../assets/home.png'; // Import the Private Game icon
-import buildingIcon from '../assets/building.png'; // Import the Business Game icon
+import plusSymbol from '../assets/plus-symbol-button.png';
+import wifiIcon from '../assets/wi-fi.png';
+import homeIcon from '../assets/home.png';
+import buildingIcon from '../assets/building.png';
 
 const Dashboard = () => {
-  const { isAuthenticated, user, logout } = useAuth(); // Use the useAuth hook to get authentication state, user, and logout function
-  const [games, setGames] = useState([]); // Used for testing
-  const [showForm, setShowForm] = useState(false); // Default state for form visibility: false = form not seen, true = form seen
+  const { isAuthenticated, user } = useAuth();
+  const [createdGames, setCreatedGames] = useState([]); // Games created by the user
+  const [appliedGames, setAppliedGames] = useState([]); // Games the user has applied for
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const fetchCreatedGames = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/games/created', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+  
+      const data = Array.isArray(response.data.games) ? response.data.games : [];
+      console.log("Fetched created games:", data);
+      setCreatedGames(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching created games:", err);
+      setError("Unable to fetch created games. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchAppliedGames = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/games/applied', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      const data = Array.isArray(response.data.games) ? response.data.games : [];
+      console.log("Fetched applied games:", data);
+      setAppliedGames(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching applied games:", err);
+      setError("Unable to fetch applied games. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchCreatedGames();
+      fetchAppliedGames();
+    }
+  }, [isAuthenticated]);
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
 
+  if (loading) {
+    return <div className="Loading"><h2>Loading games...</h2></div>;
+  }
+
+  if (error) {
+    return <div className="Error"><h2>{error}</h2></div>;
+  }
+
   return (
     <>
       <div className="Dashboard">
-        {user.role === 'private' && (
+        {user?.role === 'private' && (
           <div className="List-of-my-games">
             <h1>List of applied games:</h1>
             <div className="Applied-games-allign">
               <ul>
-                {games
-                  .filter(game => game.applicationRequired !== false)
+                {Array.isArray(appliedGames) && appliedGames
+                  .filter(game => game.applicationRequired)
                   .map((game, index) => (
                     <li key={index} className="Game-container">
                       <div className="Left-group">
@@ -39,7 +94,7 @@ const Dashboard = () => {
                         {game.type.toLowerCase() === "local" && game.createdBy === "business" && (
                           <img src={buildingIcon} alt="Business Game" />
                         )}
-                        {game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1) + " game: " + game.title}
+                        {`${game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1)} game: ${game.title}`}
                       </div>
                       <div className="Right-group">
                         <div>Status</div>
@@ -50,11 +105,12 @@ const Dashboard = () => {
             </div>
           </div>
         )}
+
         <div className="List-of-my-games">
-          <h1>List of my games:</h1>
+          <h1>List of my created games:</h1>
           <div className="My-games-allign">
             <ul>
-              {games.map((game, index) => (
+              {Array.isArray(createdGames) && createdGames.map((game, index) => (
                 <li key={index} className="Game-container">
                   <div className="Left-group">
                     {game.type.toLowerCase() === "online" && <img src={wifiIcon} alt="Online Game" />}
@@ -64,7 +120,7 @@ const Dashboard = () => {
                     {game.type.toLowerCase() === "local" && game.createdBy === "business" && (
                       <img src={buildingIcon} alt="Business Game" />
                     )}
-                    {game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1) + " game: " + game.title}
+                    {`${game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1)} game: ${game.title}`}
                   </div>
                   <div className="Right-group">
                     <button className="Join-button">Incoming Requests</button>

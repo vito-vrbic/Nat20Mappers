@@ -7,8 +7,266 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Sample user data (In practice, passwords should not be stored in plaintext)
+const testGames = [
+  // Sample games for testing (could be populated from a database in a real app)
+  {
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },{
+    id: "12345",
+    title: "Test Game 1",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: true,
+    complexity: "Medium",
+    estimatedLength: "2 hours",
+    startTimestamp: "2024-11-10T15:00:00Z",
+    description: "A fun and engaging online strategy game.",
+    pravilnik: "Players must strategize to defeat opponents.",
+    requiresForm: true,
+    currentPlayerCount: 5,
+    maxPlayerCount: 20,
+    communicationChannel: "Discord",
+    isHomebrew: false
+  },
+  // Other test games...
+];
+
 const users = [
+  // Sample user data
   {
     id: "0293",
     username: "fez",
@@ -34,53 +292,10 @@ const users = [
     companyDescription: '',
     companyWebsite: '',
     companyAddress: '',
-  }
+  }  
 ];
 
-// Sample game data
-const games = [
-  {
-    id: "12345",
-    title: "Game 1",
-    type: "online",
-    location: { "lat": 45.8131, "lng": 15.978 },
-    availability: "public",
-    createdBy: "user",
-    applicationRequired: true,
-    complexity: "Medium",
-    estimatedLength: "2 hours",
-    startTimestamp: "2024-11-10T15:00:00Z",
-    description: "A fun and engaging online strategy game.",
-    pravilnik: "Rules: Players must strategize to defeat opponents.",
-    requiresForm: true,
-    currentPlayerCount: 5,
-    maxPlayerCount: 20,
-    communicationChannel: "Discord",
-    isHomebrew: false
-  },
-  {
-    id: "67890",
-    title: "Game 2",
-    type: "local",
-    location: { "lat": 45.8131, "lng": 15.978 },
-    availability: "private",
-    createdBy: "business",
-    applicationRequired: false,
-    complexity: "Easy",
-    estimatedLength: "1 hour",
-    startTimestamp: "2024-11-10T16:00:00Z",
-    description: "A casual party game for all ages.",
-    pravilnik: "Rules: Players take turns answering questions.",
-    requiresForm: false,
-    currentPlayerCount: 10,
-    maxPlayerCount: 15,
-    communicationChannel: "In-person",
-    isHomebrew: true
-  }
-];
-
-// Store active tokens
-let activeTokens = {};
+let activeTokens = {}; // Store active session tokens
 
 // Helper function to calculate distance
 function getDistance(loc1, loc2) {
@@ -100,16 +315,46 @@ function getDistance(loc1, loc2) {
 
 // Endpoints
 
-// GET all games
+// GET all games (for dashboard)
 app.get('/api/games', (req, res) => {
-  res.json({ games });
+  res.json({ games: testGames });
 });
 
-// POST to add a new game
-app.post('/api/create-new-game', (req, res) => {
-  const newGame = req.body;
-  games.push(newGame);
-  res.status(201).json(newGame);
+// POST to search games with filters
+app.post('/api/data/search', (req, res) => {
+  const { gameTitle, gameType, includeFullGames, applicationRequired, includeUserMadeGames, includeBusinessMadeGames, gameAvailability, mapLocation, radius, page = 1 } = req.body;
+  let filteredGames = testGames;
+
+  if (gameTitle) {
+    filteredGames = filteredGames.filter(game => game.title.toLowerCase().includes(gameTitle.toLowerCase()));
+  }
+
+  if (gameType && gameType !== 'All Types') {
+    filteredGames = filteredGames.filter(game => game.type.toLowerCase() === gameType.toLowerCase());
+  }
+
+  if (gameAvailability && gameAvailability !== 'All Games') {
+    filteredGames = filteredGames.filter(game => game.availability.toLowerCase() === gameAvailability.toLowerCase());
+  }
+
+  if (applicationRequired !== undefined) {
+    filteredGames = filteredGames.filter(game => game.applicationRequired === applicationRequired);
+  }
+
+  if (mapLocation && radius) {
+    const radiusInKm = parseFloat(radius);
+    filteredGames = filteredGames.filter(game => getDistance(game.location, mapLocation) <= radiusInKm);
+  }
+
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const end = page * pageSize;
+  const paginatedGames = filteredGames.slice(start, end);
+
+  res.json({
+    games: paginatedGames,
+    pagination: { currentPage: page, totalPages: Math.ceil(filteredGames.length / pageSize), totalItems: filteredGames.length }
+  });
 });
 
 // GET user profile based on token
@@ -136,36 +381,18 @@ app.get('/api/user/profile', (req, res) => {
   res.json({ error: false, message: 'Profile fetched successfully.', code: 200, data: profile });
 });
 
-// PUT to edit user profile
-app.put('/api/user/edit-profile', (req, res) => {
+// POST to create a new game (for business users)
+app.post('/api/create-new-game', (req, res) => {
+  const newGame = req.body;
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token || !activeTokens[token]) {
-    return res.status(401).json({ error: true, message: 'Invalid or expired token', code: 401 });
+  if (!token || !activeTokens[token] || activeTokens[token].role !== 'business') {
+    return res.status(403).json({ error: true, message: 'Only business users can create games' });
   }
 
-  const user = activeTokens[token];
-  const { logo, companyPhone, companyDescription, companyWebsite, companyAddress } = req.body;
-
-  user.logo = logo || user.logo;
-  user.companyPhone = companyPhone || user.companyPhone;
-  user.companyDescription = companyDescription || user.companyDescription;
-  user.companyWebsite = companyWebsite || user.companyWebsite;
-  user.companyAddress = companyAddress || user.companyAddress;
-
-  const updatedProfile = {
-    username: user.username,
-    role: user.role,
-    organizationName: user.organizationName || "Not Provided",
-    logo: user.logo,
-    companyPhone: user.companyPhone,
-    companyDescription: user.companyDescription,
-    companyWebsite: user.companyWebsite,
-    companyAddress: user.companyAddress
-  };
-
-  res.json({ error: false, message: 'Profile updated successfully.', code: 200, data: updatedProfile });
+  games.push(newGame);
+  res.status(201).json(newGame);
 });
 
 // Login
@@ -234,42 +461,24 @@ app.post('/api/auth/signup', (req, res) => {
   res.status(201).json({ message: 'Signup successful', userData: { id: newUser.id, username: newUser.username, email: newUser.email, role: newUser.role, organizationName: newUser.organizationName } });
 });
 
-// Search games
-app.post('/api/data/search', (req, res) => {
-  const { gameTitle, gameType, includeFullGames, applicationRequired, includeUserMadeGames, includeBusinessMadeGames, gameAvailability, mapLocation, radius, page = 1 } = req.body;
+// Get games created by the user
+app.get('/api/games/created', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-  let filteredGames = games;
+  const user = activeTokens[token];
+  const createdGames = testGames;
 
-  if (gameTitle) {
-    filteredGames = filteredGames.filter(game => game.title.toLowerCase().includes(gameTitle.toLowerCase()));
-  }
+  res.json({ games: createdGames });
+});
 
-  if (gameType && gameType !== 'All Types') {
-    filteredGames = filteredGames.filter(game => game.type.toLowerCase() === gameType.toLowerCase());
-  }
+// Get games where the user has applied (for application-required games)
+app.get('/api/games/applied', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-  if (gameAvailability && gameAvailability !== 'All Games') {
-    filteredGames = filteredGames.filter(game => game.availability.toLowerCase() === gameAvailability.toLowerCase());
-  }
-
-  if (applicationRequired !== undefined) {
-    filteredGames = filteredGames.filter(game => game.applicationRequired === applicationRequired);
-  }
-
-  if (mapLocation && radius) {
-    const radiusInKm = parseFloat(radius);
-    filteredGames = filteredGames.filter(game => getDistance(game.location, mapLocation) <= radiusInKm);
-  }
-
-  const pageSize = 10;
-  const start = (page - 1) * pageSize;
-  const end = page * pageSize;
-  const paginatedGames = filteredGames.slice(start, end);
-
-  res.json({
-    games: paginatedGames,
-    pagination: { currentPage: page, totalPages: Math.ceil(filteredGames.length / pageSize), totalItems: filteredGames.length }
-  });
+  const appliedGames = testGames;
+  res.json({ games: appliedGames });
 });
 
 // Start the server

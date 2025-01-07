@@ -5,8 +5,8 @@ services:
     image: postgres:15-alpine
     container_name: ttrpg-database
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: blazh
+      POSTGRES_PASSWORD: t6c2vTegjh
       POSTGRES_DB: TTRPG_Base
     volumes:
       - db_data:/var/lib/postgresql/data

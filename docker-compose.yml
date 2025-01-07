@@ -28,10 +28,10 @@ services:
 
   frontend:
     build:
-      context: ./src/Frontend
+      context: ./src/Frontend/ttrpg-finder-frontend
     container_name: ttrpg-frontend
     ports:
-      - "4173:80"
+      - "5173:80"
     depends_on:
       - backend
 

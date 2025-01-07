@@ -1,4 +1,4 @@
-# Koristi Node.js za build React aplikacije
+# Gradi aplikaciju
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -6,8 +6,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Koristi Nginx za posluživanje statičkih datoteka
+# Posluživanje statičkih datoteka s Nginx
 FROM nginx:1.23-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 4173
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 5173
 CMD ["nginx", "-g", "daemon off;"]

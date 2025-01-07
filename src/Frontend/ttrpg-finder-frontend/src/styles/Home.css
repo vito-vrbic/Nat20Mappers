@@ -61,6 +61,11 @@
     color: black;
 }
 
+.Features-conatainer ul{
+    list-style-type: none;
+    text-align: center;
+    padding-left: 0px;
+}
 
 .End-text{
     background-color: #082567;
@@ -93,3 +98,38 @@
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%);
 }
 
+
+@media (max-width: 768px) {
+    .Purpose-text {
+        padding: 0;
+    }
+
+    .Home-page img {
+        display: none;
+    }
+
+    .Features-conatainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .End-text h1:nth-of-type(1){
+        padding: 0;
+        font-size: 2rem;
+    }
+
+    .Features-conatainer ul{
+        list-style-type: none;
+        text-align: center;
+        padding-left: 0px;
+    }
+
+    .Welcome-text{
+        width: 100%;
+        text-align: center;
+    }
+
+    *{
+        box-sizing: border-box;
+    }
+}

@@ -15,7 +15,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./src/TTRPGBE-1
     container_name: ttrpg-backend
     ports:
       - "5000:5000"
@@ -28,7 +28,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./src/Frontend
     container_name: ttrpg-frontend
     ports:
       - "4173:80"

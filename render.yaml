@@ -2,7 +2,7 @@ services:
   - type: web
     name: ttrpg-finder
     env: docker
-    dockerfilePath: docker-compose.yml
+    dockerComposePath: docker-compose.yml
     plan: free
     envVars:
       - key: SPRING_PROFILES_ACTIVE

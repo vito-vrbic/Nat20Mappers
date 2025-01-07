@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../utils/AuthContext';
 import SubmitButton from '../components/login and signup/SubmitButton';
 import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
 import InputField from '../components/login and signup/InputField';
 import FormInput from '../components/login and signup/FormInput';
 import CheckboxInput from '../components/login and signup/CheckboxInput';
 import '../styles/Signup.css';
+import { useGoogleLogin } from '@react-oauth/google'
+import GoogleLoginComponent from '../components/login and signup/GoogleLoginBox';
+
 
 const Signup = () => {
   const navigate = useNavigate();
   
+  const { checkForGoogleLogin, error } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,6 +43,26 @@ const Signup = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
+  const googleSignIn = useGoogleLogin({
+    onSuccess: async (response)=>{
+      try{
+        const res=await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+        {
+          headers:{            
+            Authorization: `Bearer ${response.access_token}`,
+          },
+        }
+        );
+        const userData = res.data;
+        console.log(userData);
+        await checkForGoogleLogin(userData,true);
+        navigate('/dashboard');
+      }
+      catch (err){
+        console.log(err);
+      }
+    },
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -155,8 +180,11 @@ const Signup = () => {
         <SubmitButton loading={isLoading} disabled={isLoading}>
           Sign up
         </SubmitButton>
+        
       </form>
+      <div className="googleLoginButton" onClick={()=>googleSignIn()}><div className='googleLoginText'>Sign up & Log in with Google</div></div>
     </div>
+    
   );
 };
 

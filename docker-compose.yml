@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15-alpine
+    container_name: ttrpg-database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: TTRPG_Base
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ttrpg-backend
+    ports:
+      - "5000:5000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/TTRPG_Base
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ttrpg-frontend
+    ports:
+      - "4173:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

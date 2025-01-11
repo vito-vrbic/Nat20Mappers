@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,11 +39,13 @@ public class OrgProfil {
     private List<Slika> companyLogos;
 
     // OneToOne veza s PoslovnimKorisnikom, mappedBy na polje business_user
-    @OneToOne
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private PoslovniKorisnik business_user;
 
     // Konstruktor, getter-i, setter-i, toString
-    public OrgProfil() {}
+    public OrgProfil() {
+        this.companyLogos = new ArrayList<>();
+    }
 
     public OrgProfil(int companyId, String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, List<Slika> companyLogos) {
         this.companyId = companyId;
@@ -50,7 +54,7 @@ public class OrgProfil {
         this.companyDes = companyDes;
         this.companyWeb = companyWeb;
         this.companyAdress = companyAdress;
-        this.companyLogos = companyLogos;
+        this.companyLogos = (companyLogos != null) ? companyLogos : new ArrayList<>();
     }
 
     public int getCompanyId() {
@@ -98,10 +102,16 @@ public class OrgProfil {
     }
 
     public List<Slika> getCompanyLogos() {
+        if (companyLogos == null) {
+            companyLogos = new ArrayList<>();
+        }
         return companyLogos;
     }
 
     public void setLogo(Slika companyLogo) {
+        if (companyLogos == null) {
+            companyLogos = new ArrayList<>();
+        }
         companyLogos.add(companyLogo);
     }
 

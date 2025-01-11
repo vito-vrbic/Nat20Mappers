@@ -12,6 +12,7 @@ import com.ttrpg.model.OrgProfil;
 import com.ttrpg.model.PoslovniKorisnik;
 import com.ttrpg.model.Slika;
 import com.ttrpg.repository.KorisnikRepository;
+import com.ttrpg.repository.OrgRepository;
 import com.ttrpg.util.jwtUtil;
 
 @Service  // Oznaka da je ovo servis klasa koja se koristi u Spring aplikaciji
@@ -19,6 +20,9 @@ public class KorisnikService {
 
     @Autowired  // Automatsko injektiranje KorisnikRepository ovisnosti
     KorisnikRepository kr;
+
+    @Autowired
+    OrgRepository or;
 
     // Metoda za autentifikaciju korisnika prema korisničkom imenu i lozinki
     public boolean authenticate(String username, String password) {
@@ -119,5 +123,37 @@ public class KorisnikService {
 
         // Vrati ažurirani profil
         return getProfileByUsername(poslovniKorisnik.getUsername());
+    }
+
+    public void createDummyCompany() {
+        // Kreiraj dummy profil kompanije
+        OrgProfil orgProfil = new OrgProfil();
+        orgProfil.setCompanyName("Dummy Company Inc.");
+        orgProfil.setCompanyPhone("987-654-3210");
+        orgProfil.setCompanyDes("Innovators in the tech industry.");
+        orgProfil.setCompanyWeb("https://dummycompany.com");
+        orgProfil.setCompanyAdress("456 Innovation Blvd, Tech City");
+    
+        // Dodaj logo kompanije
+        Slika logo = new Slika();
+        logo.setImageUrl("https://dummycompany.com/logo.png");
+        orgProfil.getCompanyLogos().add(logo);
+    
+        // Spremi OrgProfil
+        or.save(orgProfil); // Ovo osigurava da je OrgProfil spremljen prije reference
+    
+        // Kreiraj dummy poslovnog korisnika
+        PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik();
+        poslovniKorisnik.setUserId(3); // Unikatni ID
+        poslovniKorisnik.setUsername("dummyBusinessUser");
+        poslovniKorisnik.setPassword("password123");
+        poslovniKorisnik.setEmail("dummybusiness@example.com");
+        poslovniKorisnik.setRole("Business");
+    
+        // Poveži korisnika s profilom
+        poslovniKorisnik.setCompany(orgProfil);
+    
+        // Spremi PoslovniKorisnik
+        kr.save(poslovniKorisnik);
     }
 }

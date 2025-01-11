@@ -39,5 +39,6 @@ public class Ttrpgbe1Application {
         igraService.s2DataLoader();
         igraService.s3DataLoader();
         igraService.s4DataLoader();
+        korisnikService.createDummyCompany();
     }
 }

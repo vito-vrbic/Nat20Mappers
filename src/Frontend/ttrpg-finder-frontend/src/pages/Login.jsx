@@ -12,7 +12,7 @@ const clientId = "320270492524-ve80c3hmmc1108kcjemrgge0bjgigtku.apps.googleuserc
 
 const Login = () => {
   
-  const { login, checkForGoogleLogin, error } = useAuth();
+  const { login, checkForGoogleLogin, gerror } = useAuth();
  
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  //const [error, setError] = useState('');
+  const [error, setError] = useState('');
 
   const googlePrijava = useGoogleLogin({
     onSuccess: async (response)=>{
@@ -42,7 +42,7 @@ const Login = () => {
           console.log("Error found");
           setLoading(false);
         }
-        console.log(error);
+        console.log(gerror);
       }
       catch (err){
         setError("Google login failed. Please try again with a different email.");

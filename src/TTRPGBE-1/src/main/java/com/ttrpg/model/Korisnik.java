@@ -1,13 +1,6 @@
 package com.ttrpg.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Korisnik")  // Ime tablice u bazi podataka
@@ -16,6 +9,7 @@ import jakarta.persistence.Table;
 public class Korisnik {
 
     @Id  // Označava primarni ključ
+    @GeneratedValue(strategy = GenerationType.AUTO)  //zasad se ključ generira metodom koju program smatra najboljom
     private int userId;  // ID korisnika
 
     @Column(unique = true)  // Osigurava da je username jedinstven u bazi
@@ -49,6 +43,12 @@ public class Korisnik {
     // Konstruktor s parametrima za inicijalizaciju korisničkog objekta
     public Korisnik(int userId, String username, String email, String password, String role) {
         this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+    }
+    public Korisnik(String username, String password,String email, String role) { //id se ne inicijalizira u konstruktoru
         this.username = username;
         this.password = password;
         this.role = role;

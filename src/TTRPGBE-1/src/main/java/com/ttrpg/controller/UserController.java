@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping("/edit-profile")
     public ResponseEntity<?> updateProfile(@RequestHeader("Authorization") String authToken,
                                             @RequestBody BusinessProfileUpdateRequest updateRequest) {
-        if (authToken == null || !userService.isValidToken(authToken)) {
+        if (authToken == null || !userService.isValidToken(authToken.replace("Bearer ", ""))) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", "No token found or invalid token"));
         }
@@ -59,7 +59,7 @@ public class UserController {
         }
 
         try {
-            BusinessProfileDetails updatedProfile = userService.updateProfile(authToken, updateRequest);
+            BusinessProfileDetails updatedProfile = userService.updateProfile(authToken.replace("Bearer ", ""), updateRequest);
             return ResponseEntity.ok(Map.of(
                     "message", "Profile updated successfully",
                     "updatedProfile", updatedProfile

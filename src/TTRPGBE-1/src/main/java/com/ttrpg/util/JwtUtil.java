@@ -10,7 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 
 // Ovu klasu mi je Luka poslao
-public class jwtUtil {
+public class JwtUtil {
     private static final String SECRET_KEY ="2345675643524354342387699w457566334355674634543456554345654";
     //ovo kasnije možemo sakriti negdje sa strane
     private static final long toExpire = 43200000;     //12 sati
@@ -30,9 +30,12 @@ public class jwtUtil {
         try {
             SecretKey superSecretKey = new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
             return Jwts.parserBuilder().setSigningKey(superSecretKey).build().parseClaimsJws(jwt).getBody();
-        }
-        catch(SignatureException | ExpiredJwtException e) {
-            throw new RuntimeException("The token is invalid or expired", e);
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token expired: " + e.getMessage());
+            throw new RuntimeException("The token has expired", e);
+        } catch (SignatureException e) {
+            System.out.println("Invalid token signature: " + e.getMessage());
+            throw new RuntimeException("The token signature is invalid", e);
         }
     }
 

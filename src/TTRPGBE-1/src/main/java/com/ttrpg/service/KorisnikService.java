@@ -13,7 +13,7 @@ import com.ttrpg.model.PoslovniKorisnik;
 import com.ttrpg.model.Slika;
 import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.repository.OrgRepository;
-import com.ttrpg.util.jwtUtil;
+import com.ttrpg.util.JwtUtil;
 
 @Service  // Oznaka da je ovo servis klasa koja se koristi u Spring aplikaciji
 public class KorisnikService {
@@ -75,7 +75,7 @@ public class KorisnikService {
     public boolean isValidToken(String authToken) {
         try {
             // Ako `validateJWT` ne baci iznimku, token je valjan
-            jwtUtil.validateJWT(authToken);
+            JwtUtil.validateJWT(authToken);
             return true;
         } catch (RuntimeException e) {
             // Token je nevažeći ili istekao
@@ -89,7 +89,7 @@ public class KorisnikService {
         }
     
         // Dohvati korisničko ime iz tokena
-        String username = jwtUtil.validateJWT(authToken).getSubject();
+        String username = JwtUtil.validateJWT(authToken).getSubject();
 
         Korisnik korisnik = kr.findByUsername(username).stream().findFirst().orElse(null);
         PoslovniKorisnik poslovniKorisnik = (PoslovniKorisnik) korisnik;

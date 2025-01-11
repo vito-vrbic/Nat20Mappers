@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import com.ttrpg.service.IgraService;
 import com.ttrpg.service.KorisnikService;
+import com.ttrpg.util.JwtUtil;
 
 @SpringBootApplication
 public class Ttrpgbe1Application {
@@ -28,6 +29,9 @@ public class Ttrpgbe1Application {
     }
 
     public static void main(String[] args) {
+        // Generiranje JWT tokena za testiranje
+        String token = JwtUtil.generateJWT("dummyBusinessUser");
+        System.out.println("Generated Token: " + token);
         // Pokretanje aplikacije
         ApplicationContext context = SpringApplication.run(Ttrpgbe1Application.class, args);
 

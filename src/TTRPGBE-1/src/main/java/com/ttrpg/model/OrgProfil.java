@@ -97,6 +97,10 @@ public class OrgProfil {
         return companyAdress;
     }
 
+    public List<Slika> getCompanyLogos() {
+        return companyLogos;
+    }
+
     public void setLogo(Slika companyLogo) {
         companyLogos.add(companyLogo);
     }

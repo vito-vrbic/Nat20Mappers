@@ -1,4 +1,4 @@
-package com.ttrpg.service;
+package com.ttrpg.util;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

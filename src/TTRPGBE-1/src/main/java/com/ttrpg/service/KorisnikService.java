@@ -12,6 +12,7 @@ import com.ttrpg.model.OrgProfil;
 import com.ttrpg.model.PoslovniKorisnik;
 import com.ttrpg.model.Slika;
 import com.ttrpg.repository.KorisnikRepository;
+import com.ttrpg.util.jwtUtil;
 
 @Service  // Oznaka da je ovo servis klasa koja se koristi u Spring aplikaciji
 public class KorisnikService {

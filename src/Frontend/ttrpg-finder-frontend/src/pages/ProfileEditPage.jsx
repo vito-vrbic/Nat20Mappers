@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // React Router v6
-
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import styles from './ProfileEditPage.module.css'; // Importing the CSS module
 
 const ProfileForm = () => {
   const { user, isAuthenticated, loading: authLoading } = useAuth(); // Access user from Auth context
@@ -14,14 +14,14 @@ const ProfileForm = () => {
     companyAddress: ''
   });
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true); // Local loading state for fetching profile data
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const username = user?.username;
 
   // Fetch existing profile data when the component mounts
   useEffect(() => {
-    if (authLoading || !username) return; // Skip fetch if auth is loading or username is missing
+    if (authLoading || !username) return;
 
     const fetchProfileData = async () => {
       try {
@@ -32,7 +32,7 @@ const ProfileForm = () => {
         });
 
         if (response.status === 200) {
-          setProfileData(response.data.data); // Update profileData based on the correct response structure
+          setProfileData(response.data.data);
         } else {
           setMessage(response.data.message || 'Error fetching profile data');
         }
@@ -68,7 +68,7 @@ const ProfileForm = () => {
 
     try {
       const response = await axios.put(
-        '/api/user/edit-profile', // Endpoint to update profile
+        '/api/user/edit-profile',
         profileData,
         {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -79,9 +79,7 @@ const ProfileForm = () => {
         setMessage(response.data.message || 'Error updating profile');
       } else {
         setMessage(response.data.message || 'Profile updated successfully');
-
-        // Redirect to the updated profile page after successful update
-        navigate(`/user/${user.username}`); // Use user.username from the auth context
+        navigate(`/user/${user.username}`);
       }
     } catch (error) {
       console.log('Error updating profile:', error);
@@ -91,7 +89,7 @@ const ProfileForm = () => {
 
   if (authLoading) {
     return (
-      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+      <div className={styles.loadingMessage}>
         Authenticating...
       </div>
     );
@@ -99,7 +97,7 @@ const ProfileForm = () => {
 
   if (loading) {
     return (
-      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+      <div className={styles.loadingMessage}>
         Loading profile...
       </div>
     );
@@ -107,76 +105,60 @@ const ProfileForm = () => {
 
   if (!username) {
     return (
-      <div style={{ background: '#002F6C', color: 'white', padding: '20px' }}>
+      <div className={styles.loadingMessage}>
         <h1>No username provided. Please log in.</h1>
       </div>
     );
   }
 
   return (
-    <div style={{ background: '#002F6C', color: 'white', padding: '20px', minHeight: '100vh' }}>
+    <div className={styles.profileFormContainer}>
       <h2>Edit Profile</h2>
-      <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: 'auto' }}>
-        <label>
-          Logo:
-          <input
-            type="text"
-            name="logo"
-            value={profileData.logo}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' }}
-          />
-        </label>
-        <br />
-        <label>
-          Company Phone:
-          <input
-            type="text"
-            name="companyPhone"
-            value={profileData.companyPhone}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' }}
-          />
-        </label>
-        <br />
-        <label>
-          Company Description:
-          <textarea
-            name="companyDescription"
-            value={profileData.companyDescription}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' }}
-          />
-        </label>
-        <br />
-        <label>
-          Company Website:
-          <input
-            type="text"
-            name="companyWebsite"
-            value={profileData.companyWebsite}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' }}
-          />
-        </label>
-        <br />
-        <label>
-          Company Address:
-          <input
-            type="text"
-            name="companyAddress"
-            value={profileData.companyAddress}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', margin: '10px 0', borderRadius: '5px', border: '1px solid #ccc' }}
-          />
-        </label>
-        <br />
-        <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '5px' }}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label className={styles.inputTag}>Logo:</label>
+        <input
+          type="text"
+          name="logo"
+          value={profileData.logo}
+          onChange={handleChange}
+          className={styles.input}
+        />
+        <label className={styles.inputTag}>Company Phone:</label>
+        <input
+          type="text"
+          name="companyPhone"
+          value={profileData.companyPhone}
+          onChange={handleChange}
+          className={styles.input}
+        />
+        <label className={styles.inputTag}>Company Description:</label>
+        <textarea
+          name="companyDescription"
+          value={profileData.companyDescription}
+          onChange={handleChange}
+          className={styles.textarea}
+        />
+        <label className={styles.inputTag}>Company Website:</label>
+        <input
+          type="text"
+          name="companyWebsite"
+          value={profileData.companyWebsite}
+          onChange={handleChange}
+          className={styles.input}
+        />
+        <label className={styles.inputTag}>Company Address:</label>
+        <input
+          type="text"
+          name="companyAddress"
+          value={profileData.companyAddress}
+          onChange={handleChange}
+          className={styles.input}
+        />
+        <button type="submit" className={styles.submit}>
           Update Profile
         </button>
       </form>
-
-      {message && <p style={{ marginTop: '20px', color: 'green' }}>{message}</p>}
+      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 };

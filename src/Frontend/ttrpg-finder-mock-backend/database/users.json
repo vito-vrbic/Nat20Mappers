@@ -27,5 +27,13 @@
       "22334",
       "44556"
     ]
+  },
+  {
+    "id": "1736698400913",
+    "username": "goran",
+    "email": "gogi@goranmail.com",
+    "password": "gogica",
+    "role": "business",
+    "organizationName": "gogicaeats"
   }
 ]

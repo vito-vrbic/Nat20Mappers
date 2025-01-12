@@ -1,11 +1,48 @@
+/* Base Styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+  /* Ensure full height */
+  overflow: hidden;
+  /* Prevent scrolling on the page */
+}
+
 /* Search Container */
 .search {
   font-family: 'Arial', sans-serif;
-  margin: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  margin: 0;
   padding: 20px;
+  background-color: #232f44;
+  /* Matching home page color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
+  /* Allow vertical scrolling within the search container */
+  height: 100vh;
+  /* Ensure the container takes the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  /* Removed border-radius for no rounded corners */
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: transparent transparent;
+  /* For Firefox */
+}
+
+/* For Webkit browsers (Chrome, Safari, etc.) */
+.search::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 5px;
 }
 
 /* Search Filters Section */
@@ -40,7 +77,8 @@
 .searchFiltersSelect:focus,
 .searchFiltersCheckbox:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #ffdd57;
+  /* Gold accent */
 }
 
 .searchFiltersCheckbox {
@@ -49,8 +87,10 @@
 }
 
 .searchFiltersApplyBtn {
-  background-color: #007bff;
-  color: black;
+  background-color: #ffdd57;
+  /* Gold accent */
+  color: #232f44;
+  /* Darker color for contrast */
   padding: 12px 20px;
   font-size: 1rem;
   border: none;
@@ -62,7 +102,8 @@
 }
 
 .searchFiltersApplyBtn:hover {
-  background-color: #0056b3;
+  background-color: #e6c64e;
+  /* Slightly darker gold */
 }
 
 /* Map Styles */

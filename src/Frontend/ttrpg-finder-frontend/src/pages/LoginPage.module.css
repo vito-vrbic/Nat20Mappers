@@ -8,44 +8,80 @@ div {
    font-family: 'Roboto', sans-serif;
 }
 
+/* Ensure background image covers the entire screen */
+body,
+html {
+   margin: 0;
+   padding: 0;
+   font-family: 'Roboto', sans-serif;
+   height: 100%;
+   width: 100%;
+   overflow: hidden;
+   background-color: #232f44;
+   /* Default background color if image fails to load */
+}
+
 /* Container for the 'Log in' layout */
 .LogInBox {
    display: flex;
-   background-color: #082567;
+   background-color: rgba(35, 47, 68, 0.8);
+   /* Darkened background with opacity */
    align-items: center;
    flex-direction: column;
    justify-content: center;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+   /* Subtle shadow for depth */
+   max-width: 450px;
+   /* Limit width for a cleaner look */
+   width: 100%;
+   height: 100vh;
+   /* Make it take the full screen height */
+   position: absolute;
+   /* Absolute positioning to center */
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+   /* Ensure it's centered */
 }
 
-/* Style for the 'Sign up' title */
+/* Style for the 'Log in' title */
 .Title {
-   font-size: 39px;
-   margin-top: 15px;
-   margin-bottom: 15px;
+   font-size: 36px;
+   color: #ffdd57;
+   /* Gold accent for the title */
+   margin-bottom: 20px;
+   font-weight: bold;
 }
 
 /* Styling for every input field */
 .inputs input {
-   border-radius: 0.5rem;
-   padding-top: 20px;
-   padding-bottom: 20px;
-   padding-left: 20px;
-   padding-right: 70px;
-   margin: 5px;
+   border-radius: 8px;
+   padding: 15px;
+   margin: 10px 0;
+   border: 1px solid #4e6272;
+   /* Subtle border color for inputs */
+   background-color: #1d2630;
+   /* Dark background for inputs */
+   color: #f1f1f1;
+   /* Light text color */
+   font-size: 16px;
 }
 
 /* Styling for the category name above the input field, example: Email */
 .inputTag {
-   font-size: 23px;
-   margin-bottom: 5px;
+   font-size: 18px;
+   margin-bottom: 8px;
+   color: #f1f1f1;
 }
 
 /* Styling for the placeholder text inside every input field */
-.input input::placeholder {
-   color: gray;
-   font-weight: bold;
-   font-style: italic;
-   font-size: 15px;
+.inputs input::placeholder {
+   color: #aaa;
+   font-weight: normal;
 }
 
 /* Additional input styling required for the Password category */
@@ -53,107 +89,118 @@ div {
    position: relative;
 }
 
-.input input[type="password"] {
-   box-sizing: border-box;
-}
-
 .input img {
    position: absolute;
-   right: 15px;
-   bottom: 20px;
+   right: 10px;
+   bottom: 15px;
    cursor: pointer;
 }
 
 /* Styling for the 'Forgot Password' prompt */
 .forgotPassword {
+   color: #ffdd57;
+   /* Gold color for "Forgot password?" */
    margin-top: 5px;
-   margin-bottom: 5px;
+   font-size: 14px;
+   cursor: pointer;
+}
+
+.forgotPassword:hover {
+   text-decoration: underline;
 }
 
 /* Styling for the submit button for logging in */
 .submit {
    text-align: center;
    align-items: center;
-   background-color: white;
+   background-color: #ffdd57;
+   /* Gold background for the login button */
    border-radius: 10px;
    color: black;
-   font-size: 23px;
+   font-size: 18px;
    font-weight: bold;
-   margin: 10px;
-   width: 6rem;
-   padding: 0.5rem;
-   cursor: pointer; /* Cursor is pointer to show it's clickable */
-   transition: background-color 0.3s ease; /* Smooth transition for hover */
+   margin: 20px 0;
+   padding: 15px;
+   width: 100%;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
 /* Styling for the submit button when it's hovered */
 .submit:hover {
-   background-color: #f1f1f1; /* Light grey on hover */
+   background-color: #e0c15d;
+   /* Lighter gold when hovered */
 }
 
 /* Styling for the submit button when it's disabled */
 .submit:disabled {
-   background-color: #e0e0e0; /* Lighter background for disabled state */
-   color: #b0b0b0; /* Lighter text color for disabled state */
-   cursor: not-allowed; /* Cursor changes to not-allowed */
-   opacity: 0.7; /* Reduce opacity for disabled button */
+   background-color: #dcdcdc;
+   /* Disabled color */
+   color: #b0b0b0;
+   cursor: not-allowed;
+   opacity: 0.7;
 }
 
 .submit:disabled:hover {
-   background-color: #e0e0e0; /* Prevent hover effect when disabled */
+   background-color: #dcdcdc;
 }
 
 /* Styling the 'go to Sign up' section */
 .gotoSignup {
-   margin-top: 5px;
-   margin-bottom: 10px;
+   margin-top: 10px;
+   color: #f1f1f1;
 }
 
 .gotoSignup a {
-   color: #F6EB61;
+   color: #ffdd57;
+   /* Gold for the link */
    text-decoration: none;
 }
 
 .gotoSignup a:hover {
-   color: darkturquoise;
+   color: #e0c15d;
+   /* Slightly lighter gold for hover */
 }
 
 /*Styling a custom Google log in button*/
-.googleLoginText{
-   position:relative;
-   top:0;
+.googleLoginText {
+   position: relative;
    color: #757575;
    font-size: 1rem;
    font-weight: bold;
-   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
    margin-bottom: 5px;
 }
-.googleLoginButton{
+
+.googleLoginButton {
    cursor: pointer;
-   transition: background-color .3s, box-shadow .3s;
+   transition: background-color 0.3s, box-shadow 0.3s;
    padding: 20px 20px 20px 60px;
    border: none;
    border-radius: 20px;
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-   background-image: url("../assets/googleButton.png"); /* base64-encoded SVG logo */
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+   background-image: url("../assets/googleButton.png");
+   /* Google's logo */
    background-color: white;
    background-repeat: no-repeat;
    background-position: 12px 11px;
-   margin-top: 10px;
+   margin-top: 20px;
    margin-bottom: 20px;
 }
-.googleLoginButton:hover{
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+
+.googleLoginButton:hover {
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
 }
-.googleLoginButton:active{
+
+.googleLoginButton:active {
    background-color: #eeeeee;
    outline: none;
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25), 0 0 0 3px #c8dafc;
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 3px #c8dafc;
 }
-.googleLoginButton:disabled{
+
+.googleLoginButton:disabled {
    filter: grayscale(100%);
    background-color: #ebebeb;
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
    cursor: not-allowed;
 }
 
@@ -163,4 +210,86 @@ div {
    font-size: 16px;
    margin-top: 10px;
    font-weight: bold;
- }
+}
+
+/* Home Page Background */
+.homePage {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   background-image: url('../assets/images/background-image.jpg');
+   /* Background image */
+   background-size: cover;
+   /* Make it cover the entire screen */
+   background-position: center center;
+   /* Keep it centered */
+   height: 100vh;
+   /* Full height of the screen */
+   width: 100%;
+   /* Full width */
+   padding: 0;
+   text-align: center;
+   overflow: hidden;
+}
+
+/* Styling for the submit button for logging in */
+.submit {
+   text-align: center;
+   align-items: center;
+   background: linear-gradient(135deg, #ffdd57, #e0c15d);
+   /* Gold gradient for a modern look */
+   border-radius: 10px;
+   color: black;
+   font-size: 18px;
+   font-weight: bold;
+   margin: 20px 0;
+   padding: 15px;
+   width: 100%;
+   cursor: pointer;
+   border: none;
+   /* Remove default border */
+   transition: all 0.3s ease;
+   /* Smooth transition for background, scale, and shadow */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   /* Add subtle shadow for depth */
+}
+
+/* Styling for the submit button when it's hovered */
+.submit:hover {
+   background: linear-gradient(135deg, #e0c15d, #ffdd57);
+   /* Reverse gradient for hover effect */
+   transform: translateY(-4px);
+   /* Slight elevation effect */
+   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+   /* Enhance shadow on hover */
+}
+
+/* Styling for the submit button when it's active */
+.submit:active {
+   background: linear-gradient(135deg, #ffdd57, #e0c15d);
+   /* Maintain gradient on active */
+   transform: translateY(2px);
+   /* Add slight "press" effect */
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+   /* Softer shadow on active state */
+}
+
+/* Styling for the submit button when it's disabled */
+.submit:disabled {
+   background-color: #dcdcdc;
+   /* Disable color */
+   color: #b0b0b0;
+   /* Lighter text */
+   cursor: not-allowed;
+   opacity: 0.7;
+   box-shadow: none;
+   /* Remove shadow for disabled state */
+}
+
+/* Add focus effect for accessibility */
+.submit:focus {
+   outline: none;
+   box-shadow: 0 0 10px rgba(255, 221, 87, 0.8);
+   /* Glow effect on focus */
+}

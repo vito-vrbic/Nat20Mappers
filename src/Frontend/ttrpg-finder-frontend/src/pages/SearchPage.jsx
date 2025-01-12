@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import SearchFilters from '../features/search/SearchFilters';
 import SearchResults from '../features/search/SearchResults';
-import styles from './SearchPage.module.css'; // Importing CSS module
+import styles from './SearchPage.module.css'; // Ensure this imports the CSS file
 
 const Search = () => {
   const { isAuthenticated } = useAuth();
@@ -15,14 +15,14 @@ const Search = () => {
   const [includeUserMadeGames, setIncludeUserMadeGames] = useState(true);
   const [includeBusinessMadeGames, setIncludeBusinessMadeGames] = useState(true);
   const [gameAvailability, setGameAvailability] = useState('All Games');
-  const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 }); // Default location (Zagreb)
+  const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 });
   const [radius, setRadius] = useState('');
   const [page, setPage] = useState(1);
   const [results, setResults] = useState([]);
 
   const handleApplyFilters = async () => {
     try {
-      const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
+      const token = localStorage.getItem('authToken');
       const filters = {
         gameTitle,
         gameType,
@@ -42,7 +42,6 @@ const Search = () => {
 
       if (response.status === 200) {
         const { games, pagination } = response.data;
-        // Set the results with the fetched games
         setResults(games);
       } else {
         console.error('Failed to fetch games:', response);
@@ -52,14 +51,13 @@ const Search = () => {
     }
   };
 
-  // ----- PAGINATION HANDLER -----
+  // Pagination Handler
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
 
   return (
     <div className={styles.search}> {/* Apply the 'search' class from CSS Module */}
-      {/* Filter Form */}
       <SearchFilters
         isAuthenticated={isAuthenticated}
         gameTitle={gameTitle}
@@ -82,8 +80,6 @@ const Search = () => {
         setRadius={setRadius}
         handleApplyFilters={handleApplyFilters}
       />
-
-      {/* Search Results Section */}
       <SearchResults
         results={results}
         page={page}

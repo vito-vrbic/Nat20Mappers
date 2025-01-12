@@ -2,12 +2,16 @@ import React from 'react';
 import SearchGameCard from './SearchGameCard';
 
 const SearchResults = ({ results, page, handlePageChange }) => {
+  const resultsPerPage=3;
+  const startIndex = (page-1)*resultsPerPage;
+  const currentResults=results.slice(startIndex,startIndex+resultsPerPage);  
+  const totalPages=Math.ceil(results.length/resultsPerPage);
   return (
     <div className="search-results">
       <h2>Search Results</h2>
       {results.length > 0 ? (
         <ul>
-          {results.map((result, index) => (
+          {currentResults.map((result, index) => (
             <li key={index}>
               <SearchGameCard
                 title={result.title}
@@ -41,7 +45,9 @@ const SearchResults = ({ results, page, handlePageChange }) => {
           Previous
         </button>
         <span>Page {page}</span>
-        <button onClick={() => handlePageChange(page + 1)}>Next</button>
+        <button onClick={() => handlePageChange(page + 1)} 
+          disabled={startIndex+1>=results.length}
+          >Next</button>
       </div>
     </div>
   );

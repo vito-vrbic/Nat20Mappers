@@ -53,7 +53,64 @@ const games = [
     title: "Game 2",
     type: "local",
     location: { "lat": 45.8131, "lng": 15.978 },
-    availability: "private",
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: false,
+    complexity: "Easy",              // Added complexity level
+    estimatedLength: "1 hour",       // Added estimated game length
+    startTimestamp: "2024-11-10T16:00:00Z",  // Added start timestamp
+    description: "A casual party game for all ages.",  // Game description
+    pravilnik: "Rules: Players take turns answering questions.",  // Rules or guidelines (pravilnik)
+    requiresForm: false,              // Indicates if a form is required to join
+    currentPlayerCount: 10,           // Current number of players in the game
+    maxPlayerCount: 15,               // Max player count allowed in the game
+    communicationChannel: "In-person",  // Channel for game communication (e.g., Discord, Zoom, etc.)
+    isHomebrew: true                 // Indicates if the game is homebrewed
+  },
+  {
+    id: "24680",
+    title: "Game 3",
+    type: "online",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: false,
+    complexity: "Easy",              // Added complexity level
+    estimatedLength: "1 hour",       // Added estimated game length
+    startTimestamp: "2024-11-10T16:00:00Z",  // Added start timestamp
+    description: "A casual party game for all ages.",  // Game description
+    pravilnik: "Rules: Players take turns answering questions.",  // Rules or guidelines (pravilnik)
+    requiresForm: false,              // Indicates if a form is required to join
+    currentPlayerCount: 10,           // Current number of players in the game
+    maxPlayerCount: 15,               // Max player count allowed in the game
+    communicationChannel: "In-person",  // Channel for game communication (e.g., Discord, Zoom, etc.)
+    isHomebrew: true                 // Indicates if the game is homebrewed
+  },
+  {
+    id: "30213",
+    title: "Game 4",
+    type: "local",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
+    createdBy: "business",
+    applicationRequired: false,
+    complexity: "Easy",              // Added complexity level
+    estimatedLength: "1 hour",       // Added estimated game length
+    startTimestamp: "2024-11-10T16:00:00Z",  // Added start timestamp
+    description: "A casual party game for all ages.",  // Game description
+    pravilnik: "Rules: Players take turns answering questions.",  // Rules or guidelines (pravilnik)
+    requiresForm: false,              // Indicates if a form is required to join
+    currentPlayerCount: 10,           // Current number of players in the game
+    maxPlayerCount: 15,               // Max player count allowed in the game
+    communicationChannel: "In-person",  // Channel for game communication (e.g., Discord, Zoom, etc.)
+    isHomebrew: true                 // Indicates if the game is homebrewed
+  },
+  {
+    id: "11111",
+    title: "Game 5",
+    type: "local",
+    location: { "lat": 45.8131, "lng": 15.978 },
+    availability: "public",
     createdBy: "business",
     applicationRequired: false,
     complexity: "Easy",              // Added complexity level

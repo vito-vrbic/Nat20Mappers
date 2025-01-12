@@ -33,7 +33,7 @@ const Search = () => {
         gameAvailability,
         mapLocation,
         radius,
-        page,
+        page:1,
       };
 
       const response = await axios.post('/api/data/search', filters, {
@@ -44,6 +44,7 @@ const Search = () => {
         const { games, pagination } = response.data;
         // Set the results with the fetched games
         setResults(games);
+        setPage(1);
       } else {
         console.error('Failed to fetch games:', response);
       }
@@ -51,7 +52,7 @@ const Search = () => {
       console.error('Error sending request:', error);
     }
   };
-
+  
   // ----- PAGINATION HANDLER -----
   const handlePageChange = (newPage) => {
     setPage(newPage);

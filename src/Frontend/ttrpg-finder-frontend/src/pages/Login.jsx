@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../utils/AuthContext';
-import FormInput from '../components/login and signup/FormInput';
-import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
-import SubmitButton from '../components/login and signup/SubmitButton';
-import '../styles/Login.css';
+import { useAuth } from '../context/AuthContext';
+import FormInput from '../features/auth/FormInput';
+import PasswordVisibilityToggle from '../features/auth/PasswordVisibilityToggle';
+import SubmitButton from '../features/auth/SubmitButton';
+import '../assets/styles/Login.css';
 import { useGoogleLogin } from '@react-oauth/google'
-import GoogleLoginComponent from '../components/login and signup/GoogleLoginBox';
+import GoogleLoginComponent from '../features/auth/GoogleLoginBox';
 import axios from 'axios';
 const clientId = "320270492524-ve80c3hmmc1108kcjemrgge0bjgigtku.apps.googleusercontent.com"
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/Search.css';
+import '../../assets/styles/Search.css';
 
 const SearchGameCard = ({
   title,

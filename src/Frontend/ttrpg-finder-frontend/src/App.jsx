@@ -1,12 +1,14 @@
-// App.jsx
+// srd/App.jsx
+
+// REGION: Imports
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import { AuthProvider } from './utils/AuthContext';
-import AppRoutes from './utils/AppRoutes';
-//import { GoogleAuthProvider } from '@react-oauth/google';
 
-import './styles/Globals.css';
+import Navbar from './components/Navbar';
+import { AuthProvider } from './context/AuthContext';
+import AppRoutes from './routes/AppRoutes';
+// END-REGION: Imports
+import './assets/styles/Globals.css';
 
 
 function App() {

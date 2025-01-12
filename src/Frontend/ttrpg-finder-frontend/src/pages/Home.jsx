@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from 'react';
-import { useAuth } from '../utils/AuthContext'; 
+import { useAuth } from '../context/AuthContext'; 
 import { useNavigate } from 'react-router-dom';
-import '../styles/Home.css';
-import '../styles/GameContainer.css';
-import welcome_picture from '../assets/welcome-picture.png';  // Import the image
+import '../assets/styles/Home.css';
+import '../assets/styles/GameContainer.css';
+import welcome_picture from '../assets/images/welcome-picture.png';  // Import the image
 
 const Home = () => {
 

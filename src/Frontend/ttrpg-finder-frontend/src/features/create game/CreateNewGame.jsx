@@ -1,10 +1,10 @@
 import React, { useState, useEffect} from 'react';
-import '../../styles/Dashboard.css'
-import '../../styles/GameContainer.css';
-import '../../styles/CreateNewGame.css';
-import MapComponent from '../../components/search/MapComponent'; // Import the MapComponent
+import '../../assets/styles/Dashboard.css'
+import '../../assets/styles/GameContainer.css';
+import '../../assets/styles/CreateNewGame.css';
+import MapComponent from '../../features/search/MapComponent'; // Import the MapComponent
 import axios from 'axios';
-import { useAuth } from '../../utils/AuthContext'; // Importing the custom hook from AuthContext
+import { useAuth } from '../../context/AuthContext'; // Importing the custom hook from AuthContext
 import { use } from 'react';
 
 const CreateNewGame = ({onClose}) => {

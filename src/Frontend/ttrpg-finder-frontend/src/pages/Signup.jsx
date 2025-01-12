@@ -1,16 +1,17 @@
+// REGION: Imports
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../utils/AuthContext';
-import SubmitButton from '../components/login and signup/SubmitButton';
-import PasswordVisibilityToggle from '../components/login and signup/PasswordVisibilityToggle';
-import InputField from '../components/login and signup/InputField';
-import FormInput from '../components/login and signup/FormInput';
-import CheckboxInput from '../components/login and signup/CheckboxInput';
-import '../styles/Signup.css';
+import { useAuth } from '../context/AuthContext';
+import SubmitButton from '../features/auth/SubmitButton';
+import PasswordVisibilityToggle from '../features/auth/PasswordVisibilityToggle';
+import InputField from '../features/auth/InputField';
+import FormInput from '../features/auth/FormInput';
+import CheckboxInput from '../features/auth/CheckboxInput';
+import '../assets/styles/Signup.css';
 import { useGoogleLogin } from '@react-oauth/google'
-import GoogleLoginComponent from '../components/login and signup/GoogleLoginBox';
-
+import GoogleLoginComponent from '../features/auth/GoogleLoginBox';
+// END-REGION: Imports
 
 const Signup = () => {
   const navigate = useNavigate();

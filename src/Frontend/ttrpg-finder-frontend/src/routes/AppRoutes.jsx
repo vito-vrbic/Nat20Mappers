@@ -1,8 +1,8 @@
+// REGION: Imports
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../context/AuthContext';
 
-// Import Pages
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
@@ -10,6 +10,7 @@ import Search from '../pages/Search';
 import Dashboard from '../pages/Dashboard';
 import ProfileForm from '../pages/ProfileForm';
 import UserProfile from '../pages/UserProfile';
+// END-REGION: Imports
 
 const AppRoutes = () => {
   const { isAuthenticated, user, loading } = useAuth();

@@ -1,9 +1,9 @@
 // REGION: Imports
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../utils/AuthContext';
-import NavItem from '../utils/NavItem';
-import '../styles/Navbar.css';
+import { useAuth } from '../context/AuthContext';
+import NavItem from './NavItem';
+import '../assets/styles/Navbar.css';
 
 // REGION: Navbar Component
 const Navbar = () => {

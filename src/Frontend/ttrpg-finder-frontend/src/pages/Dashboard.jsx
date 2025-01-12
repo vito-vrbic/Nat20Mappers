@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Dashboard.css';
-import '../styles/GameContainer.css';
+import '../assets/styles/Dashboard.css';
+import '../assets/styles/GameContainer.css';
 import axios from 'axios';
-import { useAuth } from '../utils/AuthContext';
-import CreateNewGame from '../components/create game/CreateNewGame';
-import plusSymbol from '../assets/plus-symbol-button.png';
-import wifiIcon from '../assets/wi-fi.png';
-import homeIcon from '../assets/home.png';
-import buildingIcon from '../assets/building.png';
+import { useAuth } from '../context/AuthContext';
+import CreateNewGame from '../features/create game/CreateNewGame';
+import plusSymbol from '../assets/images/plus-symbol-button.png';
+import wifiIcon from '../assets/images/wi-fi.png';
+import homeIcon from '../assets/images/home.png';
+import buildingIcon from '../assets/images/building.png';
 
 const Dashboard = () => {
   const { isAuthenticated, user } = useAuth();
@@ -23,7 +23,7 @@ const Dashboard = () => {
       const response = await axios.get('/api/games/created', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-  
+
       const data = Array.isArray(response.data.games) ? response.data.games : [];
       console.log("Fetched created games:", data);
       setCreatedGames(data);

@@ -1,6 +1,6 @@
 import React from 'react';
 import MapComponent from './MapComponent'; // Import the MapComponent
-import '../../styles/Search.css';
+import '../../assets/styles/Search.css';
 
 const SearchFilters = ({
   isAuthenticated,

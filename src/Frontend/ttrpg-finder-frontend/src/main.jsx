@@ -1,10 +1,14 @@
 // src/main.jsx
+
+// REGION: Imports
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './styles/Globals.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import 'leaflet/dist/leaflet.css';
+
+import './assets/styles/Globals.css';
+
+import App from './App';
+// END-REGION: Imports
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

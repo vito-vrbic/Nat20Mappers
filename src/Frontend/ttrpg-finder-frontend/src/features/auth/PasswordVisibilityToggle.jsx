@@ -1,6 +1,6 @@
 import React from 'react';
-import showPass from '../../assets/ShowPassword.png';
-import hidePass from '../../assets/HidePassword.png';
+import showPass from '../../assets/images/ShowPassword.png';
+import hidePass from '../../assets/images/HidePassword.png';
 
 const PasswordVisibilityToggle = ({ isPasswordVisible, togglePasswordVisibility }) => {
   return (

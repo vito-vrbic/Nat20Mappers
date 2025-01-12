@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../utils/AuthContext';
-import SearchFilters from '../components/search/SearchFilters';
-import SearchResults from '../components/search/SearchResults';
-import '../styles/Search.css';
+import { useAuth } from '../context/AuthContext';
+import SearchFilters from '../features/search/SearchFilters';
+import SearchResults from '../features/search/SearchResults';
+import '../assets/styles/Search.css';
 
 const Search = () => {
   const { isAuthenticated } = useAuth();

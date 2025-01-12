@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // React Router v6
-import { useAuth } from '../utils/AuthContext';
+
+import { useAuth } from '../context/AuthContext';
 
 const ProfileForm = () => {
   const { user, isAuthenticated, loading: authLoading } = useAuth(); // Access user from Auth context

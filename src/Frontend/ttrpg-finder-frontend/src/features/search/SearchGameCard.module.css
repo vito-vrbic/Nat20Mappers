@@ -1,0 +1,56 @@
+.gameCard {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .expanded {
+    background-color: #f0f0f0;
+  }
+  
+  .gameSummary {
+    display: flex;
+    align-items: center;
+  }
+  
+  .gameImage {
+    width: 80px;
+    height: 80px;
+    margin-right: 16px;
+  }
+  
+  .gameDetails {
+    flex: 1;
+  }
+  
+  .gameDetails h3 {
+    font-size: 1.4rem;
+  }
+  
+  .gameExtraDetails {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #ddd;
+    opacity: 0; /* Initially hidden */
+    max-height: 0; /* Initially collapsed */
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+  }
+  
+  .gameCard.expanded .gameExtraDetails {
+    opacity: 1;
+    max-height: 1000px;
+  }
+  
+  .gameCard:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .gameCard:active {
+    background-color: #ececec;
+  }
+  

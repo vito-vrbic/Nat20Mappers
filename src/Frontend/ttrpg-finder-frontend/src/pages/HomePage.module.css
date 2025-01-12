@@ -1,4 +1,6 @@
-.Home-page{
+/* HomePage.module.css */
+
+.homePage {
     color: white;
     background-color: #082567;
     display: flex;
@@ -8,32 +10,31 @@
     border: 5px solid #bbb;
 }
 
-.Welcome-text{
+.welcomeText {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.Welcome-text h1{
+.welcomeText h1 {
     font-size: 3rem;
 }
 
-.Info-text{
+.infoText {
     border: 5px solid #bbb;
     background-color: #082567;
-
 }
 
-.Info-text p{
+.infoText p {
     margin-top: 0;
 }
 
-.Info-text h1{
+.infoText h1 {
     font-size: 2rem;
     margin-left: 10px;
 }
 
-.Purpose-text{
+.purposeText {
     text-align: center;
     font-size: 1.5rem;
     margin: 10px;
@@ -42,11 +43,11 @@
     padding-left: 200px;
 }
 
-.Purpose-text p:nth-of-type(2){
+.purposeText p:nth-of-type(2) {
     font-size: 1.8rem;
 }
 
-.Features-conatainer{
+.featuresContainer {
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -54,82 +55,81 @@
     margin: 10px;
 }
 
-.Features-conatainer div{
+.featuresContainer div {
     background-color: #bbb;
     border-radius: 25px;
     margin: 15px;
     color: black;
 }
 
-.Features-conatainer ul{
+.featuresContainer ul {
     list-style-type: none;
     text-align: center;
     padding-left: 0px;
 }
 
-.End-text{
+.endText {
     background-color: #082567;
     border: 5px solid #bbb;
     text-align: center;
 }
 
-.End-text h1:nth-of-type(1){
+.endText h1:nth-of-type(1) {
     padding: 100px;
     font-size: 4rem;
 }
 
-.Public-games{
+.publicGames {
     background-color: #082567;
     border: 5px solid #bbb;
 }
 
-.Public-games h1{
+.publicGames h1 {
     margin: 0;
     padding: 15px;
 }
 
-.Public-games ul{
+.publicGames ul {
     padding-left: 0;
 }
 
-.Home-page img{
+.welcomeImage {
     max-width: 50%;
     height: auto;
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%);
 }
 
-
 @media (max-width: 768px) {
-    .Purpose-text {
+    .purposeText {
         padding: 0;
     }
 
-    .Home-page img {
+    .welcomeImage {
         display: none;
     }
 
-    .Features-conatainer {
+    .featuresContainer {
         display: flex;
         flex-direction: column;
     }
 
-    .End-text h1:nth-of-type(1){
+    .endText h1:nth-of-type(1) {
         padding: 0;
         font-size: 2rem;
     }
 
-    .Features-conatainer ul{
+    .featuresContainer ul {
         list-style-type: none;
         text-align: center;
         padding-left: 0px;
     }
 
-    .Welcome-text{
+    .welcomeText {
         width: 100%;
         text-align: center;
     }
 
-    *{
+    * {
         box-sizing: border-box;
     }
 }

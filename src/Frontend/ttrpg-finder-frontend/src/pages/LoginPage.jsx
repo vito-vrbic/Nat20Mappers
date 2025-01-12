@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import FormInput from '../features/auth/FormInput';
 import PasswordVisibilityToggle from '../features/auth/PasswordVisibilityToggle';
 import SubmitButton from '../features/auth/SubmitButton';
-import '../assets/styles/Login.css';
-import { useGoogleLogin } from '@react-oauth/google'
-import GoogleLoginComponent from '../features/auth/GoogleLoginBox';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import styles from './LoginPage.module.css';  // Import the CSS Module
+
 const clientId = "320270492524-ve80c3hmmc1108kcjemrgge0bjgigtku.apps.googleusercontent.com"
 
 const Login = () => {
   
   const { login, checkForGoogleLogin, gerror } = useAuth();
- 
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -23,28 +22,23 @@ const Login = () => {
   const [error, setError] = useState('');
 
   const googlePrijava = useGoogleLogin({
-    onSuccess: async (response)=>{
-      try{
-        const res=await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers:{            
+    onSuccess: async (response) => {
+      try {
+        const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: {            
             Authorization: `Bearer ${response.access_token}`,
           },
-        }
-        );
+        });
         const userData = res.data;
-        console.log(userData);
-        try{
-          await checkForGoogleLogin(userData,false);
+        try {
+          await checkForGoogleLogin(userData, false);
           navigate('/dashboard');
-        }
-        catch(err){
+        } catch (err) {
           console.log("Error found");
           setLoading(false);
         }
         console.log(gerror);
-      }
-      catch (err){
+      } catch (err) {
         setError("Google login failed. Please try again with a different email.");
       }
     },
@@ -77,10 +71,10 @@ const Login = () => {
   };
 
   return (
-    <div className="LogInBox">
-      <div className="Title">Log in</div>
-      <form className="inputs" onSubmit={handleSubmit}>
-        <div className="input">
+    <div className={styles.LogInBox}>
+      <div className={styles.Title}>Log in</div>
+      <form className={styles.inputs} onSubmit={handleSubmit}>
+        <div className={styles.input}>
           <FormInput
             label="Username"
             type="text"
@@ -91,7 +85,7 @@ const Login = () => {
           />
         </div>
 
-        <div className="input">
+        <div className={styles.input}>
           <FormInput
             label="Password"
             type={isPasswordVisible ? 'text' : 'password'}
@@ -106,23 +100,22 @@ const Login = () => {
           />
         </div>
 
-        <div className="forgotPassword">Forgot password?</div>
+        <div className={styles.forgotPassword}>Forgot password?</div>
 
-        {/* Submit Button with loading and disabled handling */}
         <SubmitButton loading={loading} disabled={loading || !username || !password}>
           Log in
         </SubmitButton>
       </form>
 
-      <div className="gotoSignup">
+      <div className={styles.gotoSignup}>
         No account? <Link to="/signup">Sign up</Link>
       </div>
 
-    
-      <div className="googleLoginButton" onClick={()=>googlePrijava()}><div className='googleLoginText'>Log in with Google</div></div>
+      <div className={styles.googleLoginButton} onClick={() => googlePrijava()}>
+        <div className={styles.googleLoginText}>Log in with Google</div>
+      </div>
 
-      {error && <div className="error-message">{error}</div>}
-      {/*<GoogleLoginComponent/>*/}
+      {error && <div className={styles.errorMessage}>{error}</div>}
     </div>
   );
 };

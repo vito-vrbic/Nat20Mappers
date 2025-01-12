@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import SearchFilters from '../features/search/SearchFilters';
 import SearchResults from '../features/search/SearchResults';
-import '../assets/styles/Search.css';
+import styles from './SearchPage.module.css'; // Importing CSS module
 
 const Search = () => {
   const { isAuthenticated } = useAuth();
@@ -58,7 +58,7 @@ const Search = () => {
   };
 
   return (
-    <div className="search">
+    <div className={styles.search}> {/* Apply the 'search' class from CSS Module */}
       {/* Filter Form */}
       <SearchFilters
         isAuthenticated={isAuthenticated}

@@ -1,4 +1,3 @@
-// REGION: Imports
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,10 +7,9 @@ import PasswordVisibilityToggle from '../features/auth/PasswordVisibilityToggle'
 import InputField from '../features/auth/InputField';
 import FormInput from '../features/auth/FormInput';
 import CheckboxInput from '../features/auth/CheckboxInput';
-import '../assets/styles/Signup.css';
+import styles from './SignupPage.module.css';  // Import styles as a module
 import { useGoogleLogin } from '@react-oauth/google'
 import GoogleLoginComponent from '../features/auth/GoogleLoginBox';
-// END-REGION: Imports
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -47,23 +45,21 @@ const Signup = () => {
   const googleSignIn = useGoogleLogin({
     onSuccess: async (response)=>{
       try{
-        const res=await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
-        {
+        const res=await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers:{            
             Authorization: `Bearer ${response.access_token}`,
           },
-        }
-        );
+        });
         const userData = res.data;
         console.log(userData);
-        await checkForGoogleLogin(userData,true);
+        await checkForGoogleLogin(userData, true);
         navigate('/dashboard');
-      }
-      catch (err){
+      } catch (err) {
         console.log(err);
       }
     },
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -100,9 +96,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="SignUpBox">
-      <div className="Title">Sign up</div>
-      <form className="inputs" onSubmit={handleSubmit}>
+    <div className={styles.SignUpBox}>
+      <div className={styles.Title}>Sign up</div>
+      <form className={styles.inputs} onSubmit={handleSubmit}>
         {/* Username Input */}
         <FormInput
           label="Username"
@@ -124,7 +120,7 @@ const Signup = () => {
         />
 
         {/* Password Input with PasswordVisibilityToggle */}
-        <div className="input">
+        <div className={styles.input}>
           <InputField
             label="Password"
             type={isPasswordVisible ? 'text' : 'password'}
@@ -140,7 +136,7 @@ const Signup = () => {
         </div>
 
         {/* Confirm Password Input with PasswordVisibilityToggle */}
-        <div className="input">
+        <div className={styles.input}>
           <InputField
             label="Confirm password"
             type={isConfirmPasswordVisible ? 'text' : 'password'}
@@ -175,17 +171,18 @@ const Signup = () => {
         )}
 
         {/* Error Message */}
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
         {/* Submit Button */}
         <SubmitButton loading={isLoading} disabled={isLoading}>
           Sign up
         </SubmitButton>
-        
       </form>
-      <div className="googleLoginButton" onClick={()=>googleSignIn()}><div className='googleLoginText'>Sign up & Log in with Google</div></div>
+      
+      <div className={styles.googleLoginButton} onClick={() => googleSignIn()}>
+        <div className={styles.googleLoginText}>Sign up & Log in with Google</div>
+      </div>
     </div>
-    
   );
 };
 

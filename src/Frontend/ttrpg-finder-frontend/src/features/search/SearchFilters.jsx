@@ -1,6 +1,6 @@
 import React from 'react';
 import MapComponent from './MapComponent'; // Import the MapComponent
-import '../../assets/styles/Search.css';
+import styles from './SearchFilters.module.css'; // Import the CSS module
 
 const SearchFilters = ({
   isAuthenticated,
@@ -25,8 +25,8 @@ const SearchFilters = ({
   handleApplyFilters,
 }) => {
   return (
-    <div className="search-filters">
-      <h2 className="search-filters__title">
+    <div className={styles.searchFilters}>
+      <h2 className={styles.searchFiltersTitle}>
         {isAuthenticated ? 'Advanced Game Filters' : 'Basic Game Filters'}
       </h2>
 
@@ -36,7 +36,7 @@ const SearchFilters = ({
         <input
           type="text"
           placeholder="Search by title..."
-          className="search-filters__input"
+          className={styles.searchFiltersInput}
           value={gameTitle}
           onChange={(e) => setGameTitle(e.target.value)}
         />
@@ -46,7 +46,7 @@ const SearchFilters = ({
       <label>
         Game Type:
         <select
-          className="search-filters__select"
+          className={styles.searchFiltersSelect}
           value={gameType}
           onChange={(e) => setGameType(e.target.value)}
         >
@@ -68,7 +68,7 @@ const SearchFilters = ({
           <input
             type="number"
             placeholder="Leave empty for no radius filter..."
-            className="search-filters__input"
+            className={styles.searchFiltersInput}
             value={radius}
             onChange={(e) => setRadius(e.target.value)}
             min="0"
@@ -81,7 +81,7 @@ const SearchFilters = ({
         Include Full Games:
         <input
           type="checkbox"
-          className="search-filters__checkbox"
+          className={styles.searchFiltersCheckbox}
           checked={includeFullGames}
           onChange={(e) => setIncludeFullGames(e.target.checked)}
         />
@@ -91,7 +91,7 @@ const SearchFilters = ({
         Application Required:
         <input
           type="checkbox"
-          className="search-filters__checkbox"
+          className={styles.searchFiltersCheckbox}
           checked={applicationRequired}
           onChange={(e) => setApplicationRequired(e.target.checked)}
         />
@@ -101,7 +101,7 @@ const SearchFilters = ({
         Include User-Made Games:
         <input
           type="checkbox"
-          className="search-filters__checkbox"
+          className={styles.searchFiltersCheckbox}
           checked={includeUserMadeGames}
           onChange={(e) => setIncludeUserMadeGames(e.target.checked)}
         />
@@ -111,7 +111,7 @@ const SearchFilters = ({
         Include Business-Made Games:
         <input
           type="checkbox"
-          className="search-filters__checkbox"
+          className={styles.searchFiltersCheckbox}
           checked={includeBusinessMadeGames}
           onChange={(e) => setIncludeBusinessMadeGames(e.target.checked)}
         />
@@ -122,7 +122,7 @@ const SearchFilters = ({
         <label>
           Game Availability:
           <select
-            className="search-filters__select"
+            className={styles.searchFiltersSelect}
             value={gameAvailability}
             onChange={(e) => setGameAvailability(e.target.value)}
           >
@@ -134,7 +134,7 @@ const SearchFilters = ({
       )}
 
       {/* Apply Filters Button */}
-      <button className="search-filters__apply-btn" onClick={handleApplyFilters}>
+      <button className={styles.searchFiltersApplyBtn} onClick={handleApplyFilters}>
         Apply Filters
       </button>
     </div>

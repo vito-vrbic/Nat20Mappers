@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../assets/styles/Search.css';
+import styles from './SearchGameCard.module.css'; // Import the CSS module
 
 const SearchGameCard = ({
   title,
@@ -25,10 +25,13 @@ const SearchGameCard = ({
   };
 
   return (
-    <div className={`game-card ${isExpanded ? "expanded" : ""}`} onClick={toggleExpanded}>
-      <div className="game-summary">
-        {image && <img src={image} alt={`${title} cover`} className="game-image" />}
-        <div className="game-details">
+    <div 
+      className={`${styles.gameCard} ${isExpanded ? styles.expanded : ''}`} 
+      onClick={toggleExpanded}
+    >
+      <div className={styles.gameSummary}>
+        {image && <img src={image} alt={`${title} cover`} className={styles.gameImage} />}
+        <div className={styles.gameDetails}>
           <h3>{title}</h3>
           <p>{description}</p>
         </div>
@@ -36,7 +39,7 @@ const SearchGameCard = ({
 
       {/* Conditionally render extra details based on isExpanded state */}
       {isExpanded && (
-        <div className="game-extra-details">
+        <div className={styles.gameExtraDetails}>
           {complexity && <p><strong>Complexity:</strong> {complexity}</p>}
           {estimatedLength && <p><strong>Estimated Length:</strong> {estimatedLength}</p>}
           {startTimestamp && <p><strong>Start Time:</strong> {new Date(startTimestamp).toLocaleString()}</p>}

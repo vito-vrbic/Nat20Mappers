@@ -1,0 +1,168 @@
+/* Search Container */
+.search {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Filters Section */
+.searchFilters {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.searchFiltersTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Inputs */
+.searchFiltersInput,
+.searchFiltersSelect,
+.searchFiltersCheckbox {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.searchFiltersInput:focus,
+.searchFiltersSelect:focus,
+.searchFiltersCheckbox:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.searchFiltersCheckbox {
+  width: auto;
+  margin-right: 10px;
+}
+
+.searchFiltersApplyBtn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.searchFiltersApplyBtn:hover {
+  background-color: #0056b3;
+}
+
+/* Map Styles */
+.react-leafletContainer {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Results Section */
+.searchResults {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchResults h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.searchResults ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.searchResults li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  font-size: 1rem;
+}
+
+.searchResults li:last-child {
+  border-bottom: none;
+}
+
+.searchResults h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.searchResults p {
+  color: #666;
+}
+
+/* Pagination Styles */
+.paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.paginationControlsButton {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s;
+}
+
+.paginationControlsButton:hover {
+  background-color: #0056b3;
+}
+
+.paginationControlsButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationControlsSpan {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .searchFiltersTitle {
+    font-size: 1.3rem;
+  }
+
+  .searchFiltersInput,
+  .searchFiltersSelect,
+  .searchFiltersCheckbox {
+    font-size: 0.9rem;
+  }
+
+  .searchFiltersApplyBtn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}

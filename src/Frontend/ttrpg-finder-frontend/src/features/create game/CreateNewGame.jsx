@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import '../../assets/styles/Dashboard.css'
+import '../../pages/DashboardPage.module.css'
 import '../../assets/styles/GameContainer.css';
 import '../../assets/styles/CreateNewGame.css';
 import MapComponent from '../../features/search/MapComponent'; // Import the MapComponent

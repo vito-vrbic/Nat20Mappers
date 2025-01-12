@@ -1,0 +1,132 @@
+[
+    {
+      "id": "12345",
+      "title": "Battle Royale",
+      "type": "online",
+      "location": { "lat": 45.8131, "lng": 15.978 },
+      "availability": "public",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "67890",
+      "title": "Super Battle Royale",
+      "type": "online",
+      "location": { "lat": 45.8141, "lng": 15.979 },
+      "availability": "public",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "11223",
+      "title": "Local Soccer League",
+      "type": "local",
+      "location": { "lat": 45.8200, "lng": 15.975 },
+      "availability": "private",
+      "createdBy": "business",
+      "applicationRequired": false,
+      "status": "complete"
+    },
+    {
+      "id": "33445",
+      "title": "Extreme Racing",
+      "type": "online",
+      "location": { "lat": 45.8205, "lng": 15.970 },
+      "availability": "public",
+      "createdBy": "business",
+      "applicationRequired": true,
+      "status": "in-progress"
+    },
+    {
+      "id": "55667",
+      "title": "RPG Adventure Quest",
+      "type": "online",
+      "location": { "lat": 45.8350, "lng": 15.960 },
+      "availability": "private",
+      "createdBy": "user",
+      "applicationRequired": false,
+      "status": "complete"
+    },
+    {
+      "id": "77889",
+      "title": "Fantasy Football",
+      "type": "local",
+      "location": { "lat": 45.8200, "lng": 15.965 },
+      "availability": "public",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "99001",
+      "title": "Space Invaders VR",
+      "type": "online",
+      "location": { "lat": 45.8150, "lng": 15.980 },
+      "availability": "public",
+      "createdBy": "business",
+      "applicationRequired": false,
+      "status": "complete"
+    },
+    {
+      "id": "22334",
+      "title": "Zombie Survival",
+      "type": "online",
+      "location": { "lat": 45.8100, "lng": 15.985 },
+      "availability": "private",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "44556",
+      "title": "Kingdom Clash",
+      "type": "online",
+      "location": { "lat": 45.8180, "lng": 15.987 },
+      "availability": "public",
+      "createdBy": "business",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "66778",
+      "title": "City Building Sim",
+      "type": "local",
+      "location": { "lat": 45.8300, "lng": 15.950 },
+      "availability": "private",
+      "createdBy": "user",
+      "applicationRequired": false,
+      "status": "in-progress"
+    },
+    {
+      "id": "88990",
+      "title": "Pirate Adventures",
+      "type": "online",
+      "location": { "lat": 45.8360, "lng": 15.965 },
+      "availability": "public",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    },
+    {
+      "id": "12332",
+      "title": "Medieval Battle Royale",
+      "type": "online",
+      "location": { "lat": 45.8120, "lng": 15.960 },
+      "availability": "private",
+      "createdBy": "business",
+      "applicationRequired": false,
+      "status": "complete"
+    },
+    {
+      "id": "55544",
+      "title": "Hackathon Tournament",
+      "type": "online",
+      "location": { "lat": 45.8200, "lng": 15.955 },
+      "availability": "public",
+      "createdBy": "user",
+      "applicationRequired": true,
+      "status": "complete"
+    }
+  ]  

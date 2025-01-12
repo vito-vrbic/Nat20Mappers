@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1736679849602",
+    "username": "fez",
+    "email": "fez@fez",
+    "password": "password123",
+    "role": "business",
+    "organizationName": "fez fez"
+  },
+  {
+    "id": "1736681238006",
+    "username": "greg",
+    "email": "greg'scakes_@gmail.com",
+    "password": "password456",
+    "role": "private",
+    "organizationName": null
+  }
+]

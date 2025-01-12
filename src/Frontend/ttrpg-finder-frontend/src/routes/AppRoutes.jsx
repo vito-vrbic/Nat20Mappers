@@ -3,13 +3,13 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import Search from '../pages/Search';
-import Dashboard from '../pages/Dashboard';
-import ProfileForm from '../pages/ProfileForm';
-import UserProfile from '../pages/UserProfile';
+import Home from '../pages/HomePage';
+import Login from '../pages/LoginPage';
+import Signup from '../pages/SignupPage';
+import Search from '../pages/SearchPage';
+import Dashboard from '../pages/DashboardPage';
+import ProfileForm from '../pages/ProfileEditPage';
+import UserProfile from '../pages/ProfileViewPage';
 // END-REGION: Imports
 
 const AppRoutes = () => {

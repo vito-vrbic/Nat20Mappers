@@ -12,6 +12,7 @@ const { save_user_db } = require('./packages/server_unload');
 // REGION: Routes
 const authRoutes = require('./routes/auth_routes');
 const dataRoutes = require('./routes/data_routes');
+const gameRoutes = require('./routes/game_routes');
 // REGION-END: Routes
 
 // REGION: Necessary
@@ -22,6 +23,7 @@ app.use(express.json());
 // REGION: Route paths
 app.use('/auth', authRoutes);
 app.use('/data', dataRoutes);
+app.use('/games', gameRoutes)
 // REGION-END: Route paths
 
 // REGION: Server start

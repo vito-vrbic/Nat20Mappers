@@ -1,15 +1,20 @@
+label
+{
+  color:black;
+}
+
 .gameCard {
+    background-color: #24353a;
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
     padding: 16px;
     margin-bottom: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
   }
   
   .expanded {
-    background-color: #f0f0f0;
+    background-color: #24353a;
   }
   
   .gameSummary {
@@ -47,7 +52,7 @@
   }
   
   .gameCard:hover {
-    background-color: #f9f9f9;
+    background-color: #24353a;
   }
   
   .gameCard:active {

@@ -5,7 +5,15 @@
     "email": "fez@fez",
     "password": "password123",
     "role": "business",
-    "organizationName": "fez fez"
+    "organizationName": "fez fez",
+    "hostedGames": [
+      "12345",
+      "67890"
+    ],
+    "appliedGames": [
+      "33445",
+      "55667"
+    ]
   },
   {
     "id": "1736681238006",
@@ -13,6 +21,11 @@
     "email": "greg'scakes_@gmail.com",
     "password": "password456",
     "role": "private",
-    "organizationName": null
+    "organizationName": null,
+    "hostedGames": [],
+    "appliedGames": [
+      "22334",
+      "44556"
+    ]
   }
 ]

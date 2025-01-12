@@ -19,7 +19,7 @@
 
 .searchFiltersTitle {
   font-size: 1.5rem;
-  color: #333;
+  color: #000;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -50,7 +50,7 @@
 
 .searchFiltersApplyBtn {
   background-color: #007bff;
-  color: white;
+  color: black;
   padding: 12px 20px;
   font-size: 1rem;
   border: none;
@@ -120,7 +120,7 @@
 
 .paginationControlsButton {
   background-color: #007bff;
-  color: white;
+  color: black;
   padding: 8px 16px;
   font-size: 1rem;
   border: none;

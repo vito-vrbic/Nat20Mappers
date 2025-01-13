@@ -1,6 +1,5 @@
 package com.ttrpg.model;
 
-import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 

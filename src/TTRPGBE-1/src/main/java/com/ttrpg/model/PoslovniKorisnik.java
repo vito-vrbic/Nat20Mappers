@@ -1,5 +1,6 @@
 package com.ttrpg.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -9,7 +10,7 @@ import jakarta.persistence.OneToOne;
 public class PoslovniKorisnik extends Korisnik {
     
     // OneToOne veza s OrgProfilom, gdje "business_user" označava mappedBy
-    @OneToOne(mappedBy = "business_user")
+    @OneToOne(cascade = CascadeType.ALL)
     private OrgProfil company;
 
     // Konstruktor bez argumenata

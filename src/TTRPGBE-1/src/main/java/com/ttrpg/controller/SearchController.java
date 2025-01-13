@@ -26,10 +26,10 @@ public class SearchController {
     public ResponseEntity<HashMap<String, List<Igra>>> searchIgre22(@RequestBody SearchRequest sr) {
         
         // Dohvaća kriterije pretraživanja iz zahtjeva
-        String available = sr.getGameAvailability();
-        String tipIgre = sr.getGameType();
+        // String available = sr.getGameAvailability();
+        // String tipIgre = sr.getGameType();
         Boolean trebaPrijavnica = sr.getApplicationRequired();
-        Boolean ukljucipune = sr.getIncludeFullGames();
+        // Boolean ukljucipune = sr.getIncludeFullGames();
         Double radius = 0.0;
 
         // Pokušava parsirati radius iz zahtjeva
@@ -40,10 +40,10 @@ public class SearchController {
         }
 
         MapLocation ml = sr.getMapLocation();
-        Boolean ukljucenePoslovne = sr.getIncludeBusinessMadeGames();
-        Boolean ukljucenePrivatne = sr.getIncludeUserMadeGames();
+        // Boolean ukljucenePoslovne = sr.getIncludeBusinessMadeGames();
+        // Boolean ukljucenePrivatne = sr.getIncludeUserMadeGames();
         List<Igra> li = igraService.searchIgraService(sr.getGameTitle());
-        Integer stranica = sr.getPage();
+        // Integer stranica = sr.getPage();
 
         // Filtrira igre na osnovu uvjeta iz zahtjeva
         Stream<Igra> liStream = li.stream();

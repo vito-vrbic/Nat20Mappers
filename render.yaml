@@ -2,7 +2,6 @@ services:
   - type: web
     name: ttrpg-finder
     env: docker
-    dockerComposePath: docker-compose.yml
     plan: free
     buildCommand: ""
     startCommand: docker-compose up

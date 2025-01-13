@@ -1,5 +1,5 @@
 services:
-  - type: database
+  - type: web
     name: ttrpg-database
     env: docker
     plan: free
@@ -14,7 +14,7 @@ services:
     disk:
       sizeGB: 1
     ports:
-      - 5433:5432
+      - 5432:5432
 
   - type: web
     name: ttrpg-backend

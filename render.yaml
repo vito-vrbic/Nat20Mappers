@@ -1,10 +1,46 @@
 services:
-  - type: web
-    name: ttrpg-finder
+  - type: database
+    name: ttrpg-database
     env: docker
     plan: free
-    buildCommand: ""
-    startCommand: docker-compose up
+    dockerImage: postgres:15-alpine
     envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
+      - key: POSTGRES_USER
+        value: blazh
+      - key: POSTGRES_PASSWORD
+        value: t6c2vTegjh
+      - key: POSTGRES_DB
+        value: TTRPG_Base
+    disk:
+      sizeGB: 1
+    ports:
+      - 5433:5432
+
+  - type: web
+    name: ttrpg-backend
+    env: docker
+    plan: free
+    buildCommand: docker build -t ttrpg-backend ./src/TTRPGBE-1
+    startCommand: docker run -p 5000:5000 ttrpg-backend
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://ttrpg-database:5432/TTRPG_Base
+      - key: SPRING_DATASOURCE_USERNAME
+        value: blazh
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: t6c2vTegjh
+    dependsOn:
+      - ttrpg-database
+    ports:
+      - 5000:5000
+
+  - type: web
+    name: ttrpg-frontend
+    env: docker
+    plan: free
+    buildCommand: docker build -t ttrpg-frontend ./src/Frontend/ttrpg-finder-frontend
+    startCommand: docker run -p 5173:80 ttrpg-frontend
+    dependsOn:
+      - ttrpg-backend
+    ports:
+      - 5173:80

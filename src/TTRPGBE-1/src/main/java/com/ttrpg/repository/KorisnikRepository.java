@@ -10,7 +10,7 @@ import com.ttrpg.model.Korisnik;
 
 @Repository
 
-public interface KorisnikRepository extends JpaRepository <Korisnik,Integer>{
+public interface KorisnikRepository extends JpaRepository <Korisnik,Long>{
 	
 	
      List<Korisnik> findByUsername(String username);

@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -15,14 +17,15 @@ import jakarta.persistence.Table;
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 public class Korisnik {
 
-    @Id
-    private int userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     @Column(unique=true)
     private String username;
     private String password;
     private String role;
     private String email;
-    
+    private String organisationalName;
     
     public String getEmail() {
 		return email;
@@ -43,19 +46,20 @@ public class Korisnik {
 	// Constructors, getters, and setters
     public Korisnik() {}
 
-    public Korisnik(int userId, String username,String email, String password, String role) {
-        this.userId = userId;
+    public Korisnik(String username,String email, String password, String role, String organisationalName) {
+        
         this.username = username;
         this.password = password;
         this.role=role;
         this.email=email;
+        this.organisationalName=organisationalName;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -74,4 +78,14 @@ public class Korisnik {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getOrganisationalName() {
+		return organisationalName;
+	}
+
+	public void setOrganisationalName(String organisationalName) {
+		this.organisationalName = organisationalName;
+	}
+    
+    
 }

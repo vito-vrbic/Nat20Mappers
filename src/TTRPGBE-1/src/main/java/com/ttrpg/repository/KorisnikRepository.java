@@ -14,8 +14,10 @@ public interface KorisnikRepository extends JpaRepository <Korisnik,Long>{
 	
 	
      List<Korisnik> findByUsername(String username);
-	/*List<Korisnik> findByEmailContaining(String email);
-	Optional<Korisnik> findByUsernameAndEmail(String username, String email);*/
+	 List<Korisnik> findByEmail(String email);
+	 <S extends Korisnik> S save(Korisnik k);
+	/*Optional<Korisnik> findByUsernameAndEmail(String username, String email);*/
+	
 	
 
 }

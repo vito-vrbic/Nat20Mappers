@@ -49,6 +49,13 @@ public class MapLocation {
 	
 	public boolean inRadius(MapLocation ml, Double radiusTrazenja) {
 		
+		///////////////
+		if ( Double.valueOf( radiusTrazenja) ==0.0) {
+			radiusTrazenja=100000.0;
+		}
+		
+		
+		//////////////
 		
 		
 		/*Preko Haversinove formule */

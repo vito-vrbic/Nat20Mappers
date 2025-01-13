@@ -1,10 +1,14 @@
 package com.ttrpg.controller;
 
+import com.ttrpg.dto.LoginRequestDTO;
+import com.ttrpg.model.PoslovniKorisnik;
+import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.service.KorisnikService;
 import com.ttrpg.service.LoginResponse;
 import com.ttrpg.service.UserData;
 import com.ttrpg.model.Korisnik;
 
+import com.ttrpg.service.jwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +24,31 @@ public class LoginController {
 
     @Autowired
     private KorisnikService userService; // Servis za rukovanje korisničkim operacijama
+    @Autowired
+    private KorisnikRepository korisnikRepository;
 
     @PostMapping // Obrada POST zahtjeva za prijavu
-    public ResponseEntity<?> login(@RequestBody Korisnik korisnik) { // Prijem korisničkih podataka iz zahtjeva
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO korisnik) { // Prijem korisničkih podataka iz zahtjeva
+        //backend prima samo korisničko ime i lozinku pa se body sprema u dto umjesto u Korisnik tip podataka
         logger.info("Login attempt for user: {}", korisnik.getUsername()); // Bilježi pokušaj prijave u log
-
         // Provjerava jesu li korisničko ime i lozinka ispravni
         if (userService.authenticate(korisnik.getUsername(), korisnik.getPassword())) {
-            
+
+            Korisnik trueKorisnik = korisnikRepository.findByUsername(korisnik.getUsername()).getFirst(); //dto ne sadrži sve podatke pa tražimo puni user
             // Generira privremeni token za korisnika
-            String token = "9472037428374928372387498237498237";
+            String token = jwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
+            String companyName = null;
+            if(trueKorisnik instanceof PoslovniKorisnik trueBusinessKorisnik) {
+                companyName= trueBusinessKorisnik.getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null
+            }
 
             // Stvara podatke o korisniku koji će biti uključeni u odgovor
             UserData ud = new UserData(
-                String.valueOf(korisnik.getUserId()),
-                korisnik.getUsername(),
-                korisnik.getEmail(),
-                "private", // Privatnost korisničkih podataka
-                null
+                String.valueOf(trueKorisnik.getUserId()),
+                trueKorisnik.getUsername(),
+                trueKorisnik.getEmail(),
+                    trueKorisnik.getRole(),// Privatnost korisničkih podataka
+                    companyName
             );
 
             // Priprema uspješan odgovor s porukom, tokenom i korisničkim podacima

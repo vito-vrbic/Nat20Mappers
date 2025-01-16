@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ttrpg.dto.BusinessProfileDetails;
-import com.ttrpg.dto.BusinessProfileUpdateRequest;
+import com.ttrpg.dto.BusinessProfileDetailsDTO;
+import com.ttrpg.dto.BusinessProfileUpdateRequestDTO;
 import com.ttrpg.service.KorisnikService;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UserController {
         }
 
         try {
-            BusinessProfileDetails profile = userService.getProfileByUsername(username);
+            BusinessProfileDetailsDTO profile = userService.getProfileByUsername(username);
             if (profile == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("message", "Profile not found"));
@@ -47,7 +47,7 @@ public class UserController {
     // UPDATE PROFILE DATA
     @PutMapping("/edit-profile")
     public ResponseEntity<?> updateProfile(@RequestHeader("Authorization") String authToken,
-                                            @RequestBody BusinessProfileUpdateRequest updateRequest) {
+                                            @RequestBody BusinessProfileUpdateRequestDTO updateRequest) {
         if (authToken == null || !userService.isValidToken(authToken.replace("Bearer ", ""))) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", "No token found or invalid token"));
@@ -59,7 +59,7 @@ public class UserController {
         }
 
         try {
-            BusinessProfileDetails updatedProfile = userService.updateProfile(authToken.replace("Bearer ", ""), updateRequest);
+            BusinessProfileDetailsDTO updatedProfile = userService.updateProfile(authToken.replace("Bearer ", ""), updateRequest);
             return ResponseEntity.ok(Map.of(
                     "message", "Profile updated successfully",
                     "updatedProfile", updatedProfile

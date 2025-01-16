@@ -42,6 +42,7 @@ public class GameController {
             gameService.saveGameEdit(request);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
+            e.printStackTrace(); // Dodano za ispisivanje greške u konzolu
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("message", "Failed to save changes"));
         }

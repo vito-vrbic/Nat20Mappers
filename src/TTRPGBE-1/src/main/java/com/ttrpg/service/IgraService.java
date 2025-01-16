@@ -322,46 +322,41 @@ public class IgraService {
 
         public void saveGameEdit(SaveGameEditRequestDTO request) {
                 Optional<Igra> existingGame = igraRepository.findById(request.getId());
-
+            
                 if (existingGame.isPresent()) {
-                        Igra existing = existingGame.get();
-
-                        if (!(existing instanceof OnlineIgra)) {
-                                throw new IllegalArgumentException(
-                                                "Game with ID " + request.getId() + " is not an OnlineIgra.");
-                        }
-
-                        OnlineIgra game = (OnlineIgra) existing;
-                        game.setTitle(request.getTitle());
-                        game.setType(request.getType());
-                        game.setLocation(request.getLocation() != null
-                                        ? new MapLocation(request.getLocation().getLat(),
-                                                        request.getLocation().getLng())
-                                        : null);
-                        game.setTimezone(request.getTimezone());
-                        game.setAvailability(request.getAvailability());
-                        game.setCreatedBy(request.getCreatedBy());
-                        game.setApplicationRequired(request.isApplicationRequired());
-                        game.setComplexity(request.getComplexity());
-                        game.setEstimatedLength(request.getEstimatedLength());
-                        game.setStartTimestamp(request.getStartTimestamp());
-                        game.setDescription(request.getDescription());
-                        game.setPravilnik(request.getPravilnik());
-                        game.setRequiresForm(request.isRequiresForm());
-
-                        // Nisam siguran sto napraviti s ovim parametrom
-                        // if (request.getFormQuestions() != null) {
-                        //         game.setFormQuestions(request.getFormQuestions());
-                        // }
-
-                        game.setCurrentPlayerCount(request.getCurrentPlayerCount());
-                        game.setMaxPlayerCount(request.getMaxPlayerCount());
-                        game.setCommunicationChannel(request.getCommunicationChannel());
-                        game.setIsHomebrew(request.isHomebrew());
-
-                        igraRepository.save(game);
+                    Igra game = existingGame.get();
+                    
+                    // Ažuriranje polja
+                    game.setTitle(request.getTitle());
+                    game.setType(request.getType());
+                    game.setLocation(request.getLocation() != null
+                            ? new MapLocation(request.getLocation().getLat(), request.getLocation().getLng())
+                            : null);
+                    game.setAvailability(request.getAvailability());
+                    game.setCreatedBy(request.getCreatedBy());
+                    game.setApplicationRequired(request.isApplicationRequired());
+                    game.setComplexity(request.getComplexity());
+                    game.setEstimatedLength(request.getEstimatedLength());
+                    game.setStartTimestamp(request.getStartTimestamp());
+                    game.setDescription(request.getDescription());
+                    game.setPravilnik(request.getPravilnik());
+                    game.setRequiresForm(request.isRequiresForm());
+            
+                    // Ne znam sto da radim s ovim parametrom
+                //     if (request.getFormQuestions() != null) {
+                //         game.setFormQuestions(request.getFormQuestions());
+                //     }
+            
+                    game.setCurrentPlayerCount(request.getCurrentPlayerCount());
+                    game.setMaxPlayerCount(request.getMaxPlayerCount());
+                    game.setCommunicationChannel(request.getCommunicationChannel());
+                    game.setIsHomebrew(request.isHomebrew());
+            
+                    // Spremanje ažurirane igre
+                    igraRepository.save(game);
                 } else {
-                        throw new EntityNotFoundException("Game with ID " + request.getId() + " not found.");
+                    throw new EntityNotFoundException("Game with ID " + request.getId() + " not found.");
                 }
-        }
+            }
+            
 }

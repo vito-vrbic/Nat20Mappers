@@ -7,8 +7,8 @@ import com.ttrpg.service.KorisnikService;
 import com.ttrpg.service.LoginResponse;
 import com.ttrpg.service.UserData;
 import com.ttrpg.model.Korisnik;
+import com.ttrpg.util.JwtUtil;
 
-import com.ttrpg.service.jwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class LoginController {
 
             Korisnik trueKorisnik = korisnikRepository.findByUsername(korisnik.getUsername()).getFirst(); //dto ne sadrži sve podatke pa tražimo puni user
             // Generira privremeni token za korisnika
-            String token = jwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
+            String token = JwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
             String companyName = null;
             if(trueKorisnik instanceof PoslovniKorisnik trueBusinessKorisnik) {
                 companyName= trueBusinessKorisnik.getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ttrpg.dto.BusinessProfileDetails;
-import com.ttrpg.dto.BusinessProfileUpdateRequest;
+import com.ttrpg.dto.BusinessProfileDetailsDTO;
+import com.ttrpg.dto.BusinessProfileUpdateRequestDTO;
 import com.ttrpg.model.Korisnik;
 import com.ttrpg.model.OrgProfil;
 import com.ttrpg.model.PoslovniKorisnik;
@@ -44,7 +44,7 @@ public class KorisnikService {
         kr.save(new Korisnik(2, "Marko59","beb2@gmail.com","Apple2","Business"));  // Spremanje drugog korisnika u bazu
     }
     
-    public BusinessProfileDetails getProfileByUsername(String username) {
+    public BusinessProfileDetailsDTO getProfileByUsername(String username) {
         Korisnik korisnik = kr.findByUsername(username).get(0);  // Pronalazi korisnika po korisničkom imenu
 
         if (korisnik == null || !(korisnik instanceof PoslovniKorisnik)) {  // Ako korisnik nije pronađen ili nije poslovni korisnik
@@ -59,7 +59,7 @@ public class KorisnikService {
         }
 
         // Mapiranje podataka u BusinessProfileDetails
-        BusinessProfileDetails details = new BusinessProfileDetails();
+        BusinessProfileDetailsDTO details = new BusinessProfileDetailsDTO();
         details.setUsername(poslovniKorisnik.getUsername());
         details.setLogo(orgProfil.getCompanyLogos() != null && !orgProfil.getCompanyLogos().isEmpty() 
             ? orgProfil.getCompanyLogos().get(orgProfil.getCompanyLogos().size() - 1).getImageUrl() 
@@ -83,7 +83,7 @@ public class KorisnikService {
         }
     }
 
-    public BusinessProfileDetails updateProfile(String authToken, BusinessProfileUpdateRequest updateRequest) {
+    public BusinessProfileDetailsDTO updateProfile(String authToken, BusinessProfileUpdateRequestDTO updateRequest) {
         if (!isValidToken(authToken)) {
             throw new SecurityException("Invalid or expired token");
         }

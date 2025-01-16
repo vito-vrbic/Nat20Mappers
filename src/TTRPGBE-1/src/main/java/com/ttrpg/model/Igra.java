@@ -3,64 +3,65 @@ package com.ttrpg.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-@Entity  // Oznaka da je ovo JPA entitet
-@Table(name = "Igra")  // Definira naziv tablice u bazi podataka
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Definira strategiju naslijeđivanja entiteta
-@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)  // Dodaje diskriminatornu kolonu za naslijeđene entitete
+@Entity // Oznaka da je ovo JPA entitet
+@Table(name = "Igra") // Definira naziv tablice u bazi podataka
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Definira strategiju naslijeđivanja entiteta
+@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING) // Dodaje diskriminatornu kolonu za
+                                                                                   // naslijeđene entitete
 public class Igra {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatsko generiranje ID-a
-    @Column(name = "game_id")  // Ime kolone u bazi podataka
-    private Long id;  // Jedinstveni identifikator igre
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Automatsko generiranje ID-a
+    @Column(name = "game_id") // Ime kolone u bazi podataka
+    private Long id; // Jedinstveni identifikator igre
 
-    @JsonProperty("title")  // Serijalizira ovaj atribut pod nazivom "title"
-    private String gameName;  // Naziv igre
+    @JsonProperty("title") // Serijalizira ovaj atribut pod nazivom "title"
+    private String gameName; // Naziv igre
 
-    @JsonProperty("type")  // Serijalizira ovaj atribut pod nazivom "type"
-    private String type;  // Tip igre (npr. online, offline)
+    @JsonProperty("type") // Serijalizira ovaj atribut pod nazivom "type"
+    private String type; // Tip igre (npr. online, offline)
 
-    @Embedded  // Oznaka za ugrađeni entitet
-    private MapLocation location;  // Lokacija igre (geografska)
+    @Embedded // Oznaka za ugrađeni entitet
+    private MapLocation location; // Lokacija igre (geografska)
 
-    @JsonProperty("availability")  // Serijalizira ovaj atribut pod nazivom "availability"
-    private String availability;  // Dostupnost igre
+    @JsonProperty("availability") // Serijalizira ovaj atribut pod nazivom "availability"
+    private String availability; // Dostupnost igre
 
-    @JsonProperty("createdBy")  // Serijalizira ovaj atribut pod nazivom "createdBy"
-    private String createdBy;  // Kreator igre (npr. korisnik ili poslovni entitet)
+    @JsonProperty("createdBy") // Serijalizira ovaj atribut pod nazivom "createdBy"
+    private String createdBy; // Kreator igre (npr. korisnik ili poslovni entitet)
 
-    @JsonProperty("applicationRequired")  // Serijalizira ovaj atribut pod nazivom "applicationRequired"
-    private Boolean applicationRequired;  // Da li je prijava potrebna za igru
+    @JsonProperty("applicationRequired") // Serijalizira ovaj atribut pod nazivom "applicationRequired"
+    private Boolean applicationRequired; // Da li je prijava potrebna za igru
 
-    @JsonProperty("complexity")  // Serijalizira ovaj atribut pod nazivom "complexity"
-    private String complexity;  // Kompleksnost igre
+    @JsonProperty("complexity") // Serijalizira ovaj atribut pod nazivom "complexity"
+    private String complexity; // Kompleksnost igre
 
-    @JsonProperty("estimatedLength")  // Serijalizira ovaj atribut pod nazivom "estimatedLength"
-    private String estimatedLength;  // Procijenjeno trajanje igre
+    @JsonProperty("estimatedLength") // Serijalizira ovaj atribut pod nazivom "estimatedLength"
+    private String estimatedLength; // Procijenjeno trajanje igre
 
-    @JsonProperty("startTimestamp")  // Serijalizira ovaj atribut pod nazivom "startTimestamp"
-    private String startTimestamp;  // Početno vrijeme igre
+    @JsonProperty("startTimestamp") // Serijalizira ovaj atribut pod nazivom "startTimestamp"
+    private String startTimestamp; // Početno vrijeme igre
 
-    @JsonProperty("description")  // Serijalizira ovaj atribut pod nazivom "description"
-    private String description;  // Opis igre
+    @JsonProperty("description") // Serijalizira ovaj atribut pod nazivom "description"
+    private String description; // Opis igre
 
-    @JsonProperty("pravilnik")  // Serijalizira ovaj atribut pod nazivom "pravilnik"
-    private String pravilnik;  // Pravila igre
+    @JsonProperty("pravilnik") // Serijalizira ovaj atribut pod nazivom "pravilnik"
+    private String pravilnik; // Pravila igre
 
-    @JsonProperty("requiresForm")  // Serijalizira ovaj atribut pod nazivom "requiresForm"
-    private Boolean requiresForm;  // Da li je potrebno ispuniti obrazac za igru
+    @JsonProperty("requiresForm") // Serijalizira ovaj atribut pod nazivom "requiresForm"
+    private Boolean requiresForm; // Da li je potrebno ispuniti obrazac za igru
 
-    @JsonProperty("currentPlayerCount")  // Serijalizira ovaj atribut pod nazivom "currentPlayerCount"
-    private Integer currentPlayerCount;  // Trenutni broj igrača u igri
+    @JsonProperty("currentPlayerCount") // Serijalizira ovaj atribut pod nazivom "currentPlayerCount"
+    private Integer currentPlayerCount; // Trenutni broj igrača u igri
 
-    @JsonProperty("maxPlayerCount")  // Serijalizira ovaj atribut pod nazivom "maxPlayerCount"
-    private Integer maxPlayerCount;  // Maksimalni broj igrača u igri
+    @JsonProperty("maxPlayerCount") // Serijalizira ovaj atribut pod nazivom "maxPlayerCount"
+    private Integer maxPlayerCount; // Maksimalni broj igrača u igri
 
-    @JsonProperty("communicationChannel")  // Serijalizira ovaj atribut pod nazivom "communicationChannel"
-    private String communicationChannel;  // Kanal komunikacije (npr. Discord)
+    @JsonProperty("communicationChannel") // Serijalizira ovaj atribut pod nazivom "communicationChannel"
+    private String communicationChannel; // Kanal komunikacije (npr. Discord)
 
-    @JsonProperty("isHomebrew")  // Serijalizira ovaj atribut pod nazivom "isHomebrew"
-    private Boolean isHomebrew;  // Da li je igra prilagođena (homebrew) ili standardna
+    @JsonProperty("isHomebrew") // Serijalizira ovaj atribut pod nazivom "isHomebrew"
+    private Boolean isHomebrew; // Da li je igra prilagođena (homebrew) ili standardna
 
     // Getters and Setters (metode za pristup i postavljanje vrijednosti atributa)
 
@@ -202,9 +203,9 @@ public class Igra {
 
     // Konstruktor s parametrima
     public Igra(Long id, String gameName, String type, MapLocation location, String availability, String createdBy,
-                Boolean applicationRequired, String complexity, String estimatedLength, String startTimestamp,
-                String description, String pravilnik, Boolean requiresForm, Integer currentPlayerCount,
-                Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew) {
+            Boolean applicationRequired, String complexity, String estimatedLength, String startTimestamp,
+            String description, String pravilnik, Boolean requiresForm, Integer currentPlayerCount,
+            Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew) {
         super();
         this.id = id;
         this.gameName = gameName;
@@ -226,5 +227,6 @@ public class Igra {
     }
 
     // Defaultni konstruktor
-    public Igra() {}
+    public Igra() {
+    }
 }

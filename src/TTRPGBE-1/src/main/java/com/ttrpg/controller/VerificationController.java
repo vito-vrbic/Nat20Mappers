@@ -4,7 +4,7 @@ package com.ttrpg.controller;
 import com.ttrpg.dto.ValidationResponseDTO;
 import com.ttrpg.model.Korisnik;
 import com.ttrpg.repository.KorisnikRepository;
-import com.ttrpg.service.jwtUtil;
+import com.ttrpg.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.NoSuchElementException;
+// import java.util.NoSuchElementException;
 
 
 @RestController
@@ -34,7 +34,7 @@ public class VerificationController {
             String jwt = tokenToParse.substring(7); //izbacujemo "Bearer "
             logger.info("JWT: {}", jwt);
             try {
-                Claims claims = jwtUtil.validateJWT(jwt);      //uključuje podatke poput koji je subjekt tokena, kada ističe,...
+                Claims claims = JwtUtil.validateJWT(jwt);      //uključuje podatke poput koji je subjekt tokena, kada ističe,...
                 String username = claims.getSubject();          //claims uključuje i username koji je dekodiran iz jwta pa možemo tražiti usera u repozitoriju
                 Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();  //
                 ValidationResponseDTO responseDTO = new ValidationResponseDTO("The token is valid", korisnik);

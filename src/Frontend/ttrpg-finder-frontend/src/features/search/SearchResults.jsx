@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchGameCard from './SearchGameCard';
-import styles from './SearchResults.module.css';
+import styles from '../search/SearchResults.module.css';
 
 const SearchResults = ({ results, page, handlePageChange }) => {
   // DISPLAY PAGE HANDLING
@@ -20,6 +20,8 @@ const SearchResults = ({ results, page, handlePageChange }) => {
                 description={result.description}
                 image={result.image}
                 genre={result.genre}
+                createdBy={result.createdBy}
+                madeBy={result.madeBy}
                 releaseDate={result.releaseDate}
                 complexity={result.complexity}
                 estimatedLength={result.estimatedLength}
@@ -30,6 +32,7 @@ const SearchResults = ({ results, page, handlePageChange }) => {
                 maxPlayerCount={result.maxPlayerCount}
                 communicationChannel={result.communicationChannel}
                 isHomebrew={result.isHomebrew}
+                formQuestions={result.formQuestions}
               />
             </li>
           ))}
@@ -39,15 +42,15 @@ const SearchResults = ({ results, page, handlePageChange }) => {
       )}
 
       {/* Pagination Controls */}
-      <div className="pagination-controls">
-        <button
+      <div className={styles.page}>
+        <button className={styles.pagination}
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
         >
           Previous
         </button>
         <span>Page {page}</span>
-        <button onClick={() => handlePageChange(page + 1)}
+        <button className={styles.pagination} onClick={() => handlePageChange(page + 1)}
           disabled={page===totalPages || results.length===0}>Next</button>
       </div>
     </div>

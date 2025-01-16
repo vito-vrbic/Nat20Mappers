@@ -15,7 +15,7 @@
     "pravilnik": "Battle Royale rules",
     "requiresForm": true,
     "formQuestions": { "questions": "What is your experience with Battle Royale games?" },
-    "currentPlayerCount": "0",
+    "currentPlayerCount": "100",
     "maxPlayerCount": "100",
     "communicationChannel": "Discord",
     "isHomebrew": false,

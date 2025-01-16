@@ -1,13 +1,19 @@
 import React from 'react';
 import SearchGameCard from './SearchGameCard';
+import styles from './SearchResults.module.css';
 
 const SearchResults = ({ results, page, handlePageChange }) => {
+  // DISPLAY PAGE HANDLING
+  const resultsPerPage = 3; // how many results come up on 1 page
+  const startIndex = (page-1)*resultsPerPage; //index for the main result array
+  const currentResults = results.slice(startIndex,startIndex+resultsPerPage); //find the displayed results of i-th page
+  const totalPages = Math.ceil(results.length/resultsPerPage); //for checking if the next page button should be available
   return (
     <div className="search-results">
       <h2>Search Results</h2>
-      {results.length > 0 ? (
+      {currentResults.length > 0 ? (
         <ul>
-          {results.map((result, index) => (
+          {currentResults.map((result, index) => (
             <li key={index}>
               <SearchGameCard
                 title={result.title}
@@ -41,10 +47,10 @@ const SearchResults = ({ results, page, handlePageChange }) => {
           Previous
         </button>
         <span>Page {page}</span>
-        <button onClick={() => handlePageChange(page + 1)}>Next</button>
+        <button onClick={() => handlePageChange(page + 1)}
+          disabled={page===totalPages || results.length===0}>Next</button>
       </div>
     </div>
   );
-};
-
+}; 
 export default SearchResults;

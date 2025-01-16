@@ -35,5 +35,13 @@
     "password": "gogica",
     "role": "business",
     "organizationName": "gogicaeats"
+  },
+  {
+    "id": "1736719556361",
+    "username": "OrganizacijaDva",
+    "email": "Organizacijadva@emial.mail",
+    "password": "OrganizacijaLozinkaDva",
+    "role": "business",
+    "organizationName": "TestnoImeOrganizacije"
   }
 ]

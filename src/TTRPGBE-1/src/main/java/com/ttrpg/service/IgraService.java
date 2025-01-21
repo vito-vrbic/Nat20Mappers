@@ -2,6 +2,7 @@ package com.ttrpg.service;
 
 import java.security.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,10 @@ import com.ttrpg.model.MapLocation;
 import com.ttrpg.repository.IgraRepository;
 @Service
 public class IgraService {
-
+	
+	IgraRepository ir;
+	
+	
 	public List<Igra> findByGenre(String genre) {
 		// TODO Auto-generated method stub
 		return null;
@@ -20,6 +24,11 @@ public class IgraService {
 	public List<Igra> findByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Optional<Igra> findById(Long id) {
+		// TODO Auto-generated method stub
+		return ir.findById(id) ;
 	}
 	
 	

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,11 +22,17 @@ public class SecurityConfig {
     	
     	http.csrf(Customizer -> Customizer.disable());
     	http.authorizeHttpRequests(request -> 
-    	request.requestMatchers("/h2-console/**").permitAll().
+    	request.requestMatchers("/h2-console/**", "/login**" ,"/","/signup"
+    			,"/error**", 
+                "/h2-console/**",
+                "/login/oauth2/code/google-login",       
+                "/signup/oauth2/code/google-signup",
+                
+                "/api/auth/google-login/oauth2/code/google").permitAll().
     	anyRequest().authenticated()).oauth2Login(oa2 -> oa2.defaultSuccessUrl("/",true));
-    	//http.formLogin(Customizer.withDefaults());
+    	http.formLogin(Customizer.withDefaults());
     	http.headers(headers -> headers.frameOptions(fo -> fo.sameOrigin()));
-    	//http.httpBasic(Customizer.withDefaults());
+    	http.httpBasic(Customizer.withDefaults());
     	
      /*   http
             .authorizeHttpRequests(authorize -> authorize

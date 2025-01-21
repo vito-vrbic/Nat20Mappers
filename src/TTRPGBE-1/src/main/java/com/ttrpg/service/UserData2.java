@@ -7,7 +7,7 @@ public class UserData2 {
     private String password;
     private String role;
     private String organizationName;
-
+/*spring.security.oauth2.client.registration.google.redirect-uri=http://localhost:5000/login/oauth2/code/google*/
    
     public UserData2(String username,String password, String email, String role, String organizationName) {
         this.password=password;

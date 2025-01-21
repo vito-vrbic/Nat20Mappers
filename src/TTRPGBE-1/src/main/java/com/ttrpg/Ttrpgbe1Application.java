@@ -20,6 +20,8 @@ import com.ttrpg.service.KorisnikService;
 @SpringBootApplication
 public class Ttrpgbe1Application {
 	
+
+	
 	
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -45,7 +47,6 @@ public class Ttrpgbe1Application {
 	        KorisnikService korisnikService = context.getBean(KorisnikService.class);
 		
 	        IgraService  igraService= context.getBean(IgraService.class);
-		
 		
 		
 		

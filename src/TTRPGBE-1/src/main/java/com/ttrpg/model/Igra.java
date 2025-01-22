@@ -77,7 +77,7 @@ public class Igra {
         return gameName;
     }
 
-    public void setGameName(String gameName) {
+    public void setTitle(String gameName) {
         this.gameName = gameName;
     }
 

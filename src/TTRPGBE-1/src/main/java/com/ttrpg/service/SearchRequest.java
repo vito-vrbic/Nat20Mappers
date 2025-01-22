@@ -5,35 +5,35 @@ import com.ttrpg.model.MapLocation;
 
 public class SearchRequest {
 
-    @JsonProperty("gameTitle")
-    private String gameTitle;
+	@JsonProperty("gameTitle")
+	private String gameTitle;
 
-    @JsonProperty("gameType")
-    private String gameType;
+	@JsonProperty("gameType")
+	private String gameType;
 
-    @JsonProperty("includeFullGames")
-    private Boolean includeFullGames;
+	@JsonProperty("includeFullGames")
+	private Boolean includeFullGames;
 
-    @JsonProperty("applicationRequired")
-    private Boolean applicationRequired;
+	@JsonProperty("applicationRequired")
+	private Boolean applicationRequired;
 
-    @JsonProperty("includeUserMadeGames")
-    private Boolean includeUserMadeGames;
+	@JsonProperty("includeUserMadeGames")
+	private Boolean includeUserMadeGames;
 
-    @JsonProperty("includeBusinessMadeGames")
-    private Boolean includeBusinessMadeGames;
+	@JsonProperty("includeBusinessMadeGames")
+	private Boolean includeBusinessMadeGames;
 
-    @JsonProperty("gameAvailability")
-    private String gameAvailability;
+	@JsonProperty("gameAvailability")
+	private String gameAvailability;
 
-    @JsonProperty("mapLocation")
-    private MapLocation mapLocation;
+	@JsonProperty("mapLocation")
+	private MapLocation mapLocation;
 
-    @JsonProperty("radius")
-    private String radius;
+	@JsonProperty("radius")
+	private String radius;
 
-    @JsonProperty("page")
-    private Integer page;
+	@JsonProperty("page")
+	private Integer page;
 
 	public String getGameTitle() {
 		return gameTitle;
@@ -116,7 +116,8 @@ public class SearchRequest {
 	}
 
 	public SearchRequest(String gameTitle, String gameType, Boolean includeFullGames, Boolean applicationRequired,
-			Boolean includeUserMadeGames, Boolean includeBusinessMadeGames, String gameAvailability, MapLocation mapLocation,
+			Boolean includeUserMadeGames, Boolean includeBusinessMadeGames, String gameAvailability,
+			MapLocation mapLocation,
 			String radius, Integer page) {
 		super();
 		this.gameTitle = gameTitle;
@@ -130,10 +131,5 @@ public class SearchRequest {
 		this.radius = radius;
 		this.page = page;
 	}
-    
-    
-    
-    
-    
-    
+
 }

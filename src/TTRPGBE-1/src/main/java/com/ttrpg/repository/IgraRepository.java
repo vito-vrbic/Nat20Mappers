@@ -52,5 +52,6 @@ public interface IgraRepository extends JpaRepository<Igra, Long> {
             @Param("location") String location);*/
             
 	        List<Igra> findByGameNameContaining(@Param("gameName") String gameName);
+			List<Igra> findByCreatedBy(@Param("createdBy") String createdBy);
 			
 }

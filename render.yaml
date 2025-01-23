@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: ttrpg-database
+    env: docker
+    plan: free
+    image: postgres:15-alpine
+    envVars:
+      - key: POSTGRES_USER
+        value: blazh
+      - key: POSTGRES_PASSWORD
+        value: t6c2vTegjh
+      - key: POSTGRES_DB
+        value: TTRPG_Base
+    disk:
+      sizeGB: 1
+
+  - type: web
+    name: ttrpg-backend
+    env: docker
+    plan: free
+    buildCommand: docker build -t ttrpg-backend ./src/TTRPGBE-1
+    startCommand: java -jar /app/your-backend.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://ttrpg-database:5432/TTRPG_Base
+      - key: SPRING_DATASOURCE_USERNAME
+        value: blazh
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: t6c2vTegjh
+
+  - type: web
+    name: ttrpg-frontend
+    env: docker
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: REACT_APP_BACKEND_URL
+        value: http://ttrpg-backend:5000

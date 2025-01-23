@@ -1,0 +1,83 @@
+/* makes the background look darkened*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .form-container {
+    background: rgba(35, 47, 68, 1);;
+    padding: 40px;
+    border-radius: 10px;
+    width: 1000px;
+    max-width: 75%;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .form-container h2 {
+    margin-top: 0;
+    color: #ffdd57;
+  }
+
+  .buttonsContainer button{
+    background-color: #ffdd57;
+    color: black;
+  }
+
+  .user-application button{
+    background-color: #ffdd57;
+    color: black;
+  }
+
+  .application{
+    list-style-type: none;
+  }
+
+  .user-application{
+    color: black;
+    background-color: #1d2630;
+    padding: 25px;
+    margin: 25px;
+  }
+
+  p{
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .radioButton{
+        gap: 25px;
+    }
+
+    .formQuestions{
+        flex-direction: column;
+    }
+
+    .addQuestionButton{
+        display: flex;
+        justify-content: center;
+      }
+}
+
+  @media (max-width: 400px) {
+
+    .user-info{
+      flex-direction: column;
+    }
+
+    .formQuestions{
+        flex-direction: column;
+    }
+
+    .buttonsContainer{
+        flex-direction: column;
+      }
+}

@@ -8,6 +8,9 @@ import homeIcon from '../assets/images/home.png';
 import buildingIcon from '../assets/images/building.png';
 import styles from './DashboardPage.module.css';  // Import styles as a module
 
+import EditGame from '../features/edit game/EditGame';
+import IncomingRequests from '../features/incoming requests/IncomingRequests';
+
 const Dashboard = () => {
   const { isAuthenticated, user } = useAuth();
   const [createdGames, setCreatedGames] = useState([]); // Games created by the user
@@ -15,6 +18,14 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  //useState for a form that is used for editing a game
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editingGameId, setEditingGameId] = useState(null);
+
+  //useState for a tab that is used to list all incoming request for joining a game
+  const [showIncomingRequests, setShowIncomingRequests] = useState(false);
+  const [appliedGameId, setAppliedGameId] = useState(null);
 
   const fetchCreatedGames = async () => {
     try {
@@ -57,8 +68,23 @@ const Dashboard = () => {
     }
   }, [isAuthenticated]);
 
+  //toggle create new game form
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  //toggle edit game form
+  const toggleEditForm = (id = null) => {
+    setEditingGameId(id);
+    console.log("Editam igru sa id: " ,id);
+    setShowEditForm(!showEditForm);
+  };
+
+  //toggle a tab that shows incomming requests
+  const toggleIncomingRequests = (incomingRequestsgameId = null) => {
+    setAppliedGameId(incomingRequestsgameId); 
+    console.log("Gledam prijave od igre: " ,incomingRequestsgameId);
+    setShowIncomingRequests(!showIncomingRequests);
   };
 
   if (loading) {
@@ -104,7 +130,7 @@ const Dashboard = () => {
           <div className={styles['My-games-allign']}>
             <ul>
               {createdGames.map((game, index) => (
-                <li key={index} className={styles['Game-container']}>
+                <li key={index} className={styles['Game-container']} id={game.id}>
                   <div className={styles['Left-group']}>
                     {game.type.toLowerCase() === "online" && <img src={wifiIcon} alt="Online Game" />}
                     {game.type.toLowerCase() === "local" && game.createdBy === "user" && (
@@ -116,8 +142,8 @@ const Dashboard = () => {
                     {`${game.createdBy.charAt(0).toUpperCase() + game.createdBy.slice(1)} game: ${game.title}`}
                   </div>
                   <div className={styles['Right-group']}>
-                    <button className={styles['Join-button']}>Incoming Requests</button>
-                    <button className={styles['More-info-button']}>Edit</button>
+                    <button className={styles['Join-button']} onClick={() => toggleIncomingRequests(game.id)}>Incoming Requests</button>
+                    <button className={styles['More-info-button']} onClick={() => toggleEditForm(game.id)}>Edit</button>
                   </div>
                 </li>
               ))}
@@ -130,6 +156,8 @@ const Dashboard = () => {
       </div>
 
       {showForm && <CreateNewGame onClose={toggleForm} />}
+      {showEditForm && <EditGame onClose={() => toggleEditForm(null)} editingGameId={editingGameId} />}
+      {showIncomingRequests && <IncomingRequests onClose={() => toggleIncomingRequests(null)} gameId={appliedGameId} />}
     </>
   );
 };

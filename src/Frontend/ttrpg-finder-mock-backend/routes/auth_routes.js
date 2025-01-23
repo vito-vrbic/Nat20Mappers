@@ -135,4 +135,38 @@ router.post('/logout', authenticateJWT, (req, res) => {
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
+router.post('/apply', async (req, res) => {
+  const { gameId, userId, questions } = req.body;
+  console.log(questions);
+  try {
+    const users = get_user_db();
+    const user = users.find(user => user.id === userId);
+    
+    //different logic should be applied for sending back an error
+    //this is just for seeing if the frontend part works
+    //error could occur from signing the person up for a full game
+    //also add a check or if the person has already sent an application
+    
+    if(!user){
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+    else{
+      res.status(200).json({
+      success: true,
+      message: 'Application submitted successfully!',
+    });
+    }
+    
+  } catch (error) {
+    console.error('Error processing application:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to process application. Please try again later.',
+    });
+  }
+});
+
 module.exports = router;

@@ -10,7 +10,6 @@ label
     border: 1px solid #ccc;
     padding: 16px;
     margin-bottom: 16px;
-    cursor: pointer;
   }
   
   .expanded {
@@ -45,6 +44,15 @@ label
     overflow: hidden;
     transition: opacity 0.3s ease, max-height 0.3s ease;
   }
+  .link{
+    color: #3498db;
+    text-decoration: none; 
+    font-weight: bold;
+  }
+  .link:hover {
+    color: #85c1e9;
+    text-decoration: underline;
+  }
   
   .gameCard.expanded .gameExtraDetails {
     opacity: 1;
@@ -54,8 +62,74 @@ label
   .gameCard:hover {
     background-color: #24353a;
   }
-  
-  .gameCard:active {
-    background-color: #ececec;
+
+  .formQuestion label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color:whitesmoke
   }
+  
+  .textarea {
+    width: 100%; 
+    padding: 10px;
+    margin-top:10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+  }
+  
+  .textarea:focus {
+    border-color: #007bff; 
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .formContainer button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .applyButton{
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .formContainer button:hover {
+    background-color: #218838;
+  }
+
+
+  .expandButton {
+    display: inline-block; /* Prevent it from stretching */
+    margin: 20px auto; /* Center the button horizontally */
+    padding: 10px 20px; /* Add some padding for better usability */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    font-size: 16px; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+  }
+  
+  .expandButton:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+  }
+  
+  .expandButton:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a glow effect */
+  }
+  
   

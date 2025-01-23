@@ -42,6 +42,7 @@ const Search = () => {
 
       if (response.status === 200) {
         const { games, pagination } = response.data;
+        console.log(games);
         setResults(games);
       } else {
         console.error('Failed to fetch games:', response);

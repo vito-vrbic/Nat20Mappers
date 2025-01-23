@@ -50,13 +50,13 @@ const EditGame = ({onClose,editingGameId}) => {
       setMaxNumOfPlayers(response.data.game.maxPlayerCount || ""); 
       setFormRequired(response.data.game.requiresForm);
       const questionsFromServer = response.data.game.formQuestions || [];
-      const formattedQuestions = questionsFromServer.map(q => ({ question: q.question }));
+      const formattedQuestions = questionsFromServer.map(q => ({ questions: q.questions }));
       setCommunicationChannel(response.data.game.communicationChannel); 
       setIsHomeBrew(response.data.game.isHomebrew ); 
       setPlayerCount(response.data.game.currentPlayerCount);
 
       // If no questions, set a default empty question field
-      setQuestions(formattedQuestions.length > 0 ? formattedQuestions : [{ question: "" }]);
+      setQuestions(formattedQuestions.length > 0 ? formattedQuestions : [{ questions: "" }]);
 
     } catch (err) {
       setError("Unable to fetch game data. Please try again later.");
@@ -98,15 +98,16 @@ const EditGame = ({onClose,editingGameId}) => {
       const [communicationChannel, setCommunicationChannel] = useState(""); // Communication channel for game
       const [isHomebrew, setIsHomeBrew] = useState(""); // Is Homebrew
 
-      const [questions, setQuestions] = useState([{question: ""}]); //Array for questions
+      const [questions, setQuestions] = useState([{questions: ""}]); //Array for questions
       const [playerCount, setPlayerCount] = useState(0);
 
-      
+      const [newQuestions, setNewQuestions] = useState([]); //For newly added questions
+
       //Handler for adding a new user question
       const handleAddQuestion = () => {
         //Check if the maximum number of questions was added
-        if(questions.length < 99){
-          setQuestions([...questions, {question: ""}]);
+        if(newQuestions.length + questions.length < 99){
+          setNewQuestions([...newQuestions, {questions: ""}]);
         }
         else{
           alert("You cannot add more than 99 questions.");
@@ -116,9 +117,9 @@ const EditGame = ({onClose,editingGameId}) => {
       //Handler for delted a question
       const handleDeleteQuestion = (indexToRemove) => {
         //Check if a user is trying to delete the last question making it so that there is no questions but a form is required
-        if(questions.length > 1){
-          const updatedQuestions = questions.filter((_, index) => index !== indexToRemove);
-          setQuestions(updatedQuestions);
+        if(newQuestions.length + questions.length > 1){
+          const updatedQuestions = newQuestions.filter((_, index) => index !== indexToRemove);
+          setNewQuestions(updatedQuestions);
         }
         else{
           alert("You must have at least 1 question.");
@@ -127,10 +128,10 @@ const EditGame = ({onClose,editingGameId}) => {
 
       //Handler for question change
       const handleQuestionChange = (index,e) => {
-        const updatedQuestions = questions.map((q, i) => 
-          i === index ? { ...q, question: e.target.value} : q
+        const updatedQuestions = newQuestions.map((q, i) => 
+          i === index ? { ...q, questions: e.target.value} : q
         );
-        setQuestions(updatedQuestions);
+        setNewQuestions(updatedQuestions);
       };
 
       const toggleForm = () =>{
@@ -243,7 +244,10 @@ const EditGame = ({onClose,editingGameId}) => {
       //Handler for submiting a form
       const handleSubmit = async (e) => {
         e.preventDefault();
-
+        /*console.log("New questions:", newQuestions);
+        const allQuestions = [...questions, ...newQuestions];
+        console.log("All questions:", allQuestions);
+        setQuestions(allQuestions);*/
         //Data of a new game
         const newGame = {
           id: editingGameId,
@@ -260,7 +264,7 @@ const EditGame = ({onClose,editingGameId}) => {
           description: description, // Optional string
           pravilnik: rules, // String
           requiresForm: formRequired, // true/false
-          formQuestions: (formRequired ? questions : []), // Array of strings
+          formQuestions: (formRequired ? [...questions, ...newQuestions] : []), // Array of strings
           currentPlayerCount: playerCount, // int
           maxPlayerCount: maxNumOfPlayers, // Optional int
           communicationChannel: communicationChannel, // String
@@ -285,10 +289,10 @@ const EditGame = ({onClose,editingGameId}) => {
             setRules("");
             setMaxNumOfPlayers("");
             setFormRequired("");
-            setQuestions([{question: ""}]);
+            setQuestions([{questions: ""}]);
             setCommunicationChannel("");
             setIsHomeBrew("");
-            window.location.reload();
+            //window.location.reload();
             onClose();
           }
           else{
@@ -311,31 +315,6 @@ const EditGame = ({onClose,editingGameId}) => {
                 <input type="text" name="title" value={gameTitle} onChange={handleGameTitleChange} placeholder="Enter Game Title" required/>
               </label>
               <br />
-
-              {/*Pick game type: online/local (for private user) online/exact(for business user)*/}
-              <label>
-                Game Type:
-              </label>
-              <br/>
-                <div className="radioButton">
-                  <label>
-                  Online <input type="radio" name="type" value="online" checked={gameType === "online"} onChange={handleGameTypeChange} required/>
-                  </label>
-                  {user?.role === "private" && (
-                  <label>
-                  Local <input type="radio" name="type" value="local" checked={gameType === "local"} onChange={handleGameTypeChange} required/>
-                  </label>
-                  )}
-                  {user?.role === "business" && (
-                  <label>
-                  Exact <input type="radio" name="type" value="exact" checked={gameType === "exact"} onChange={handleGameTypeChange} required/> 
-                  </label>
-                  )}
-                </div>
-              <br />
-    
-              {/*Pick a location on a map local/exact*/}
-              {(gameType !== "online" && <MapComponent mapLocation={mapLocation} setMapLocation={setMapLocation}></MapComponent>)}
 
               {/*Picak a timezone for online game*/}
               {(gameType === "online" && 
@@ -364,6 +343,7 @@ const EditGame = ({onClose,editingGameId}) => {
                 </div>
               )}
               <br />
+              
 
               {/*Pick if a game is private or public*/}
               <label>
@@ -448,21 +428,10 @@ const EditGame = ({onClose,editingGameId}) => {
                 </label>
                 <br />
 
-                {/*Pick if a "custom" form is required*/}
-              <label>
-              Form Required:
-              </label>
-              <br></br>
-                <div className="radioButton">
-                  <label>
-                  Yes <input type="radio" name="formRequired" value={true} checked={formRequired === true} onChange={handleFormRequiredChange} required/>
-                  </label>
-                  <label>
-                  No <input type="radio" name="formRequired" value={false} checked={formRequired === false} onChange={handleFormRequiredChange} required/>
-                  </label>
-                </div>
-              <br />
-
+              
+              {(formRequired && <label>
+                Form questions: 
+              </label>)}
               {/*"Custom" form question maker*/}
               {(formRequired &&
               <div>
@@ -471,10 +440,19 @@ const EditGame = ({onClose,editingGameId}) => {
                     <label>
                       Question {index + 1}:
                     </label>
-                    <input type="text" value={q.question} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required></input>
-                    <button type="button" onClick={() => handleDeleteQuestion(index)}>Delete Question</button>
+                    <input type="text" value={q.questions} readOnly></input>
                   </div>
                 ))}
+
+                {newQuestions.map((q, index) => (
+                  <div className="formQuestions" key={index + questions.length}>
+                    <label>
+                      Question {index + questions.length + 1}:
+                    </label>
+                      <input type="text" value={q.questions} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required/>
+                        <button type="button" onClick={() => handleDeleteQuestion(index)}> Delete Question </button>
+                      </div>
+                  ))}
                 <div className="addQuestionButton">
                   <button type="button" onClick={handleAddQuestion}>Add Question</button> 
                 </div>

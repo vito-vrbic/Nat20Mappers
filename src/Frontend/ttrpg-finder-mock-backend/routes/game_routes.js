@@ -20,8 +20,8 @@ const router = express.Router();
         "pravilnik": "Players must have basic understanding of Dungeons & Dragons rules.",
         "requiresForm": true,
         "formQuestions": [
-			{"question": "What experience do you have with tabletop RPGs?"},
-			{"question": "Halo"}
+			{"questions": "What experience do you have with tabletop RPGs?"},
+			{"questions": "Halo"}
         ],
         "currentPlayerCount": "3",
         "maxPlayerCount": "6",
@@ -65,7 +65,7 @@ const router = express.Router();
         "pravilnik": "Players must understand advanced strategy mechanics.",
         "requiresForm": true,
         "formQuestions": [
-		  {"question": "Do you have prior experience with real-time strategy games?"}
+		  {"questions": "Do you have prior experience with real-time strategy games?"}
 		  ],
         "currentPlayerCount": "10",
         "maxPlayerCount": "20",

@@ -28,13 +28,13 @@ const CreateNewGame = ({onClose}) => {
       const [communicationChannel, setCommunicationChannel] = useState(""); // Communication channel for game
       const [isHomebrew, setIsHomeBrew] = useState(""); // Is Homebrew
 
-      const [questions, setQuestions] = useState([{question: ""}]); //Array for questions
+      const [questions, setQuestions] = useState([{questions: ""}]); //Array for questions
 
       //Handler for adding a new user question
       const handleAddQuestion = () => {
         //Check if the maximum number of questions was added
         if(questions.length < 99){
-          setQuestions([...questions, {question: ""}]);
+          setQuestions([...questions, {questions: ""}]);
         }
         else{
           alert("You cannot add more than 99 questions.");
@@ -56,7 +56,7 @@ const CreateNewGame = ({onClose}) => {
       //Handler for question change
       const handleQuestionChange = (index,e) => {
         const updatedQuestions = questions.map((q, i) => 
-          i === index ? { ...q, question: e.target.value} : q
+          i === index ? { ...q, questions: e.target.value} : q
         );
         setQuestions(updatedQuestions);
       };
@@ -197,6 +197,7 @@ const CreateNewGame = ({onClose}) => {
           communicationChannel: communicationChannel, // String
           isHomebrew: isHomebrew // true/false
         };
+        console.log(newGame);
         try{
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
           const response = await axios.post("/api/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
@@ -216,7 +217,7 @@ const CreateNewGame = ({onClose}) => {
           setRules("");
           setMaxNumOfPlayers("");
           setFormRequired("");
-          setQuestions([{question: ""}]);
+          setQuestions([{questions: ""}]);
           setCommunicationChannel("");
           setIsHomeBrew("");
           onClose();
@@ -401,7 +402,7 @@ const CreateNewGame = ({onClose}) => {
                     <label>
                       Question {index + 1}:
                     </label>
-                    <input type="text" value={q.question} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required></input>
+                    <input type="text" value={q.questions} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required></input>
                     <button type="button" onClick={() => handleDeleteQuestion(index)}>Delete Question</button>
                   </div>
                 ))}

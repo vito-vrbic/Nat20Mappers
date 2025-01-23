@@ -15,40 +15,55 @@ public class LokaliziranaIgra extends Igra {
         // TODO Auto-generated constructor stub
     }
 
+    public LokaliziranaIgra(Long id, String gameName, String availability,
+                            Korisnik dungeonMaster, String complexity,
+                            String estimatedLength, String startTimestamp,
+                            String description, String ruleset, Boolean requiresForm,
+                            Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew,
+                            MapLocation realLocation, MapLocation fakeLocation) {
+        super(id, gameName, availability, dungeonMaster, complexity, estimatedLength, startTimestamp, description, ruleset, requiresForm, maxPlayerCount, communicationChannel, isHomebrew);
+        this.realLocation = realLocation;
+        this.fakeLocation = fakeLocation;
+    }
+    public LokaliziranaIgra(String gameName, String availability,
+                            Korisnik dungeonMaster, String complexity,
+                            String estimatedLength, String startTimestamp,
+                            String description, String ruleset, Boolean requiresForm,
+                            Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew,
+                            MapLocation realLocation, MapLocation fakeLocation) {
+        super(gameName, availability, dungeonMaster, complexity, estimatedLength, startTimestamp, description, ruleset, requiresForm, maxPlayerCount, communicationChannel, isHomebrew);
+        this.realLocation = realLocation;
+        this.fakeLocation = fakeLocation;
+    }
+
     // Definiranje atributa za lokaliziranu igru
-    @Column(name = "radius")  // Kolona u bazi koja pohranjuje radijus
-    private int radiussy;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "real-lat")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "real-lng"))
+    })
+    private MapLocation realLocation;
 
-    @Column(name = "center-coordinate", length = 20)  // Kolona u bazi koja pohranjuje središnje koordinatne vrijednosti
-    private String centercoordinate;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "fake-lat")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "fake-lng"))
+    })
+    private MapLocation fakeLocation;
 
-    @Column(name = "coordinate", length = 20)  // Kolona u bazi koja pohranjuje koordinate igre
-    private String coordinate;
-
-    // Getter i Setter za radiussy (radijus)
-    public int getRadiussy() {
-        return radiussy;
+    public MapLocation getRealLocation() {
+        return realLocation;
     }
 
-    public void setRadiussy(int radiussy) {
-        this.radiussy = radiussy;
+    public void setRealLocation(MapLocation realLocation) {
+        this.realLocation = realLocation;
     }
 
-    // Getter i Setter za centercoordinate (središnje koordinate)
-    public String getCentercoordinate() {
-        return centercoordinate;
+    public MapLocation getFakeLocation() {
+        return fakeLocation;
     }
 
-    public void setCentercoordinate(String centercoordinate) {
-        this.centercoordinate = centercoordinate;
-    }
-
-    // Getter i Setter za coordinate (koordinate)
-    public String getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public void setFakeLocation(MapLocation fakeLocation) {
+        this.fakeLocation = fakeLocation;
     }
 }

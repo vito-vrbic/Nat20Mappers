@@ -10,7 +10,6 @@ import com.ttrpg.dto.BusinessProfileUpdateRequestDTO;
 import com.ttrpg.model.Korisnik;
 import com.ttrpg.model.OrgProfil;
 import com.ttrpg.model.PoslovniKorisnik;
-import com.ttrpg.model.Slika;
 import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.repository.OrgRepository;
 import com.ttrpg.util.JwtUtil;

@@ -3,6 +3,7 @@ package com.ttrpg.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.ttrpg.repository.PrijavaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,15 @@ public class IgraService {
                 // TODO Auto-generated method stub
                 return null;
         }
+        public long getPlayerCount(long id) {
+            return prijavaRepository.countByGameIdAndStatus(id,"Accepted");
+        }
 
         @Autowired
         private IgraRepository igraRepository;
+
+        @Autowired
+        private PrijavaRepository prijavaRepository;
         /*
          * public List<Igra> searchIgre(String title, Integer maxPlayer, Boolean
          * isPrivate, Boolean isHomebrew,
@@ -310,7 +317,7 @@ public class IgraService {
                 game.setEstimatedLength(request.getEstimatedLength());
                 game.setStartTimestamp(request.getStartTimestamp());
                 game.setDescription(request.getDescription());
-                game.setPravilnik(request.getPravilnik());
+                game.setRuleset(request.getPravilnik());
                 game.setRequiresForm(request.isRequiresForm());
                 game.setCurrentPlayerCount(0);
                 game.setMaxPlayerCount(request.getMaxPlayerCount());
@@ -339,7 +346,7 @@ public class IgraService {
                     game.setEstimatedLength(request.getEstimatedLength());
                     game.setStartTimestamp(request.getStartTimestamp());
                     game.setDescription(request.getDescription());
-                    game.setPravilnik(request.getPravilnik());
+                    game.setRuleset(request.getPravilnik());
                     game.setRequiresForm(request.isRequiresForm());
             
                     // Ne znam sto da radim s ovim parametrom

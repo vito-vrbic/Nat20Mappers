@@ -56,7 +56,10 @@ html {
    margin-bottom: 20px;
    font-weight: bold;
 }
-
+.inputs{
+   display:flex;
+   flex-direction: column;
+}
 /* Styling for every input field */
 .inputs input {
    border-radius: 8px;
@@ -69,6 +72,8 @@ html {
    color: #f1f1f1;
    /* Light text color */
    font-size: 16px;
+   align-items: center;
+   justify-content: center;
 }
 
 /* Styling for the category name above the input field, example: Email */
@@ -82,6 +87,15 @@ html {
 .inputs input::placeholder {
    color: #aaa;
    font-weight: normal;
+}
+.inputs button{
+   margin-top:10px;
+   padding:10px;
+   font-weight: bold;
+   color:black;
+   font-size:20px;
+   border-radius:0.5rem;
+   background-color: #ffdd57;
 }
 
 /* Additional input styling required for the Password category */
@@ -173,35 +187,18 @@ html {
 
 .googleLoginButton {
    cursor: pointer;
+   display:flex;
    transition: background-color 0.3s, box-shadow 0.3s;
    padding: 20px 20px 20px 60px;
    border: none;
    border-radius: 20px;
    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-   background-image: url("../assets/googleButton.png");
-   /* Google's logo */
+   background-image: url("../assets/images/googleButton.png");
    background-color: white;
    background-repeat: no-repeat;
    background-position: 12px 11px;
    margin-top: 20px;
    margin-bottom: 20px;
-}
-
-.googleLoginButton:hover {
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
-}
-
-.googleLoginButton:active {
-   background-color: #eeeeee;
-   outline: none;
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 3px #c8dafc;
-}
-
-.googleLoginButton:disabled {
-   filter: grayscale(100%);
-   background-color: #ebebeb;
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-   cursor: not-allowed;
 }
 
 /* Styling for error message */

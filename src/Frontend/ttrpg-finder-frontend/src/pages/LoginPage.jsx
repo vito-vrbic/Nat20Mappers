@@ -7,6 +7,7 @@ import SubmitButton from '../features/auth/SubmitButton';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import styles from './LoginPage.module.css';  // Import the CSS Module
+import googleImage from '../assets/images/googleButton.png'
 
 const clientId = "320270492524-ve80c3hmmc1108kcjemrgge0bjgigtku.apps.googleusercontent.com"
 
@@ -101,18 +102,19 @@ const Login = () => {
         </div>
 
         <div className={styles.forgotPassword}>Forgot password?</div>
-
         <SubmitButton loading={loading} disabled={loading || !username || !password}>
           Log in
         </SubmitButton>
-      </form>
+      </form> 
 
       <div className={styles.gotoSignup}>
         No account? <Link to="/signup">Sign up</Link>
       </div>
 
       <div className={styles.googleLoginButton} onClick={() => googlePrijava()}>
-        <div className={styles.googleLoginText}>Log in with Google</div>
+        <div className={styles.googleLoginText}>
+          Log in with Google
+        </div>
       </div>
 
       {error && <div className={styles.errorMessage}>{error}</div>}

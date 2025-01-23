@@ -150,13 +150,14 @@ const Signup = () => {
             togglePasswordVisibility={toggleConfirmPasswordVisibility}
           />
         </div>
-
         {/* Checkbox Input for Organization Role */}
-        <CheckboxInput
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-          label="Representing an organization?"
-        />
+          <CheckboxInput
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+            label="Representing an organization?"
+          />
+      
+        
 
         {/* Organization Name input if checkbox is checked */}
         {isChecked && (

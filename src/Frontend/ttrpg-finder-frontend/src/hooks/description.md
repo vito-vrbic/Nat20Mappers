@@ -1,1 +1,0 @@
-This folder contains custom React hooks that are used on the TTRPGFinder frontend.

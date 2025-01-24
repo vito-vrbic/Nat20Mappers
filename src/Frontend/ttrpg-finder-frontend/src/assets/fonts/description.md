@@ -1,1 +1,0 @@
-This folder contains fonts that are used on the TTRPGFinder frontend.

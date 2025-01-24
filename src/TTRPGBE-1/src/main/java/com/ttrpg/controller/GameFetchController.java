@@ -49,7 +49,6 @@ public class GameFetchController {
     @GetMapping("/created")
     public ResponseEntity<?> createdGames(@RequestHeader("Authorization") String tokenToParse) {
         if (tokenToParse == null || !korisnikService.isValidToken(tokenToParse.replace("Bearer ", ""))) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Unable to fetch created games. Please try again later."));
             System.out.println("Invalid token!");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Unable to fetch created games. Please try again later."));
@@ -59,13 +58,8 @@ public class GameFetchController {
             logger.info("Fetching created games");
             Claims claim = JwtUtil.validateJWT(tokenToParse.replace("Bearer ", ""));
             String username = claim.getSubject();
-            logger.info("Fetching created games for user {}", username);
             System.out.println("Token valid! User: " + username);
             Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();
-            int id = korisnik.getUserId();
-            if (igraRepository.findByCreatedBy(korisnik) == null) {
-                CreatedGamesDTO response = new CreatedGamesDTO();
-                return ResponseEntity.ok(response);
 
             if (korisnik == null) {
                 System.out.println("User not found in database!");
@@ -80,13 +74,13 @@ public class GameFetchController {
                 games = new ArrayList<>();
             }
             CreatedGamesDTO fullGames = new CreatedGamesDTO();
+            fullGames.setGames(new ArrayList<>());
 
             for (Igra igra : games) {
                 CreatedGamesDTO.CreatedGameDTO gameDTO = new CreatedGamesDTO.CreatedGameDTO();
                 logger.info("dto created");
                 gameDTO.setGameId(igra.getId());
                 gameDTO.setTitle(igra.getTitle());
-                if(igra.getDescription()!= null)gameDTO.setDescription(igra.getDescription());
                 gameDTO.setType(igra instanceof OnlineIgra ? "online"
                               : igra instanceof LokaliziranaIgra ? "local"
                               : igra instanceof TocnoLokacijskaIgra ? "exact" : "unknown");
@@ -98,7 +92,6 @@ public class GameFetchController {
                 gameDTO.setApplicationRequired(igra.getApplicationRequired());
                 gameDTO.setComplexity(igra.getComplexity());
                 gameDTO.setEstimatedLength(igra.getEstimatedLength());
-                if(igra.getStartTimestamp()!= null)gameDTO.setStartTimestamp(igra.getStartTimestamp());
                 gameDTO.setStartTimestamp(igra.getStartTimestamp());
                 gameDTO.setDescription(igra.getDescription());
                 gameDTO.setPravilnik(igra.getRuleset());
@@ -108,23 +101,10 @@ public class GameFetchController {
                 gameDTO.setHomebrew(igra.getIsHomebrew());
 
                 List<Pitanje> pitanja = pitanjeRepository.findByIdGameId(igra.getId());
-                gameDTO.setFormQuestions(new ArrayList<String>());
                 List<String> formQuestions = new ArrayList<>();
                 for (Pitanje pitanje : pitanja) {
-                    gameDTO.addQuestion(pitanje.getId().getQuestionText());
                     formQuestions.add(pitanje.getId().getQuestionText());
                 }
-                if (igra instanceof OnlineIgra) {
-                    gameDTO.setType("online");
-                    gameDTO.setTimezone(((OnlineIgra) igra).getTimezone());
-                } else if (igra instanceof LokaliziranaIgra) {
-                    gameDTO.setType("local");
-                    gameDTO.setLocation(((LokaliziranaIgra) igra).getRealLocation());
-                } else if (igra instanceof TocnoLokacijskaIgra) {
-                    gameDTO.setType("exact");
-                    gameDTO.setLocation(((TocnoLokacijskaIgra) igra).getLocation());
-                }
-                logger.info("adding");
                 gameDTO.setFormQuestions(formQuestions);
 
                 fullGames.addGame(gameDTO);
@@ -132,7 +112,6 @@ public class GameFetchController {
             return ResponseEntity.ok(fullGames);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Unable to fetch created games. Please try again later."));
             System.out.println("EXCEPTION OCCURRED! Check logs for details.");
             e.printStackTrace(); // OVDE se ispisuje puni stack trace u logovima
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -171,9 +150,9 @@ public class GameFetchController {
 
             // List<Igra> games = igraRepository.findByCreatedBy(korisnik);
             CreatedGamesDTO fullGames = new CreatedGamesDTO();
+            fullGames.setGames(new ArrayList<>());
+
             for (Prijava prijava : applications) {
-                CreatedGamesDTO.CreatedGameDTO gameDTO = new CreatedGamesDTO.CreatedGameDTO();
-                gameDTO.setGameId(prijava.getPrijavaId().getGameId());
                 Igra igra = igraRepository.findGameById(prijava.getPrijavaId().getGameId()).getFirst();
                 if (igra == null)
                     continue;
@@ -181,7 +160,6 @@ public class GameFetchController {
                 CreatedGamesDTO.CreatedGameDTO gameDTO = new CreatedGamesDTO.CreatedGameDTO();
                 gameDTO.setGameId(igra.getId());
                 gameDTO.setTitle(igra.getTitle());
-                gameDTO.setDescription(igra.getDescription());
                 gameDTO.setType(igra instanceof OnlineIgra ? "online"
                               : igra instanceof LokaliziranaIgra ? "local"
                               : igra instanceof TocnoLokacijskaIgra ? "exact" : "unknown");
@@ -207,20 +185,8 @@ public class GameFetchController {
                 gameDTO.setHomebrew(igra.getIsHomebrew());
                 
                 List<Pitanje> pitanja = pitanjeRepository.findByIdGameId(igra.getId());
-                gameDTO.setFormQuestions(new ArrayList<String>());
                 List<String> formQuestions = new ArrayList<>();
                 for (Pitanje pitanje : pitanja) {
-                    gameDTO.addQuestion(pitanje.getId().getQuestionText());
-                }
-                if (igra instanceof OnlineIgra) {
-                    gameDTO.setType("online");
-                    gameDTO.setTimezone(((OnlineIgra) igra).getTimezone());
-                } else if (igra instanceof LokaliziranaIgra) {
-                    gameDTO.setType("local");
-                    gameDTO.setLocation(((LokaliziranaIgra) igra).getRealLocation());
-                } else if (igra instanceof TocnoLokacijskaIgra) {
-                    gameDTO.setType("exact");
-                    gameDTO.setLocation(((TocnoLokacijskaIgra) igra).getLocation());
                     formQuestions.add(pitanje.getId().getQuestionText());
                 }
                 gameDTO.setFormQuestions(formQuestions);
@@ -230,11 +196,9 @@ public class GameFetchController {
             return ResponseEntity.ok(fullGames);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Unable to fetch created games. Please try again later."));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Unable to fetch created games. Please try again later."));
         }
-
 
     }
 

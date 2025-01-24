@@ -17,7 +17,7 @@ const EditGame = ({onClose,editingGameId}) => {
   const fetchGameToEdit = async (id) => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/games/game-to-edit', {
+      const response = await axios.get('/games/game-to-edit', {
         params: { id },
         headers: { Authorization: `Bearer ${user.token}` },
       });
@@ -273,7 +273,7 @@ const EditGame = ({onClose,editingGameId}) => {
         console.log(newGame);
         try{
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
-          const response = await axios.post("/api/games/save-edit", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          const response = await axios.post("/games/save-edit", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
           if(response.status === 201){
             console.log("SPREMLJENO NA SERVER");
             setGameTitle("");

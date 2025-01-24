@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 /*
     GET PROFILE DATA
     -----
-    Address: ./api/user/{username}
+    Address: ./user/{username}
     Type: GET
     Header: {} // No specific headers required because all users can view profiles
     Body: {} // No body content required
@@ -52,7 +52,7 @@ const UserProfile = () => {
     // Fetch the user profile data based on the username
     const fetchProfileData = async () => {
       try {
-        const response = await fetch(`/api/user/${username}`); // Assuming you have a server route like this
+        const response = await fetch(`/user/${username}`); // Assuming you have a server route like this
         if (response.ok) {
           const data = await response.json();
           setProfile(data.data); // Set the profile data (assumes data comes under 'data')

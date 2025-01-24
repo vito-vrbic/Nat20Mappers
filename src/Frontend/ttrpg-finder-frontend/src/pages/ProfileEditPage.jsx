@@ -25,7 +25,7 @@ const ProfileForm = () => {
 
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`/api/user/${username}`, {
+        const response = await axios.get(`/user/${username}`, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -68,7 +68,7 @@ const ProfileForm = () => {
 
     try {
       const response = await axios.put(
-        '/api/user/edit-profile',
+        '/user/edit-profile',
         profileData,
         {
           headers: { 'Authorization': `Bearer ${token}` }

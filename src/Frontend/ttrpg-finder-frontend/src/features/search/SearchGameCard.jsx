@@ -55,7 +55,7 @@ const SearchGameCard = ({
       }
     }
     try {
-      const response = await fetch('/api/auth/apply', {
+      const response = await fetch('/auth/apply', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

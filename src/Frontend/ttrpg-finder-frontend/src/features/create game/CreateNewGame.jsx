@@ -200,7 +200,7 @@ const CreateNewGame = ({onClose}) => {
         console.log(newGame);
         try{
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
-          const response = await axios.post("/api/games/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          const response = await axios.post("/games/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
           if(response.status === 201){
           //Reset the form
           console.log("Poslano i spremljeno na server");

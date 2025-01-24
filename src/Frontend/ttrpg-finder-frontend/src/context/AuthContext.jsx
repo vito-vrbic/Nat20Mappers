@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   []);
   const verifyToken = (token) => {
     axios
-      .get('/api/auth/verify-token', {
+      .get('/auth/verify-token', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post('/api/auth/login', credentials);
+      const response = await axios.post('/auth/login', credentials);
 
       if (response.status === 200) {
         localStorage.setItem('authToken', response.data.token);
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       try {
-        const response = await axios.post('/api/auth/logout', {}, {
+        const response = await axios.post('/auth/logout', {}, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -137,9 +137,9 @@ export const AuthProvider = ({ children }) => {
       //determine where to send the data
       var adress="";
       if(isSignIn)
-        adress="/api/auth/google-signin";
+        adress="/auth/google-signin";
       else
-        adress="/api/auth/google-login";
+        adress="/auth/google-login";
 
       const response = await axios.post(adress, {
         email: userData.email, // Send email or other identifying fields

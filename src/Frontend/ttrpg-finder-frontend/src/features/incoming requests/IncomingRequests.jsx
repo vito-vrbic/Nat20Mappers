@@ -24,7 +24,7 @@ const IncomingRequests = ({onClose,gameId}) => {
     //Get all data based on the gameId
     const fetchApplications = async (id) => {
       try{
-        const response = await axios.get('/api/games/game-applications', {
+        const response = await axios.get('/games/game-applications', {
           params: {id},
           headers: { Authorization: `Bearer ${user.token}` },
         });
@@ -52,7 +52,7 @@ const IncomingRequests = ({onClose,gameId}) => {
           //console.log(userId,decision);
           //console.log(gameId);
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
-          const response = await axios.post("/api/games/application-decision", {userId, gameId , decision} , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          const response = await axios.post("/games/application-decision", {userId, gameId , decision} , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
           if(response.status === 201){
             console.log("Poslana odluka na server");
           }

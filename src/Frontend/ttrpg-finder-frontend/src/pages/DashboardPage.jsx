@@ -30,7 +30,7 @@ const Dashboard = () => {
   const fetchCreatedGames = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/games/created', {
+      const response = await axios.get('/games/created', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
@@ -47,7 +47,7 @@ const Dashboard = () => {
   const fetchAppliedGames = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/games/applied', {
+      const response = await axios.get('/games/applied', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 

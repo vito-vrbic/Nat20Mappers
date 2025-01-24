@@ -14,7 +14,7 @@ const CreateNewGame = ({onClose}) => {
       const [showForm, setShowForm] = useState(false); // Default state for form visibility: flase = form not seen, true = form seen
       const [gameTitle, setGameTitle] = useState(""); // Game title
       const [gameType, setGameType] = useState("online"); // Default type of game
-      const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 }); // Default location (Zagreb)
+      const [mapLocation, setMapLocation] = useState({ lat: null, lng: null }); // Default location (Zagreb)
       const [timeZone, setTimeZone] = useState("GMT"); // Timezone for when the game is online
       const [gameAvailability, setGameAvailability] = useState("private"); // Default type of game availability
       const [applicationRequired, setApplicationRequired] = useState(true); // Default state for applicationn requirement
@@ -191,7 +191,7 @@ const CreateNewGame = ({onClose}) => {
           description: description, // Optional string
           pravilnik: rules, // String
           requiresForm: formRequired, // true/false
-          formQuestions: questions, // Array of strings
+          formQuestions: (formRequired ? questions : []), // Array of strings
           currentPlayerCount: 0, // int
           maxPlayerCount: maxNumOfPlayers, // Optional int
           communicationChannel: communicationChannel, // String
@@ -200,7 +200,7 @@ const CreateNewGame = ({onClose}) => {
         console.log(newGame);
         try{
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
-          const response = await axios.post("/api/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          const response = await axios.post("/api/games/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
           if(response.status === 201){
           //Reset the form
           console.log("Poslano i spremljeno na server");

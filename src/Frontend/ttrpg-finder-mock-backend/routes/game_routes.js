@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs'); // Import fs module
+const path = './database/games.json'; // Specify the path to your JSON file
 const router = express.Router();
 
 
@@ -524,9 +526,35 @@ router.get('/game-applications', (req, res) => {
   }
 });
 
-router.post('/application-decision', (req, res) => {
-	console.log(req.body);
-	res.status(201).json({ message: 'Uspjesno' });
+router.post('/create-new-game', (req, res) => {
+  const newGame = req.body;
+  console.log(newGame); // This logs the incoming new game data
+  
+  const storeGameData = (newGame) => {
+    try {
+      // Step 1: Read the current games data from the JSON file
+      let games = [];
+      if (fs.existsSync(path)) {
+        const fileData = fs.readFileSync(path, 'utf8');
+        games = JSON.parse(fileData);
+      }
+
+      // Step 2: Add the new game data to the existing list of games
+      console.log('Pushano'); // This should now be logged correctly
+      games.push(newGame);
+
+      // Step 3: Write the updated game list back to the JSON file
+      fs.writeFileSync(path, JSON.stringify(games, null, 2), 'utf8');
+      console.log('Game data has been successfully saved');
+    } catch (error) {
+      console.error('Error saving game data:', error);
+    }
+  };
+
+  // Call the storeGameData function to save the game data
+  storeGameData(newGame);
+
+  res.status(201).send('Game data saved');
 });
 
 module.exports = router;

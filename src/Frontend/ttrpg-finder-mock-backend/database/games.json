@@ -3,7 +3,10 @@
     "id": "12345",
     "title": "Battle Royale",
     "type": "online",
-    "location": { "lat": 45.8131, "lng": 15.978 },
+    "location": {
+      "lat": 45.8131,
+      "lng": 15.978
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "user",
@@ -14,7 +17,14 @@
     "description": "",
     "pravilnik": "Battle Royale rules",
     "requiresForm": true,
-    "formQuestions": [{"questions": "What is your experience with Battle Royale games?"},{"questions":"What is your favorite skin in fortnite"}],
+    "formQuestions": [
+      {
+        "questions": "What is your experience with Battle Royale games?"
+      },
+      {
+        "questions": "What is your favorite skin in fortnite"
+      }
+    ],
     "currentPlayerCount": "100",
     "maxPlayerCount": "100",
     "communicationChannel": "Discord",
@@ -25,7 +35,10 @@
     "id": "67890",
     "title": "Super Battle Royale",
     "type": "online",
-    "location": { "lat": 45.8141, "lng": 15.979 },
+    "location": {
+      "lat": 45.8141,
+      "lng": 15.979
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "user",
@@ -36,7 +49,9 @@
     "description": "A super competitive Battle Royale game.",
     "pravilnik": "Super Battle Royale rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "What is your experience with competitive games?" },
+    "formQuestions": {
+      "questions": "What is your experience with competitive games?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "100",
     "communicationChannel": "Zoom",
@@ -47,7 +62,10 @@
     "id": "11223",
     "title": "Local Soccer League",
     "type": "local",
-    "location": { "lat": 45.8200, "lng": 15.975 },
+    "location": {
+      "lat": 45.82,
+      "lng": 15.975
+    },
     "timezone": "Europe/Zagreb",
     "availability": "private",
     "createdBy": "business",
@@ -70,7 +88,10 @@
     "id": "33445",
     "title": "Extreme Racing",
     "type": "online",
-    "location": { "lat": 45.8205, "lng": 15.970 },
+    "location": {
+      "lat": 45.8205,
+      "lng": 15.97
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "business",
@@ -81,7 +102,14 @@
     "description": "An intense racing competition.",
     "pravilnik": "Extreme racing rules",
     "requiresForm": true,
-    "formQuestions":[{"question" : "Why are you interested in this?"}, {"question" : "What is your favorite fast vehicle?"}],
+    "formQuestions": [
+      {
+        "question": "Why are you interested in this?"
+      },
+      {
+        "question": "What is your favorite fast vehicle?"
+      }
+    ],
     "currentPlayerCount": "0",
     "maxPlayerCount": "20",
     "communicationChannel": "Discord",
@@ -92,7 +120,10 @@
     "id": "55667",
     "title": "RPG Adventure Quest",
     "type": "online",
-    "location": { "lat": 45.8350, "lng": 15.960 },
+    "location": {
+      "lat": 45.835,
+      "lng": 15.96
+    },
     "timezone": "",
     "availability": "private",
     "createdBy": "user",
@@ -115,7 +146,10 @@
     "id": "77889",
     "title": "Fantasy Football",
     "type": "local",
-    "location": { "lat": 45.8200, "lng": 15.965 },
+    "location": {
+      "lat": 45.82,
+      "lng": 15.965
+    },
     "timezone": "Europe/Zagreb",
     "availability": "public",
     "createdBy": "user",
@@ -126,7 +160,9 @@
     "description": "A fun and competitive fantasy football league.",
     "pravilnik": "Fantasy football rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "How many fantasy leagues have you participated in?" },
+    "formQuestions": {
+      "questions": "How many fantasy leagues have you participated in?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "10",
     "communicationChannel": "Zoom",
@@ -137,7 +173,10 @@
     "id": "99001",
     "title": "Space Invaders VR",
     "type": "online",
-    "location": { "lat": 45.8150, "lng": 15.980 },
+    "location": {
+      "lat": 45.815,
+      "lng": 15.98
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "business",
@@ -159,7 +198,10 @@
     "id": "22334",
     "title": "Zombie Survival",
     "type": "online",
-    "location": { "lat": 45.8100, "lng": 15.985 },
+    "location": {
+      "lat": 45.81,
+      "lng": 15.985
+    },
     "timezone": "",
     "availability": "private",
     "createdBy": "user",
@@ -170,7 +212,9 @@
     "description": "Survive the zombie apocalypse.",
     "pravilnik": "Zombie survival rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "How experienced are you with survival games?" },
+    "formQuestions": {
+      "questions": "How experienced are you with survival games?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "50",
     "communicationChannel": "Zoom",
@@ -181,7 +225,10 @@
     "id": "44556",
     "title": "Kingdom Clash",
     "type": "online",
-    "location": { "lat": 45.8180, "lng": 15.987 },
+    "location": {
+      "lat": 45.818,
+      "lng": 15.987
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "business",
@@ -192,7 +239,9 @@
     "description": "Conquer kingdoms in this multiplayer battle game.",
     "pravilnik": "Kingdom clash rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "Do you prefer playing as a king or a knight?" },
+    "formQuestions": {
+      "questions": "Do you prefer playing as a king or a knight?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "100",
     "communicationChannel": "Discord",
@@ -203,7 +252,10 @@
     "id": "66778",
     "title": "City Building Sim",
     "type": "local",
-    "location": { "lat": 45.8300, "lng": 15.950 },
+    "location": {
+      "lat": 45.83,
+      "lng": 15.95
+    },
     "timezone": "Europe/Zagreb",
     "availability": "private",
     "createdBy": "user",
@@ -225,7 +277,10 @@
     "id": "88990",
     "title": "Pirate Adventures",
     "type": "online",
-    "location": { "lat": 45.8360, "lng": 15.965 },
+    "location": {
+      "lat": 45.836,
+      "lng": 15.965
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "user",
@@ -236,7 +291,9 @@
     "description": "Set sail on a pirate adventure.",
     "pravilnik": "Pirate adventures rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "Have you ever sailed on a ship before?" },
+    "formQuestions": {
+      "questions": "Have you ever sailed on a ship before?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "10",
     "communicationChannel": "Zoom",
@@ -247,11 +304,14 @@
     "id": "12332",
     "title": "Medieval Battle Royale",
     "type": "online",
-    "location": { "lat": 45.8120, "lng": 15.960 },
+    "location": {
+      "lat": 45.812,
+      "lng": 15.96
+    },
     "timezone": "",
     "availability": "private",
     "createdBy": "business",
-    "madeBy":"fez",
+    "madeBy": "fez",
     "applicationRequired": false,
     "complexity": "high",
     "estimatedLength": "1 hour",
@@ -270,7 +330,10 @@
     "id": "55544",
     "title": "Hackathon Tournament",
     "type": "online",
-    "location": { "lat": 45.8200, "lng": 15.955 },
+    "location": {
+      "lat": 45.82,
+      "lng": 15.955
+    },
     "timezone": "",
     "availability": "public",
     "createdBy": "user",
@@ -281,11 +344,36 @@
     "description": "A hackathon tournament.",
     "pravilnik": "Hackathon rules",
     "requiresForm": true,
-    "formQuestions": { "questions": "What is your experience with hackathons?" },
+    "formQuestions": {
+      "questions": "What is your experience with hackathons?"
+    },
     "currentPlayerCount": "0",
     "maxPlayerCount": "50",
     "communicationChannel": "Zoom",
     "isHomebrew": false,
     "status": "complete"
+  },
+  {
+    "title": "Testiranje",
+    "type": "online",
+    "location": {
+      "lat": 45.8131,
+      "lng": 15.978
+    },
+    "timezone": "GMT",
+    "availability": "private",
+    "createdBy": "private",
+    "applicationRequired": true,
+    "complexity": "Medium",
+    "estimatedLength": "1 sat",
+    "startTimestamp": "",
+    "description": "",
+    "pravilnik": "Nema pravila",
+    "requiresForm": false,
+    "formQuestions": [],
+    "currentPlayerCount": 0,
+    "maxPlayerCount": "456",
+    "communicationChannel": "Discord",
+    "isHomebrew": false
   }
 ]

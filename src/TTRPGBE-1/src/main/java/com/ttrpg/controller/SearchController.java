@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/api/data/search") // Ruta za pretraživanje igara
+@RequestMapping("/data/search") // Ruta za pretraživanje igara
 public class SearchController {
 
     @Autowired

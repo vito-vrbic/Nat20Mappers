@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/auth/login") // Postavlja osnovnu rutu za prijavu korisnika
+@RequestMapping("/auth/login") // Postavlja osnovnu rutu za prijavu korisnika
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class); // Logger za praćenje aktivnosti
@@ -39,8 +39,8 @@ public class LoginController {
             String token = JwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
             String companyName = null;
             String role = "private";
-            if(trueKorisnik instanceof PoslovniKorisnik trueBusinessKorisnik) {
-                companyName= trueBusinessKorisnik.getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null
+            if(trueKorisnik instanceof PoslovniKorisnik ) {
+                companyName= ((PoslovniKorisnik)trueKorisnik).getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null
                 role = "business";
             }
 

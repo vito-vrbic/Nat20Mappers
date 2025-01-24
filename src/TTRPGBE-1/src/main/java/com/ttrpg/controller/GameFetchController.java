@@ -122,13 +122,13 @@ public class GameFetchController {
     @GetMapping("/applied")
     public ResponseEntity<?> appliedGames(@RequestHeader("Authorization") String tokenToParse) {
         if (tokenToParse == null || !korisnikService.isValidToken(tokenToParse.replace("Bearer ", ""))) {
-<<<<<<< HEAD
+
             logger.info("token is null or empty");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Unable to fetch created games. Please try again later."));
-=======
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "Unable to fetch created games. Please try again later."));
->>>>>>> 0896d1676afee4cf43d38241221e84a88d79501d
+
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            //        .body(Map.of("message", "Unable to fetch created games. Please try again later."));
+
 
         }
         logger.info("applied games");
@@ -176,11 +176,9 @@ public class GameFetchController {
                 gameDTO.setPravilnik(igra.getRuleset());
                 gameDTO.setCurrentPlayerCount(igraService.getPlayerCount(igra.getId()));
                 gameDTO.setMaxPlayerCount(igra.getMaxPlayerCount());
-<<<<<<< HEAD
+
                 //gameDTO.setCurrentPlayerCount(igraService.getPlayerCount(id));
                 gameDTO.setCurrentPlayerCount(0L);
-=======
->>>>>>> 0896d1676afee4cf43d38241221e84a88d79501d
                 gameDTO.setCommunicationChannel(igra.getCommunicationChannel());
                 gameDTO.setHomebrew(igra.getIsHomebrew());
                 

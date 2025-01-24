@@ -9,7 +9,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000', //Adresa mock backenda
         changeOrigin: true,
-        rewrite: (path) => path.replace(/ˇ\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '') // Correct rewrite pattern
       }
     } 
   },

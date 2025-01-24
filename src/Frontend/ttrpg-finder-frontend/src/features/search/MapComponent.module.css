@@ -1,0 +1,11 @@
+.mapContainer {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  

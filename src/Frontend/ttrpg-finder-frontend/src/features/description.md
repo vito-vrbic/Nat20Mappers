@@ -1,0 +1,1 @@
+This folder contains feature-specific components that are used on the TTRPGFinder frontend.

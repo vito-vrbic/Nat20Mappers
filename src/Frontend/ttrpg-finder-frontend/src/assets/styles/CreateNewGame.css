@@ -24,11 +24,11 @@
   
   .form-container h2 {
     margin-top: 0;
-    color: black;
+    color: #fff;
   }
   
   .form-container label {
-    color: black;
+    color: #fff !important;
     display: block;
   }
   
@@ -43,7 +43,7 @@
   }
   
   .form-container button {
-    background: #003082; 
+    background: #ffdd57; 
     color: white;
     padding: 10px 20px;
     border: none;
@@ -53,7 +53,7 @@
   }
   
   .form-container button:hover {
-    background: #002060; 
+    background: #ffdd57; 
   }
 
   .radioButton{
@@ -104,6 +104,16 @@
   .buttonsContainer{
     display: flex;
     justify-content: center;
+  }
+
+  .addQuestionButton button{
+    background-color: #ffdd57 !important;
+    color: black !important;
+  }
+
+  .formQuestions button{
+    background-color: #ffdd57 !important;
+    color: black !important;
   }
 
   @media (max-width: 768px) {

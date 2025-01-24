@@ -1,20 +1,90 @@
-import React, { useState, useEffect} from 'react';
-import '../../pages/DashboardPage.module.css'
-import '../../assets/styles/GameContainer.css';
+import React, { useState, useEffect, useRef} from 'react';
+//import '../../pages/DashboardPage.module.css'
+//import '../../assets/styles/GameContainer.css';
 import '../../assets/styles/CreateNewGame.css';
-import MapComponent from '../../features/search/MapComponent'; // Import the MapComponent
+import MapComponent from '../search/MapComponent'; // Import the MapComponent
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // Importing the custom hook from AuthContext
 import { use } from 'react';
 
-const CreateNewGame = ({onClose}) => {
-    const { isAuthenticated, user, logout } = useAuth();
+const EditGame = ({onClose,editingGameId}) => {
+  const { isAuthenticated, user, logout } = useAuth();    
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const lastEditingGameIdRef = useRef(null); 
+
+  //Fetch data of a game that will be edited with an ID
+  const fetchGameToEdit = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/games/game-to-edit', {
+        params: { id },
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      console.log("Fetched game data from server: ", response.data);
+
+      //Write data that was read from the server
+      setGameTitle(response.data.game.title); 
+      setGameType(response.data.game.type); 
+      setMapLocation(response.data.game.location || { lat: 45.8131, lng: 15.978 }); 
+      setTimeZone(response.data.game.timezone || "GMT");
+      setGameAvailability(response.data.game.availability); 
+      setApplicationRequired(response.data.game.applicationRequired); 
+      setComplexityLevel(response.data.game.complexity.charAt(0).toUpperCase() + response.data.game.complexity.slice(1).toLowerCase());
+      setEstimatedLength(response.data.game.estimatedLength);
+      if(response.data.game.startTimestamp){
+        const date = new Date(response.data.game.startTimestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+        setStartTime(formattedDate); // If start time exists
+      }
+      else{
+        setStartTime(""); // If start time doesnt exist
+      }
+      setDescription(response.data.game.description || "");
+      setRules(response.data.game.pravilnik); 
+      setMaxNumOfPlayers(response.data.game.maxPlayerCount || ""); 
+      setFormRequired(response.data.game.requiresForm);
+      const questionsFromServer = response.data.game.formQuestions || [];
+      const formattedQuestions = questionsFromServer.map(q => ({ questions: q.questions }));
+      setCommunicationChannel(response.data.game.communicationChannel); 
+      setIsHomeBrew(response.data.game.isHomebrew ); 
+      setPlayerCount(response.data.game.currentPlayerCount);
+
+      // If no questions, set a default empty question field
+      setQuestions(formattedQuestions.length > 0 ? formattedQuestions : [{ questions: "" }]);
+
+    } catch (err) {
+      setError("Unable to fetch game data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    const trimmedEditingGameId = editingGameId?.trim(); // Trim any spaces
+    // Check if the ID has changed compared to the last stored ID (in the ref)
+    if (isAuthenticated && trimmedEditingGameId && trimmedEditingGameId !== lastEditingGameIdRef.current) {
+      lastEditingGameIdRef.current = trimmedEditingGameId; // Update the ref
+      fetchGameToEdit(trimmedEditingGameId); 
+    }
+  }, [isAuthenticated, editingGameId]); 
+
+
+
+
+      
+      
 
       //Seters for data that will be collected in a form
-      const [showForm, setShowForm] = useState(false); // Default state for form visibility: flase = form not seen, true = form seen
+      const [showForm, setShowEditForm] = useState(false); // Default state for form visibility: flase = form not seen, true = form seen
       const [gameTitle, setGameTitle] = useState(""); // Game title
       const [gameType, setGameType] = useState("online"); // Default type of game
-      const [mapLocation, setMapLocation] = useState({ lat: null, lng: null }); // Default location (Zagreb)
+      const [mapLocation, setMapLocation] = useState({ lat: 45.8131, lng: 15.978 }); // Default location (Zagreb)
       const [timeZone, setTimeZone] = useState("GMT"); // Timezone for when the game is online
       const [gameAvailability, setGameAvailability] = useState("private"); // Default type of game availability
       const [applicationRequired, setApplicationRequired] = useState(true); // Default state for applicationn requirement
@@ -29,12 +99,15 @@ const CreateNewGame = ({onClose}) => {
       const [isHomebrew, setIsHomeBrew] = useState(""); // Is Homebrew
 
       const [questions, setQuestions] = useState([{questions: ""}]); //Array for questions
+      const [playerCount, setPlayerCount] = useState(0);
+
+      const [newQuestions, setNewQuestions] = useState([]); //For newly added questions
 
       //Handler for adding a new user question
       const handleAddQuestion = () => {
         //Check if the maximum number of questions was added
-        if(questions.length < 99){
-          setQuestions([...questions, {questions: ""}]);
+        if(newQuestions.length + questions.length < 99){
+          setNewQuestions([...newQuestions, {questions: ""}]);
         }
         else{
           alert("You cannot add more than 99 questions.");
@@ -44,9 +117,9 @@ const CreateNewGame = ({onClose}) => {
       //Handler for delted a question
       const handleDeleteQuestion = (indexToRemove) => {
         //Check if a user is trying to delete the last question making it so that there is no questions but a form is required
-        if(questions.length > 1){
-          const updatedQuestions = questions.filter((_, index) => index !== indexToRemove);
-          setQuestions(updatedQuestions);
+        if(newQuestions.length + questions.length > 1){
+          const updatedQuestions = newQuestions.filter((_, index) => index !== indexToRemove);
+          setNewQuestions(updatedQuestions);
         }
         else{
           alert("You must have at least 1 question.");
@@ -55,14 +128,14 @@ const CreateNewGame = ({onClose}) => {
 
       //Handler for question change
       const handleQuestionChange = (index,e) => {
-        const updatedQuestions = questions.map((q, i) => 
+        const updatedQuestions = newQuestions.map((q, i) => 
           i === index ? { ...q, questions: e.target.value} : q
         );
-        setQuestions(updatedQuestions);
+        setNewQuestions(updatedQuestions);
       };
 
       const toggleForm = () =>{
-        setShowForm(false);
+        setShowEditForm(false);
       }
     
       //Handler for changing a title of game
@@ -171,13 +244,13 @@ const CreateNewGame = ({onClose}) => {
       //Handler for submiting a form
       const handleSubmit = async (e) => {
         e.preventDefault();
-        //If a user made some questions for its form but then decided that the form is not needed clear the questions that were created
-        if(!formRequired){
-          setQuestions([{question: ""}]);
-        }
-
+        /*console.log("New questions:", newQuestions);
+        const allQuestions = [...questions, ...newQuestions];
+        console.log("All questions:", allQuestions);
+        setQuestions(allQuestions);*/
         //Data of a new game
         const newGame = {
+          id: editingGameId,
           title: gameTitle, // String
           type: gameType, // online/local for private user, online/exact for business user
           location: {"lat": mapLocation.lat, "lng": mapLocation.lng}, // Coordinates
@@ -191,8 +264,8 @@ const CreateNewGame = ({onClose}) => {
           description: description, // Optional string
           pravilnik: rules, // String
           requiresForm: formRequired, // true/false
-          formQuestions: (formRequired ? questions : []), // Array of strings
-          currentPlayerCount: 0, // int
+          formQuestions: (formRequired ? [...questions, ...newQuestions] : []), // Array of strings
+          currentPlayerCount: playerCount, // int
           maxPlayerCount: maxNumOfPlayers, // Optional int
           communicationChannel: communicationChannel, // String
           isHomebrew: isHomebrew // true/false
@@ -200,27 +273,27 @@ const CreateNewGame = ({onClose}) => {
         console.log(newGame);
         try{
           const token = localStorage.getItem('authToken'); // Assuming token is saved in localStorage
-          const response = await axios.post("/api/games/create-new-game", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
+          const response = await axios.post("/api/games/save-edit", newGame , {headers: { Authorization: `Bearer ${token}` }}); //Send to server
           if(response.status === 201){
-          //Reset the form
-          console.log("Poslano i spremljeno na server");
-          setGameTitle("");
-          setGameType("online");
-          setMapLocation({ lat: 45.8131, lng: 15.978 });
-          setTimeZone("GMT");
-          setGameAvailability("private");
-          setApplicationRequired(true);
-          setComplexityLevel("");
-          setEstimatedLength("");
-          setStartTime("");
-          setDescription("");
-          setRules("");
-          setMaxNumOfPlayers("");
-          setFormRequired("");
-          setQuestions([{questions: ""}]);
-          setCommunicationChannel("");
-          setIsHomeBrew("");
-          onClose();
+            console.log("SPREMLJENO NA SERVER");
+            setGameTitle("");
+            setGameType("online");
+            setMapLocation({ lat: 45.8131, lng: 15.978 });
+            setTimeZone("GMT");
+            setGameAvailability("private");
+            setApplicationRequired(true);
+            setComplexityLevel("");
+            setEstimatedLength("");
+            setStartTime("");
+            setDescription("");
+            setRules("");
+            setMaxNumOfPlayers("");
+            setFormRequired("");
+            setQuestions([{questions: ""}]);
+            setCommunicationChannel("");
+            setIsHomeBrew("");
+            //window.location.reload();
+            onClose();
           }
           else{
             console.error("NIJE USPIJELO STAVITI SE NA SERVER");
@@ -233,7 +306,7 @@ const CreateNewGame = ({onClose}) => {
       return (
         <div className="overlay">
           <div className="form-container">
-            <h2>Create New Game</h2>
+            <h2>Edit Game</h2>
 
             <form onSubmit={handleSubmit}>
               {/*Enter game name*/}
@@ -242,31 +315,6 @@ const CreateNewGame = ({onClose}) => {
                 <input type="text" name="title" value={gameTitle} onChange={handleGameTitleChange} placeholder="Enter Game Title" required/>
               </label>
               <br />
-
-              {/*Pick game type: online/local (for private user) online/exact(for business user)*/}
-              <label>
-                Game Type:
-              </label>
-              <br/>
-                <div className="radioButton">
-                  <label>
-                  Online <input type="radio" name="type" value="online" checked={gameType === "online"} onChange={handleGameTypeChange} required/>
-                  </label>
-                  {user?.role === "private" && (
-                  <label>
-                  Local <input type="radio" name="type" value="local" checked={gameType === "local"} onChange={handleGameTypeChange} required/>
-                  </label>
-                  )}
-                  {user?.role === "business" && (
-                  <label>
-                  Exact <input type="radio" name="type" value="exact" checked={gameType === "exact"} onChange={handleGameTypeChange} required/> 
-                  </label>
-                  )}
-                </div>
-              <br />
-    
-              {/*Pick a location on a map local/exact*/}
-              {(gameType !== "online" && <MapComponent mapLocation={mapLocation} setMapLocation={setMapLocation}></MapComponent>)}
 
               {/*Picak a timezone for online game*/}
               {(gameType === "online" && 
@@ -295,6 +343,7 @@ const CreateNewGame = ({onClose}) => {
                 </div>
               )}
               <br />
+              
 
               {/*Pick if a game is private or public*/}
               <label>
@@ -379,21 +428,10 @@ const CreateNewGame = ({onClose}) => {
                 </label>
                 <br />
 
-                {/*Pick if a "custom" form is required*/}
-              <label>
-              Form Required:
-              </label>
-              <br></br>
-                <div className="radioButton">
-                  <label>
-                  Yes <input type="radio" name="formRequired" value={true} checked={formRequired === true} onChange={handleFormRequiredChange} required/>
-                  </label>
-                  <label>
-                  No <input type="radio" name="formRequired" value={false} checked={formRequired === false} onChange={handleFormRequiredChange} required/>
-                  </label>
-                </div>
-              <br />
-
+              
+              {(formRequired && <label>
+                Form questions: 
+              </label>)}
               {/*"Custom" form question maker*/}
               {(formRequired &&
               <div>
@@ -402,10 +440,19 @@ const CreateNewGame = ({onClose}) => {
                     <label>
                       Question {index + 1}:
                     </label>
-                    <input type="text" value={q.questions} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required></input>
-                    <button type="button" onClick={() => handleDeleteQuestion(index)}>Delete Question</button>
+                    <input type="text" value={q.questions} readOnly></input>
                   </div>
                 ))}
+
+                {newQuestions.map((q, index) => (
+                  <div className="formQuestions" key={index + questions.length}>
+                    <label>
+                      Question {index + questions.length + 1}:
+                    </label>
+                      <input type="text" value={q.questions} onChange={(event) => handleQuestionChange(index, event)} placeholder="Enter a question" required/>
+                        <button type="button" onClick={() => handleDeleteQuestion(index)}> Delete Question </button>
+                      </div>
+                  ))}
                 <div className="addQuestionButton">
                   <button type="button" onClick={handleAddQuestion}>Add Question</button> 
                 </div>
@@ -446,4 +493,4 @@ const CreateNewGame = ({onClose}) => {
       )
 }
 
-export default CreateNewGame;
+export default EditGame;

@@ -1,9 +1,9 @@
 const express = require('express');
+const fs = require('fs'); // Import fs module
+const path = './database/games.json'; // Specify the path to your JSON file
 const router = express.Router();
 
-// Route to fetch the hosted games for a user
-router.get('/created', (req, res) => {
-  try {
+
     // Hardcoded array of 4 games
     const games = [
       {
@@ -21,9 +21,10 @@ router.get('/created', (req, res) => {
         "description": "A thrilling dungeon crawl for adventurers of all levels.",
         "pravilnik": "Players must have basic understanding of Dungeons & Dragons rules.",
         "requiresForm": true,
-        "formQuestions": {
-          "questions": "What experience do you have with tabletop RPGs?"
-        },
+        "formQuestions": [
+			{"questions": "What experience do you have with tabletop RPGs?"},
+			{"questions": "Halo"}
+        ],
         "currentPlayerCount": "3",
         "maxPlayerCount": "6",
         "communicationChannel": "Discord",
@@ -44,7 +45,7 @@ router.get('/created', (req, res) => {
         "description": "Uncover the secrets of the old mansion in this local game.",
         "pravilnik": "Players must work in teams to solve the mystery.",
         "requiresForm": false,
-        "formQuestions": {},
+        "formQuestions": [],
         "currentPlayerCount": "2",
         "maxPlayerCount": "4",
         "communicationChannel": "Zoom",
@@ -65,9 +66,9 @@ router.get('/created', (req, res) => {
         "description": "A battle for supremacy in outer space.",
         "pravilnik": "Players must understand advanced strategy mechanics.",
         "requiresForm": true,
-        "formQuestions": {
-          "questions": "Do you have prior experience with real-time strategy games?"
-        },
+        "formQuestions": [
+		  {"questions": "Do you have prior experience with real-time strategy games?"}
+		  ],
         "currentPlayerCount": "10",
         "maxPlayerCount": "20",
         "communicationChannel": "Discord",
@@ -236,6 +237,10 @@ router.get('/created', (req, res) => {
       }
     ];
 
+// Route to fetch the hosted games for a user
+router.get('/created', (req, res) => {
+  try {
+	  games;
     res.status(200).json({ games });
   } catch (error) {
     console.error('Error fetching hosted games:', error);
@@ -423,6 +428,133 @@ router.get('/applied', (req, res) => {
     console.error('Error fetching applied games:', error);
     res.status(500).json({ message: 'Unable to fetch applied games. Please try again later.' });
   }
+});
+
+router.get('/game-to-edit', (req, res) => {
+	const {id} = req.query;
+	
+	if(!id){
+		return res.status(400).json({error: 'Game id is not provided'});
+	}
+	
+	const filteredGames = games.filter(game => game.id === id);
+	if(filteredGames.length === 0){
+		return res.status(404).json({error: 'No game with specified id'});
+	}
+	
+	const gameToReturn = filteredGames[0];
+	
+	return res.json({game: gameToReturn});
+});
+
+router.post('/save-edit', (req, res) => {
+	const editedGame = req.body;
+	console.log(editedGame);
+	const gameId = editedGame.id;
+	const updatedGame = editedGame;
+	
+	const gameIndex = games.findIndex(game => game.id === gameId);
+	if (gameIndex === -1) {
+		return res.status(404).json({ message: "Game not found" });
+	}
+	games[gameIndex] = { ...games[gameIndex], ...updatedGame };
+	return res.status(201).json({ message: "Game updated successfully" });
+});
+
+router.get('/game-applications', (req, res) => {
+  try {
+    const appliedUsers = [
+      {
+        "id": "gameId123",
+        "userId": "12334",
+		"username": "ivan",
+        "answers": [
+			"odgvor1",
+			"odgvor2",
+			"treciAnswer"
+        ]
+      },
+	  {
+        "id": "gameId123",
+        "userId": "1232434",
+		"username": "patrik",
+        "answers": [
+			"odgvor435",
+			"odgvor534",
+			"treciAnswer"
+        ]
+      },
+	  {
+        "id": "gameId123",
+        "userId": "fdg2434",
+		"username": "patrdfsafasdfik",
+        "answers": [
+			"odgvor435",
+			"odgvor534",
+			"treciAnswer"
+        ]
+      },
+	  {
+        "id": "gameId123",
+        "userId": "12afd34",
+		"username": "pahgdfgjhgfjtrik",
+        "answers": [
+			"odgvor435",
+			"odgvor534",
+			"treciAnswer"
+        ]
+      },
+	  {
+        "id": "gameId123",
+        "userId": "12afd34",
+		"username": "pahgdfgjhgfjtrik",
+        "answers": []
+      }
+      
+    ];
+	const id = req.query;
+	console.log(id);
+	const filteredUsers = id
+      ? appliedUsers.filter((appliedUsers) => appliedUsers.id === id)
+      : appliedUsers;
+
+	
+    res.status(200).json({ appliedUsers: appliedUsers });
+  } catch (error) {
+    console.error('Error fetching applied games:', error);
+    res.status(500).json({ message: 'Unable to fetch applied games. Please try again later.' });
+  }
+});
+
+router.post('/create-new-game', (req, res) => {
+  const newGame = req.body;
+  console.log(newGame); // This logs the incoming new game data
+  
+  const storeGameData = (newGame) => {
+    try {
+      // Step 1: Read the current games data from the JSON file
+      let games = [];
+      if (fs.existsSync(path)) {
+        const fileData = fs.readFileSync(path, 'utf8');
+        games = JSON.parse(fileData);
+      }
+
+      // Step 2: Add the new game data to the existing list of games
+      console.log('Pushano'); // This should now be logged correctly
+      games.push(newGame);
+
+      // Step 3: Write the updated game list back to the JSON file
+      fs.writeFileSync(path, JSON.stringify(games, null, 2), 'utf8');
+      console.log('Game data has been successfully saved');
+    } catch (error) {
+      console.error('Error saving game data:', error);
+    }
+  };
+
+  // Call the storeGameData function to save the game data
+  storeGameData(newGame);
+
+  res.status(201).send('Game data saved');
 });
 
 module.exports = router;

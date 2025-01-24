@@ -31,7 +31,7 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get('/games/created', {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
       });
 
       const data = Array.isArray(response.data.games) ? response.data.games : [];
@@ -48,7 +48,7 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get('/games/applied', {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
       });
 
       const data = Array.isArray(response.data.games) ? response.data.games : [];

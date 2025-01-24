@@ -1,12 +1,12 @@
-// App.jsx
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
-import { AuthProvider } from './utils/AuthContext';
-import AppRoutes from './utils/AppRoutes';
+import { AuthProvider } from './context/AuthContext';
+import AppRoutes from './routes/AppRoutes';
+import './assets/styles/Globals.css';
 
-import './styles/Globals.css';
-
+import DiceRoller from './utils/DiceRoller'; // Import DiceRoller component
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <main className="main-content">
             <AppRoutes />
           </main>
+          <DiceRoller /> {/* Include DiceRoller in your component tree */}
         </div>
       </Router>
     </AuthProvider>

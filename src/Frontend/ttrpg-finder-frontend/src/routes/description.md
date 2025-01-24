@@ -1,0 +1,1 @@
+This folder contains routes that are used on the TTRPGFinder frontend.

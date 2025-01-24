@@ -1,1 +1,1 @@
-Used for components that represent entire pages or views in the application.
+This folder contains route-level components that are used on the TTRPGFinder frontend.

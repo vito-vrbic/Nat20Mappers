@@ -33,10 +33,6 @@ public class CreatedGamesDTO {
         private int maxPlayerCount;
         private String communicationChannel;
         private boolean isHomebrew;
-
-        public void addQuestion(String question) {
-            formQuestions.add(question);
-        }
     }
 
 

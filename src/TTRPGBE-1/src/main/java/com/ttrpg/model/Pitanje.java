@@ -13,7 +13,8 @@ public class Pitanje {
     private PitanjeId id;
     private String questionText;
     @ManyToOne
-    @JoinColumn(name = "gameId", referencedColumnName = "gameId", nullable = false)  // Foreign key to User
+    //@MapsId("gameId")
+    @JoinColumn(name = "pitanjeGameId", referencedColumnName = "gameId", nullable = false)  // Foreign key to User
     private Igra game;
 
     public Pitanje(String questionText, Igra game) {
@@ -27,7 +28,9 @@ public class Pitanje {
     }
     @Embeddable
     public static class PitanjeId implements Serializable {
+        @Column(name="pitanjeGameId")
         private Long gameId;
+        @Column(name="questionText")
         private String questionText;
 
         public PitanjeId(Long gameId, String questionText) {

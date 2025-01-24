@@ -75,8 +75,9 @@ public class Prijava {
 
     @Embeddable
     public class PrijavaId implements Serializable {
-
+        @Column(name = "prijavaGameId")
         private Long gameId;  // Foreign key to Igra
+        @Column(name = "prijavaUserId")
         private int userId;  // Foreign key to PrivatniKorisnik
 
         public PrijavaId() {

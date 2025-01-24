@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue("PrivatniKorisnik") 
 public class PrivatniKorisnik extends Korisnik {
 
     // OneToMany veza s entitetom 'Prijava', gdje 'privateUser' označava povezanu stranu

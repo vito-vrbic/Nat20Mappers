@@ -11,7 +11,7 @@ public class Odgovor {
     private String answerText;
 
     @ManyToOne
-    @MapsId("prijavaId")
+    //@MapsId("prijavaId")
     @JoinColumns({
             @JoinColumn(name = "prijavaGameId", referencedColumnName = "prijavaGameId", insertable = false, updatable = false),
             @JoinColumn(name = "prijavaUserId", referencedColumnName = "prijavaUserId", insertable = false, updatable = false)
@@ -19,10 +19,10 @@ public class Odgovor {
     private Prijava prijava;
 
     @ManyToOne
-    @MapsId("pitanjeId") // Maps this part of the embedded ID to the Prijava relationship
+    //@MapsId("pitanjeId") // Maps this part of the embedded ID to the Prijava relationship
     @JoinColumns({
-            @JoinColumn(name = "pitanjeGameId", referencedColumnName = "pitanjeGameId"),
-            @JoinColumn(name = "questionText", referencedColumnName = "questionText")
+            @JoinColumn(name = "pitanjeGameId", referencedColumnName = "pitanjeGameId",insertable = false, updatable = false),
+            @JoinColumn(name = "questionText", referencedColumnName = "questionText",insertable = false, updatable = false)
     })
     private Pitanje pitanje;
 
@@ -42,12 +42,15 @@ public class Odgovor {
 
     @Embeddable
     public class OdgovorId implements Serializable {
+        @Embedded
         private Pitanje.PitanjeId pitanjeId;
+        @Embedded
         private Prijava.PrijavaId prijavaId;
+        @Column(name="answerText")
         private String answerText;
         public OdgovorId() {}
-        public OdgovorId(Pitanje.PitanjeId id, String answerText, Prijava.PrijavaId prijavaId) {
-            this.pitanjeId = id;
+        public OdgovorId(Pitanje.PitanjeId pitanjeId, String answerText, Prijava.PrijavaId prijavaId) {
+            this.pitanjeId = pitanjeId;
             this.answerText = answerText;
             this.prijavaId = prijavaId;
 

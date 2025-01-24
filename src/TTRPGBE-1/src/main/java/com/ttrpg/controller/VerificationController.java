@@ -3,9 +3,13 @@ package com.ttrpg.controller;
 
 import com.ttrpg.dto.ValidationResponseDTO;
 import com.ttrpg.model.Korisnik;
+import com.ttrpg.model.PoslovniKorisnik;
+import com.ttrpg.model.PrivatniKorisnik;
 import com.ttrpg.repository.KorisnikRepository;
+import com.ttrpg.service.UserData;
 import com.ttrpg.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +40,17 @@ public class VerificationController {
             try {
                 Claims claims = JwtUtil.validateJWT(jwt);      //uključuje podatke poput koji je subjekt tokena, kada ističe,...
                 String username = claims.getSubject();          //claims uključuje i username koji je dekodiran iz jwta pa možemo tražiti usera u repozitoriju
-                Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();  //
-                ValidationResponseDTO responseDTO = new ValidationResponseDTO("The token is valid", korisnik);
+                Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();
+                UserData userData = new UserData(String.valueOf(korisnik.getUserId()), korisnik.getUsername(), korisnik.getEmail());
+                if(korisnik instanceof PoslovniKorisnik) {
+                    PoslovniKorisnik pk = (PoslovniKorisnik) korisnik;
+                    userData.setRole("business");
+                    userData.setOrganizationName(pk.getCompany().getCompanyName());
+                }
+                else if(korisnik instanceof PrivatniKorisnik) {
+                    userData.setRole("private");
+                }
+                ValidationResponseDTO responseDTO = new ValidationResponseDTO("The token is valid", userData);
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);    //šaljemo poruku, user data i status
 
             } catch (RuntimeException e) {

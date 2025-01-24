@@ -2,21 +2,26 @@ package com.ttrpg.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @DiscriminatorValue("TocnoLokacijskaIgra")  // Oznaka tipa igre u tabeli (nasljeđivanje u Single Table strategiji)
 public class TocnoLokacijskaIgra extends Igra {
+    @Embedded
+    private MapLocation location;
 
-    @Column(name="Coordinate", length=20)  // Polje za pohranu koordinata u obliku stringa, maksimalne duljine 20 znakova
-    private String coordinate;  // Koordinate koje definiraju točno mjesto igre
+    public TocnoLokacijskaIgra() {
 
-    // Getter za koordinatu
-    public String getCoordinate() {
-        return coordinate;  // Vraća vrijednost koordinata
     }
 
-    // Setter za koordinatu
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;  // Postavlja vrijednost koordinata
+    public TocnoLokacijskaIgra(String gameName, String availability, Korisnik dungeonMaster, String complexity,
+                               String estimatedLength, String startTimestamp, String description, String ruleset, Boolean requiresForm,
+                               Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew, boolean applicationRequired,
+                               MapLocation location) {
+        super(gameName, availability, dungeonMaster,applicationRequired, complexity, estimatedLength, startTimestamp, description, ruleset, requiresForm, maxPlayerCount, communicationChannel, isHomebrew);
+        this.location = location;
     }
 }

@@ -53,10 +53,10 @@ public class UserController {
                     .body(Map.of("message", "No token found or invalid token"));
         }
 
-        if (!updateRequest.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", "Invalid input data"));
-        }
+        //if (!updateRequest.isValid()) {
+        //    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        //            .body(Map.of("message", "Invalid input data"));
+        //}
 
         try {
             BusinessProfileDetailsDTO updatedProfile = userService.updateProfile(authToken.replace("Bearer ", ""), updateRequest);

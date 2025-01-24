@@ -3,6 +3,7 @@ package com.ttrpg.controller;
 import java.util.Collections;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,15 @@ import com.ttrpg.service.IgraService;
 
 import jakarta.validation.Valid;
 
+<<<<<<< HEAD
 @RestController
 @RequestMapping("/games")
+=======
+//@RestController
+//@RequestMapping("/games")
+>>>>>>> 1f16e636c3e11b201abdd2e8a6e5820d7f3f90e6
 public class GameController {
-
+    /*@Autowired
     private final IgraService gameService;
 
     public GameController(IgraService gameService) {
@@ -47,4 +53,6 @@ public class GameController {
                     .body(Collections.singletonMap("message", "Failed to save changes"));
         }
     }
+    */
+
 }

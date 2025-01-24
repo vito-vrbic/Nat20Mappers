@@ -38,8 +38,10 @@ public class LoginController {
             // Generira privremeni token za korisnika
             String token = JwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
             String companyName = null;
-            if(trueKorisnik instanceof PoslovniKorisnik trueBusinessKorisnik) {
-                companyName= trueBusinessKorisnik.getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null
+            String role = "private";
+            if(trueKorisnik instanceof PoslovniKorisnik ) {
+                companyName= ((PoslovniKorisnik)trueKorisnik).getCompany().getCompanyName();  //ako korisnik nije poslovni ime kompanije ostaje null
+                role = "business";
             }
 
             // Stvara podatke o korisniku koji će biti uključeni u odgovor
@@ -47,7 +49,7 @@ public class LoginController {
                 String.valueOf(trueKorisnik.getUserId()),
                 trueKorisnik.getUsername(),
                 trueKorisnik.getEmail(),
-                    trueKorisnik.getRole(),// Privatnost korisničkih podataka
+                    role,// Privatnost korisničkih podataka
                     companyName
             );
 

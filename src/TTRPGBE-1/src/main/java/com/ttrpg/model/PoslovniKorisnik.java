@@ -1,12 +1,9 @@
 package com.ttrpg.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+@PrimaryKeyJoinColumn(name = "userId")
 @Entity
-@DiscriminatorValue("PoslovniKorisnik") 
 public class PoslovniKorisnik extends Korisnik {
     
     // OneToOne veza s OrgProfilom, gdje "business_user" označava mappedBy
@@ -15,6 +12,11 @@ public class PoslovniKorisnik extends Korisnik {
 
     // Konstruktor bez argumenata
     public PoslovniKorisnik() {}
+
+    public PoslovniKorisnik(String username, String password, String email, OrgProfil company) {
+        super(username, password, email);
+        this.company = company;
+    }
 
     @Override
     public String toString() {

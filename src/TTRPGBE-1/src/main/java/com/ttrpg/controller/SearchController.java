@@ -1,14 +1,18 @@
 package com.ttrpg.controller;
 
-import com.ttrpg.model.Igra;
-import com.ttrpg.model.MapLocation;
+import com.ttrpg.dto.SearchDTO;
+import com.ttrpg.model.*;
+import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.service.IgraService;
+import com.ttrpg.service.KorisnikService;
 import com.ttrpg.service.SearchRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +25,13 @@ public class SearchController {
 
     @Autowired
     private IgraService igraService; // Servis za manipulaciju podacima o igrama
+    @Autowired
+    private KorisnikService korisnikService;
+    @Autowired
+    private KorisnikRepository korisnikRepository;
 
     @PostMapping // Obrada POST zahtjeva za pretraživanje igara
-    public ResponseEntity<HashMap<String, List<Igra>>> searchIgre22(@RequestBody SearchRequest sr) {
+    public ResponseEntity<HashMap<String, List<SearchDTO>>> searchIgre22(@RequestBody SearchRequest sr) {
         
         // Dohvaća kriterije pretraživanja iz zahtjeva
         // String available = sr.getGameAvailability();
@@ -54,7 +62,7 @@ public class SearchController {
             Boolean fail;
 
             // Provjerava je li igra puna
-            if (s.getCurrentPlayerCount() < s.getMaxPlayerCount()) {
+            if (igraService.getPlayerCount(s.getId()) < s.getMaxPlayerCount()) {
                 puna = false;
             } else {
                 puna = true;
@@ -74,18 +82,31 @@ public class SearchController {
 
         // Uklanja igre koje nisu unutar definiranog radijusa
         Iterator<Igra> it = li.iterator();
-        while (it.hasNext()) {
-            Igra igraIt = it.next();
-            if (!igraIt.getLocation().inRadius(ml, radius)) {
-                it.remove();
+        if(radius > 0) {
+            while (it.hasNext()) {
+                Igra igraIt = it.next();
+                if(igraIt instanceof TocnoLokacijskaIgra) {
+                    if(!(((TocnoLokacijskaIgra)igraIt).getLocation().inRadius(ml, radius))) {
+                        it.remove();
+                    }
+                }
+                //if (!igraIt.getLocation().inRadius(ml, radius)) {
+                //    it.remove();
+                //}
             }
         }
+        //while (it.hasNext()) {
+        //    Igra igraIt = it.next();
+        //    if (!igraIt.getLocation().inRadius(ml, radius)) {
+        //        it.remove();
+        //    }
+        //}
 
         // Filtrira igre prema tipu kreatora (poslovni ili privatni korisnici)
         it = li.iterator();
         while (it.hasNext()) {
             Igra igraIt = it.next();
-            if (!sr.getIncludeBusinessMadeGames() && igraIt.getCreatedBy().contains("business")) {
+            if (!sr.getIncludeBusinessMadeGames() && igraIt.getCreatedBy() instanceof PoslovniKorisnik) {
                 it.remove();
             }
         }
@@ -93,37 +114,80 @@ public class SearchController {
         it = li.iterator();
         while (it.hasNext()) {
             Igra igraIt = it.next();
-            if (!sr.getIncludeUserMadeGames() && igraIt.getCreatedBy().contains("user")) {
+            if (!sr.getIncludeUserMadeGames() && igraIt.getCreatedBy() instanceof PrivatniKorisnik) {
                 it.remove();
             }
         }
-
-        // Filtrira igre prema tipu (sve, online ili lokalne)
-        if (sr.getGameType().contains("All games")) {
-            // Zadržava sve igre
-        } else if (sr.getGameType().contains("Online")) {
-            it = li.iterator();
-            while (it.hasNext()) {
+        if(sr.getGameAvailability().contains("all games")) {}
+        else if (sr.getGameAvailability().contains("public")) {
+            it= li.iterator();
+            while(it.hasNext()) {
                 Igra igraIt = it.next();
-                if (igraIt.getType().contains("offline")) {
+                if(igraIt.getAvailability().equalsIgnoreCase("private")) {
                     it.remove();
                 }
             }
-        } else if (sr.getGameType().contains("Local")) {
+        } else if (sr.getGameAvailability().contains("private")) {
+            it= li.iterator();
+            while(it.hasNext()) {
+                Igra igraIt = it.next();
+                if(igraIt.getAvailability().equalsIgnoreCase("public")) {
+                    it.remove();
+                }
+            }
+        }
+        // Filtrira igre prema tipu (sve, online ili lokalne)
+        if (sr.getGameType().contains("all types")) {
+            // Zadržava sve igre
+        } else if (sr.getGameType().contains("online")) {
             it = li.iterator();
             while (it.hasNext()) {
                 Igra igraIt = it.next();
-                if (igraIt.getType().contains("online")) {
+                //if (igraIt.getType().contains("offline")) {
+                //    it.remove();
+                //}
+                if(!(igraIt instanceof OnlineIgra)) {
+                    it.remove();
+                }
+            }
+        } else if (sr.getGameType().contains("local")) {
+            it = li.iterator();
+            while (it.hasNext()) {
+                Igra igraIt = it.next();
+                if (!(igraIt instanceof LokaliziranaIgra)) {
                     it.remove();
                 }
             }
         }
 
+        it=li.iterator();
+        List<SearchDTO> searches = new ArrayList<>();
+        while (it.hasNext()) {
+            Igra igraIt = it.next();
+            Korisnik voditelj = igraIt.getCreatedBy();
+            SearchDTO search = new SearchDTO(igraIt.getId(), igraIt.getTitle(), igraIt.getApplicationRequired());
+            if(igraIt instanceof TocnoLokacijskaIgra) {
+                search.setType("exact");
+                search.setLocation(((TocnoLokacijskaIgra)igraIt).getLocation());
+            }
+            else if(igraIt instanceof OnlineIgra) search.setType("online");
+            else if(igraIt instanceof LokaliziranaIgra) {
+                search.setType("local");
+                search.setLocation(((LokaliziranaIgra)igraIt).getFakeLocation());
+            }
+            if(voditelj instanceof PoslovniKorisnik) search.setCreatedBy("business");
+            else search.setCreatedBy("user");
+            searches.add(search);
+
+
+        }
+        HashMap<String, List<SearchDTO>> hmm = new HashMap<>();
+        hmm.put("games", searches);
         // Priprema konačne rezultate u mapu i vraća kao odgovor
-        HashMap<String, List<Igra>> hm = new HashMap<>();
-        hm.put("games", li);
-        System.out.println("Ovo se izvršava " + li.size() + " " + sr.getGameTitle());
-        return ResponseEntity.ok(hm);
+        //HashMap<String, List<Igra>> hm = new HashMap<>();
+        //hm.put("games", li);
+        //System.out.println("Ovo se izvršava " + li.size() + " " + sr.getGameTitle());
+        return ResponseEntity.ok(hmm);
     }
 }
 

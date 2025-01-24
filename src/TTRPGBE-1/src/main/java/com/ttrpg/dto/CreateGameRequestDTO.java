@@ -2,6 +2,8 @@ package com.ttrpg.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+
+import java.util.List;
 import java.util.Map;
 
 import com.ttrpg.model.MapLocation;
@@ -42,7 +44,7 @@ public class CreateGameRequestDTO {
 
     private boolean requiresForm;
 
-    private Map<String, String> formQuestions;
+    private List<Map<String, String>> formQuestions;
 
     private int currentPlayerCount = 0;
 

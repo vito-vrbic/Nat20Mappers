@@ -8,7 +8,7 @@ public class BusinessProfileDetailsDTO {
     private String logo;
     private String companyName;
     private String companyPhone;
-    private String companyDes;
-    private String companyWeb;
+    private String companyDescription;
+    private String companyWebsite;
     private String companyAddress;
 }

@@ -1,17 +1,23 @@
 package com.ttrpg.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.ttrpg.controller.LoginController;
+import com.ttrpg.model.*;
+import com.ttrpg.repository.KorisnikRepository;
+import com.ttrpg.repository.PitanjeRepository;
+import com.ttrpg.repository.PrijavaRepository;
+import com.ttrpg.util.MapLocationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ttrpg.dto.CreateGameRequestDTO;
 import com.ttrpg.dto.SaveGameEditRequestDTO;
-import com.ttrpg.model.Igra;
 // import com.ttrpg.model.LokaliziranaIgra;
-import com.ttrpg.model.MapLocation;
-import com.ttrpg.model.OnlineIgra;
 import com.ttrpg.repository.IgraRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +26,12 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class IgraService {
 
-        public List<Igra> findByGenre(String genre) {
+    @Autowired
+    private KorisnikRepository korisnikRepository;
+    @Autowired
+    private PitanjeRepository pitanjeRepository;
+
+    public List<Igra> findByGenre(String genre) {
                 // TODO Auto-generated method stub
                 return null;
         }
@@ -29,9 +40,17 @@ public class IgraService {
                 // TODO Auto-generated method stub
                 return null;
         }
+        public long getPlayerCount(long id) {
+            return prijavaRepository.countByGameIdAndStatus(id,"Accepted");
+        }
 
         @Autowired
         private IgraRepository igraRepository;
+
+        @Autowired
+        private PrijavaRepository prijavaRepository;
+
+
         /*
          * public List<Igra> searchIgre(String title, Integer maxPlayer, Boolean
          * isPrivate, Boolean isHomebrew,
@@ -60,7 +79,7 @@ public class IgraService {
 
         public void s2DataLoader() {
 
-                Igra game1 = new Igra(
+               /* Igra game1 = new Igra(
                                 1L, "Game 1", "online", new MapLocation(45.8131, 15.978), "public", "user1",
                                 true, "Medium", "2 hours", "2024-11-10T15:00:00Z",
                                 "A fun and engaging online strategy game.",
@@ -85,9 +104,12 @@ public class IgraService {
                 igraRepository.save(game3);
 
                 // Add more sample data as needed
+                */
+
         }
 
         public void s3DataLoader() {
+                /*
                 Igra game1 = new Igra(
                                 11L, "Game 11", "online", new MapLocation(45.8131, 15.978), "public", "user1",
                                 true, "Medium", "2 hours", "2024-11-10T15:00:00Z",
@@ -142,6 +164,7 @@ public class IgraService {
 
                 // Add all games to the repository
                 igraRepository.saveAll(List.of(game1, game2, game3, game4, game5, game6, game7, game8, game9, game10));
+       */
         }
 
         /*
@@ -157,7 +180,7 @@ public class IgraService {
          */
 
         public void s4DataLoader() {
-                Igra game20 = new Igra(
+               /* Igra game20 = new Igra(
                                 20L, "Game 20", "online", new MapLocation(45.8131, 15.978), "public", "user1",
                                 true, "Medium", "2 hours", "2024-11-10T15:00:00Z",
                                 "A fun and engaging online strategy game.",
@@ -280,43 +303,65 @@ public class IgraService {
                                                 combinedGame37
 
                                 ));
-
+                */
         }
 
         public List<Igra> searchIgraService(String gameName) {
                 return igraRepository.findByGameNameContaining(gameName);
 
         }
-
-        public Igra createGame(CreateGameRequestDTO request) {
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class); // Logger za praćenje aktivnosti
+        public Igra createGame(CreateGameRequestDTO request, Korisnik korisnik) {
                 Igra game = new Igra();
-
+                logger.info("creating new game");
                 if ("online".equalsIgnoreCase(request.getType())) {
                         // Online igra
                         OnlineIgra onlineGame = new OnlineIgra();
                         onlineGame.setTimezone(request.getTimezone());
                         game = onlineGame;
+                        logger.info("the timezone is {}", request.getTimezone());
 
+                }
+                else if("exact".equalsIgnoreCase(request.getType())) {
+                    TocnoLokacijskaIgra tocnoLokacijskaIgra = new TocnoLokacijskaIgra();
+                    tocnoLokacijskaIgra.setLocation(tocnoLokacijskaIgra.getLocation());
+                    game = tocnoLokacijskaIgra;
+                    logger.info("exact game");
+                }
+                else if("local".equalsIgnoreCase(request.getType())) {
+                    LokaliziranaIgra tocnoLokacijskaIgra = new LokaliziranaIgra();
+                    tocnoLokacijskaIgra.setRealLocation(request.getLocation());
+                    tocnoLokacijskaIgra.setFakeLocation(MapLocationUtil.generateRandomLocation(request.getLocation(), 500));
+                    game = tocnoLokacijskaIgra;
+                    logger.info("exact game");
                 }
 
                 // Postavljanje zajedničkih atributa
                 game.setTitle(request.getTitle());
-                game.setType(request.getType());
-                game.setLocation(request.getLocation());
+
                 game.setAvailability(request.getAvailability());
-                game.setCreatedBy(request.getCreatedBy());
+
+
+                //game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).getFirst())
+                game.setCreatedBy(korisnik);
                 game.setApplicationRequired(request.isApplicationRequired());
                 game.setComplexity(request.getComplexity());
                 game.setEstimatedLength(request.getEstimatedLength());
                 game.setStartTimestamp(request.getStartTimestamp());
                 game.setDescription(request.getDescription());
-                game.setPravilnik(request.getPravilnik());
+                game.setRuleset(request.getPravilnik());
                 game.setRequiresForm(request.isRequiresForm());
-                game.setCurrentPlayerCount(0);
+                //game.setCurrentPlayerCount(0);
                 game.setMaxPlayerCount(request.getMaxPlayerCount());
                 game.setCommunicationChannel(request.getCommunicationChannel());
                 game.setIsHomebrew(request.isHomebrew());
-
+                for(Map<String, String> map: request.getFormQuestions()) {
+                    for(String value: map.values()) {
+                        Pitanje pitanje = new Pitanje(value, game);
+                        pitanjeRepository.save(pitanje);
+                    }
+                }
+                logger.info("saving");
                 return igraRepository.save(game);
         }
 
@@ -325,32 +370,46 @@ public class IgraService {
             
                 if (existingGame.isPresent()) {
                     Igra game = existingGame.get();
-                    
+                    if(request.getType().equalsIgnoreCase("online") && game instanceof OnlineIgra) {
+                        ((OnlineIgra)game).setTimezone(request.getTimezone());
+                    }
+                    else if(request.getType().equalsIgnoreCase("exact") && game instanceof TocnoLokacijskaIgra) {
+                        ((TocnoLokacijskaIgra)game).setLocation(request.getLocation());
+                    }
+                    else if(request.getType().equalsIgnoreCase("local") && game instanceof LokaliziranaIgra) {
+                        ((LokaliziranaIgra)game).setRealLocation(request.getLocation());
+                        ((LokaliziranaIgra)game).setFakeLocation(MapLocationUtil.generateRandomLocation(request.getLocation(), 500));
+                    }
                     // Ažuriranje polja
                     game.setTitle(request.getTitle());
-                    game.setType(request.getType());
-                    game.setLocation(request.getLocation() != null
-                            ? new MapLocation(request.getLocation().getLat(), request.getLocation().getLng())
-                            : null);
+                    //game.setType(request.getType());
+                    //game.setLocation(request.getLocation() != null
+                    //        ? new MapLocation(request.getLocation().getLat(), request.getLocation().getLng())
+                    //        : null);
                     game.setAvailability(request.getAvailability());
-                    game.setCreatedBy(request.getCreatedBy());
+                    game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).getFirst());
                     game.setApplicationRequired(request.isApplicationRequired());
                     game.setComplexity(request.getComplexity());
                     game.setEstimatedLength(request.getEstimatedLength());
                     game.setStartTimestamp(request.getStartTimestamp());
                     game.setDescription(request.getDescription());
-                    game.setPravilnik(request.getPravilnik());
-                    game.setRequiresForm(request.isRequiresForm());
+                    game.setRuleset(request.getPravilnik());
+                    //game.setRequiresForm(request.isRequiresForm());
             
                     // Ne znam sto da radim s ovim parametrom
                 //     if (request.getFormQuestions() != null) {
                 //         game.setFormQuestions(request.getFormQuestions());
                 //     }
             
-                    game.setCurrentPlayerCount(request.getCurrentPlayerCount());
+                    //game.setCurrentPlayerCount(request.getCurrentPlayerCount());
                     game.setMaxPlayerCount(request.getMaxPlayerCount());
                     game.setCommunicationChannel(request.getCommunicationChannel());
                     game.setIsHomebrew(request.isHomebrew());
+                    //for(Map<String, String> map: request.getFormQuestions()) {
+                    //    for(String value: map.values()) {
+
+                    //    }
+                    //}
             
                     // Spremanje ažurirane igre
                     igraRepository.save(game);

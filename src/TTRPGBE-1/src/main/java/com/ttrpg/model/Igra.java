@@ -2,33 +2,40 @@ package com.ttrpg.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
+@Inheritance(strategy = InheritanceType.JOINED) // Definira strategiju naslijeđivanja entiteta
 @Entity // Oznaka da je ovo JPA entitet
 @Table(name = "Igra") // Definira naziv tablice u bazi podataka
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Definira strategiju naslijeđivanja entiteta
-@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING) // Dodaje diskriminatornu kolonu za
-                                                                                   // naslijeđene entitete
+
 public class Igra {
+
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Automatsko generiranje ID-a
-    @Column(name = "game_id") // Ime kolone u bazi podataka
+    @Column(name = "gameId") // Ime kolone u bazi podataka
     private Long id; // Jedinstveni identifikator igre
 
     @JsonProperty("title") // Serijalizira ovaj atribut pod nazivom "title"
     private String gameName; // Naziv igre
 
-    @JsonProperty("type") // Serijalizira ovaj atribut pod nazivom "type"
-    private String type; // Tip igre (npr. online, offline)
+    //@JsonProperty("type") // Serijalizira ovaj atribut pod nazivom "type"
+    //private String type; // Tip igre (npr. online, offline)
 
-    @Embedded // Oznaka za ugrađeni entitet
-    private MapLocation location; // Lokacija igre (geografska)
+    //@Embedded // Oznaka za ugrađeni entitet
+    //private MapLocation location; // Lokacija igre (geografska)
 
     @JsonProperty("availability") // Serijalizira ovaj atribut pod nazivom "availability"
     private String availability; // Dostupnost igre
 
-    @JsonProperty("createdBy") // Serijalizira ovaj atribut pod nazivom "createdBy"
-    private String createdBy; // Kreator igre (npr. korisnik ili poslovni entitet)
+
+    @ManyToOne
+    @JoinColumn(name = "userId",referencedColumnName = "userId", nullable = false)  // Foreign key to User
+    private Korisnik createdBy;
+
+    //@JsonProperty("createdBy") // Serijalizira ovaj atribut pod nazivom "createdBy"
+    //private String createdBy; // Kreator igre (npr. korisnik ili poslovni entitet)
 
     @JsonProperty("applicationRequired") // Serijalizira ovaj atribut pod nazivom "applicationRequired"
     private Boolean applicationRequired; // Da li je prijava potrebna za igru
@@ -46,13 +53,13 @@ public class Igra {
     private String description; // Opis igre
 
     @JsonProperty("pravilnik") // Serijalizira ovaj atribut pod nazivom "pravilnik"
-    private String pravilnik; // Pravila igre
+    private String ruleset; // Pravila igre
 
     @JsonProperty("requiresForm") // Serijalizira ovaj atribut pod nazivom "requiresForm"
     private Boolean requiresForm; // Da li je potrebno ispuniti obrazac za igru
 
-    @JsonProperty("currentPlayerCount") // Serijalizira ovaj atribut pod nazivom "currentPlayerCount"
-    private Integer currentPlayerCount; // Trenutni broj igrača u igri
+    //@JsonProperty("currentPlayerCount") // Serijalizira ovaj atribut pod nazivom "currentPlayerCount"
+    //private Integer currentPlayerCount; // Trenutni broj igrača u igri
 
     @JsonProperty("maxPlayerCount") // Serijalizira ovaj atribut pod nazivom "maxPlayerCount"
     private Integer maxPlayerCount; // Maksimalni broj igrača u igri
@@ -81,21 +88,21 @@ public class Igra {
         this.gameName = gameName;
     }
 
-    public String getType() {
-        return type;
-    }
+    //public String getType() {
+      //  return type;
+    //}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    //public void setType(String type) {
+      //  this.type = type;
+    //}
 
-    public MapLocation getLocation() {
-        return location;
-    }
+   // public MapLocation getLocation() {
+   //     return location;
+   // }
 
-    public void setLocation(MapLocation location) {
-        this.location = location;
-    }
+    //public void setLocation(MapLocation location) {
+    //    this.location = location;
+    //}
 
     public String getAvailability() {
         return availability;
@@ -105,17 +112,17 @@ public class Igra {
         this.availability = availability;
     }
 
-    public String getCreatedBy() {
+    public Korisnik getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Korisnik createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Boolean getApplicationRequired() {
-        return applicationRequired;
-    }
+   public Boolean getApplicationRequired() {
+       return applicationRequired;
+   }
 
     public void setApplicationRequired(Boolean applicationRequired) {
         this.applicationRequired = applicationRequired;
@@ -153,12 +160,12 @@ public class Igra {
         this.description = description;
     }
 
-    public String getPravilnik() {
-        return pravilnik;
+    public String getRuleset() {
+        return ruleset;
     }
 
-    public void setPravilnik(String pravilnik) {
-        this.pravilnik = pravilnik;
+    public void setRuleset(String pravilnik) {
+        this.ruleset = pravilnik;
     }
 
     public Boolean getRequiresForm() {
@@ -169,13 +176,9 @@ public class Igra {
         this.requiresForm = requiresForm;
     }
 
-    public Integer getCurrentPlayerCount() {
-        return currentPlayerCount;
-    }
-
-    public void setCurrentPlayerCount(Integer currentPlayerCount) {
-        this.currentPlayerCount = currentPlayerCount;
-    }
+    //public void setCurrentPlayerCount(Integer currentPlayerCount) {
+    //    this.currentPlayerCount = currentPlayerCount;
+    //}
 
     public Integer getMaxPlayerCount() {
         return maxPlayerCount;
@@ -202,15 +205,14 @@ public class Igra {
     }
 
     // Konstruktor s parametrima
-    public Igra(Long id, String gameName, String type, MapLocation location, String availability, String createdBy,
-            Boolean applicationRequired, String complexity, String estimatedLength, String startTimestamp,
-            String description, String pravilnik, Boolean requiresForm, Integer currentPlayerCount,
-            Integer maxPlayerCount, String communicationChannel, Boolean isHomebrew) {
-        super();
+
+
+    public Igra(Long id, String gameName, String availability, Korisnik createdBy, Boolean applicationRequired,
+                String complexity, String estimatedLength, String startTimestamp,
+                String description, String ruleset, Boolean requiresForm, Integer maxPlayerCount,
+                String communicationChannel, Boolean isHomebrew) {
         this.id = id;
         this.gameName = gameName;
-        this.type = type;
-        this.location = location;
         this.availability = availability;
         this.createdBy = createdBy;
         this.applicationRequired = applicationRequired;
@@ -218,12 +220,33 @@ public class Igra {
         this.estimatedLength = estimatedLength;
         this.startTimestamp = startTimestamp;
         this.description = description;
-        this.pravilnik = pravilnik;
+        this.ruleset = ruleset;
         this.requiresForm = requiresForm;
-        this.currentPlayerCount = currentPlayerCount;
         this.maxPlayerCount = maxPlayerCount;
         this.communicationChannel = communicationChannel;
         this.isHomebrew = isHomebrew;
+    }
+    public Igra(String gameName, String availability, Korisnik createdBy, Boolean applicationRequired,
+                String complexity, String estimatedLength, String startTimestamp,
+                String description, String ruleset, Boolean requiresForm, Integer maxPlayerCount,
+                String communicationChannel, Boolean isHomebrew) {
+        this.gameName = gameName;
+        this.availability = availability;
+        this.createdBy = createdBy;
+        this.applicationRequired = applicationRequired;
+        this.complexity = complexity;
+        this.estimatedLength = estimatedLength;
+        this.startTimestamp = startTimestamp;
+        this.description = description;
+        this.ruleset = ruleset;
+        this.requiresForm = requiresForm;
+        this.maxPlayerCount = maxPlayerCount;
+        this.communicationChannel = communicationChannel;
+        this.isHomebrew = isHomebrew;
+    }
+
+    public Igra(Long id) {
+        this.id = id;
     }
 
     // Defaultni konstruktor

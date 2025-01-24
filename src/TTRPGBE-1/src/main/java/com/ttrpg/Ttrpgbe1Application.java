@@ -30,7 +30,7 @@ public class Ttrpgbe1Application {
 
     public static void main(String[] args) {
         // Generiranje JWT tokena za testiranje
-        String token = JwtUtil.generateJWT("dummyBusinessUser");
+        String token = JwtUtil.generateJWT("Marko59");
         System.out.println("Generated Token: " + token);
         // Pokretanje aplikacije
         ApplicationContext context = SpringApplication.run(Ttrpgbe1Application.class, args);

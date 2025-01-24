@@ -1,11 +1,10 @@
 package com.ttrpg.model;
 
 import jakarta.persistence.*;
-
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "Korisnik")  // Ime tablice u bazi podataka
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Strategija naslijeđivanja (jedna tablica za sve klase koje naslijeđuju)
-@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)  // Kolona koja označava vrstu naslijeđene klase
+//@Table(name = "Korisnik")  // Ime tablice u bazi podataka
+ // Strategija naslijeđivanja
 public class Korisnik {
 
     @Id  // Označava primarni ključ
@@ -16,7 +15,7 @@ public class Korisnik {
     private String username;  // Korisničko ime
 
     private String password;  // Lozinka korisnika
-    private String role;  // Uloga korisnika (npr. admin, korisnik)
+    //private String role;  // Uloga korisnika (npr. admin, korisnik)
     private String email;  // Email korisnika
 
     // Getter i Setter za email
@@ -30,28 +29,26 @@ public class Korisnik {
 
     // Getter i Setter za role (uloga korisnika)
     public String getRole() {
-        return role;
-    }
+        return "admin";
+    } //za svaki slučaj
 
-    public void setRole(String role) {
-        this.role = role;  // Postavljanje uloge korisnika
-    }
+    //public void setRole(String role) {
+    //    this.role = role;  // Postavljanje uloge korisnika
+    //}
 
     // Konstruktor bez argumenata
     public Korisnik() {}
 
     // Konstruktor s parametrima za inicijalizaciju korisničkog objekta
-    public Korisnik(int userId, String username, String email, String password, String role) {
+    public Korisnik(int userId, String username, String email, String password) {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role = role;
         this.email = email;
     }
-    public Korisnik(String username, String password,String email, String role) { //id se ne inicijalizira u konstruktoru
+    public Korisnik(String username, String password,String email) { //id se ne inicijalizira u konstruktoru
         this.username = username;
         this.password = password;
-        this.role = role;
         this.email = email;
     }
 

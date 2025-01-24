@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ttrpg.model.*;
 import com.ttrpg.repository.IgraRepository;
+import com.ttrpg.repository.PrijavaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class KorisnikService {
 
     @Autowired
     IgraRepository ir;
+    @Autowired
+    private PrijavaRepository prijavaRepository;
 
     // Metoda za autentifikaciju korisnika prema korisničkom imenu i lozinki
     public boolean authenticate(String username, String password) {
@@ -47,7 +50,9 @@ public class KorisnikService {
     public void sDataLoader() {
         OrgProfil org= new OrgProfil("business ralph", "0914682525", "Ralph is businessing all over the place", "beep", "boop", "bap");
         or.save(org);
-        kr.save(new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple"));  // Spremanje korisnika u bazu
+        PrivatniKorisnik privatniKorisnik = new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple");
+        kr.save(privatniKorisnik);
+        //kr.save(new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple"));  // Spremanje korisnika u bazu
         PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik("Marko59", "beb2@gmail.com", "Apple2",org);  // Spremanje drugog korisnika u bazu
         kr.save(poslovniKorisnik);  // Spremanje drugog korisnika u bazu
         List<Igra> games = new ArrayList<>();
@@ -61,6 +66,7 @@ public class KorisnikService {
         // Localized game inside Zagreb
         MapLocation realLocation1 = new MapLocation(45.8150, 15.9819); // Coordinates for Zagreb
         MapLocation fakeLocation1 = new MapLocation(45.8125, 15.9770); // Slightly different fake location
+
 
         games.add(new LokaliziranaIgra(
                 "Zagreb Mystery Quest", "public", poslovniKorisnik, "medium",
@@ -113,9 +119,10 @@ public class KorisnikService {
         //    : null); // Uzmi zadnji logo
         details.setLogo(orgProfil.getCompanyLogo());
         details.setCompanyPhone(orgProfil.getCompanyPhone());
-        details.setCompanyDes(orgProfil.getCompanyDes());
-        details.setCompanyWeb(orgProfil.getCompanyWeb());
+        details.setCompanyDescription(orgProfil.getCompanyDes());
+        details.setCompanyWebsite(orgProfil.getCompanyWeb());
         details.setCompanyAddress(orgProfil.getCompanyAdress());
+        details.setCompanyName(orgProfil.getCompanyName());
 
         return details;
     }
@@ -160,11 +167,11 @@ public class KorisnikService {
         if (updateRequest.getCompanyPhone() != null) {
             orgProfil.setCompanyPhone(updateRequest.getCompanyPhone());
         }
-        if (updateRequest.getCompanyDes() != null) {
-            orgProfil.setCompanyDes(updateRequest.getCompanyDes());
+        if (updateRequest.getCompanyDescription() != null) {
+            orgProfil.setCompanyDes(updateRequest.getCompanyDescription());
         }
-        if (updateRequest.getCompanyWeb() != null) {
-            orgProfil.setCompanyWeb(updateRequest.getCompanyWeb());
+        if (updateRequest.getCompanyWebsite() != null) {
+            orgProfil.setCompanyWeb(updateRequest.getCompanyWebsite());
         }
         if (updateRequest.getCompanyAddress() != null) {
             orgProfil.setCompanyAddress(updateRequest.getCompanyAddress());

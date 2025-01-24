@@ -119,9 +119,11 @@ public class GameFetchController {
     @GetMapping("/applied")
     public ResponseEntity<?> appliedGames(@RequestHeader("Authorization") String tokenToParse) {
         if (tokenToParse == null || !korisnikService.isValidToken(tokenToParse.replace("Bearer ", ""))) {
+            logger.info("token is null or empty");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Unable to fetch created games. Please try again later."));
 
         }
+        logger.info("applied games");
         try {
             Claims claim = JwtUtil.validateJWT(tokenToParse.replace("Bearer ", ""));
             String username = claim.getSubject();
@@ -148,7 +150,8 @@ public class GameFetchController {
                 gameDTO.setStartTimestamp(igra.getStartTimestamp());
                 gameDTO.setPravilnik(igra.getRuleset());
                 gameDTO.setMaxPlayerCount(igra.getMaxPlayerCount());
-                gameDTO.setCurrentPlayerCount(igraService.getPlayerCount(id));
+                //gameDTO.setCurrentPlayerCount(igraService.getPlayerCount(id));
+                gameDTO.setCurrentPlayerCount(0L);
                 gameDTO.setCommunicationChannel(igra.getCommunicationChannel());
                 gameDTO.setHomebrew(igra.getIsHomebrew());
                 if (korisnik instanceof PrivatniKorisnik) {

@@ -30,17 +30,19 @@ public class GameApplyController {
     public PrijavaRepository prijavaRepository;
     @Autowired
     public OdgovorRepository odgovorRepository;
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class); // Logger za praćenje aktivnosti
     @PostMapping
     public ResponseEntity<?> applyToGame(@RequestBody ApplyDTO applyDTO) {
         try {
             String status= "Waiting";
             Igra igra = igraRepository.findGameById(applyDTO.getGameId()).getFirst();
+            logger.info("checking user");
 
             if(korisnikRepository.findByUserId(applyDTO.getUserId()).getFirst() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("success", false, "message", "User not found"));
             }
             Korisnik korisnik = korisnikRepository.findByUserId(applyDTO.getUserId()).getFirst();
+
             if(!(korisnik instanceof PrivatniKorisnik)) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message","Unable to process application. Please try again later." ));
             }
@@ -59,7 +61,8 @@ public class GameApplyController {
             return ResponseEntity.ok().body(Map.of("success", true, "message", "Game apply completed successfully"));
 
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message","Unable to process application. Please try again later." ));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message","An error has occured. Please" +
+                    " try again later." ));
         }
 
     }

@@ -42,7 +42,7 @@ public class RegisterController {
         }
         else {
             if(registerDTO.getRole().equalsIgnoreCase("private")) {
-                PrivatniKorisnik privatniKorisnik = new PrivatniKorisnik(registerDTO.getUsername(), registerDTO.getEmail(), registerDTO.getPassword());
+                PrivatniKorisnik privatniKorisnik = new PrivatniKorisnik(registerDTO.getUsername(), registerDTO.getPassword(), registerDTO.getEmail());
                 korisnikRepository.save(privatniKorisnik);
                 return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
 

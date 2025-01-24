@@ -3,7 +3,6 @@ package com.ttrpg.dto;
 import com.ttrpg.model.MapLocation;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 @Data
 public class CreatedGamesDTO {
@@ -33,10 +32,6 @@ public class CreatedGamesDTO {
         private int maxPlayerCount;
         private String communicationChannel;
         private boolean isHomebrew;
-
-        public void addQuestion(String question) {
-            formQuestions.add(question);
-        }
     }
 
 

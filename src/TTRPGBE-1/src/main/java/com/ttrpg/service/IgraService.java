@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.ttrpg.controller.LoginController;
 import com.ttrpg.model.*;
 import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.repository.PitanjeRepository;
 import com.ttrpg.repository.PrijavaRepository;
 import com.ttrpg.util.MapLocationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +49,7 @@ public class IgraService {
 
         @Autowired
         private PrijavaRepository prijavaRepository;
+
 
         /*
          * public List<Igra> searchIgre(String title, Integer maxPlayer, Boolean
@@ -306,34 +310,40 @@ public class IgraService {
                 return igraRepository.findByGameNameContaining(gameName);
 
         }
-
-        public Igra createGame(CreateGameRequestDTO request) {
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class); // Logger za praćenje aktivnosti
+        public Igra createGame(CreateGameRequestDTO request, Korisnik korisnik) {
                 Igra game = new Igra();
-
+                logger.info("creating new game");
                 if ("online".equalsIgnoreCase(request.getType())) {
                         // Online igra
                         OnlineIgra onlineGame = new OnlineIgra();
                         onlineGame.setTimezone(request.getTimezone());
                         game = onlineGame;
+                        logger.info("the timezone is {}", request.getTimezone());
 
                 }
                 else if("exact".equalsIgnoreCase(request.getType())) {
                     TocnoLokacijskaIgra tocnoLokacijskaIgra = new TocnoLokacijskaIgra();
                     tocnoLokacijskaIgra.setLocation(tocnoLokacijskaIgra.getLocation());
                     game = tocnoLokacijskaIgra;
+                    logger.info("exact game");
                 }
                 else if("local".equalsIgnoreCase(request.getType())) {
                     LokaliziranaIgra tocnoLokacijskaIgra = new LokaliziranaIgra();
                     tocnoLokacijskaIgra.setRealLocation(request.getLocation());
                     tocnoLokacijskaIgra.setFakeLocation(MapLocationUtil.generateRandomLocation(request.getLocation(), 500));
                     game = tocnoLokacijskaIgra;
+                    logger.info("exact game");
                 }
 
                 // Postavljanje zajedničkih atributa
                 game.setTitle(request.getTitle());
 
                 game.setAvailability(request.getAvailability());
-                game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).getFirst());
+
+
+                //game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).getFirst())
+                game.setCreatedBy(korisnik);
                 game.setApplicationRequired(request.isApplicationRequired());
                 game.setComplexity(request.getComplexity());
                 game.setEstimatedLength(request.getEstimatedLength());
@@ -351,6 +361,7 @@ public class IgraService {
                         pitanjeRepository.save(pitanje);
                     }
                 }
+                logger.info("saving");
                 return igraRepository.save(game);
         }
 

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/auth/verify-token")
+@RequestMapping("/auth/verify-token")
 public class VerificationController {
 
     @Autowired

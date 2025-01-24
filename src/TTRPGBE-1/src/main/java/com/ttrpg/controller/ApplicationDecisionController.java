@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("application-decision")
+@RequestMapping("/application-decision")
 public class ApplicationDecisionController {
 
     @Autowired

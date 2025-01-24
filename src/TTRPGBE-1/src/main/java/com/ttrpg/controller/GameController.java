@@ -15,10 +15,10 @@ import com.ttrpg.service.IgraService;
 
 import jakarta.validation.Valid;
 
-@RestController
-@RequestMapping("/api/games")
+//@RestController
+//@RequestMapping("/games")
 public class GameController {
-    @Autowired
+    /*@Autowired
     private final IgraService gameService;
 
     public GameController(IgraService gameService) {
@@ -48,4 +48,6 @@ public class GameController {
                     .body(Collections.singletonMap("message", "Failed to save changes"));
         }
     }
+    */
+
 }

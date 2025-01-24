@@ -3,6 +3,8 @@ package com.ttrpg.controller;
 import com.ttrpg.dto.ApplyDTO;
 import com.ttrpg.model.*;
 import com.ttrpg.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth/apply")
+@RequestMapping("/auth/apply")
 public class GameApplyController {
 
     @Autowired
@@ -28,6 +30,7 @@ public class GameApplyController {
     public PrijavaRepository prijavaRepository;
     @Autowired
     public OdgovorRepository odgovorRepository;
+
     @PostMapping
     public ResponseEntity<?> applyToGame(@RequestBody ApplyDTO applyDTO) {
         try {

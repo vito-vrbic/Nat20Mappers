@@ -1,1 +1,1 @@
-Used for anything that doesn't fit into the other ./src folders.
+Used for anything that doesn't fit into the other ./src folders like additional functions, etc.

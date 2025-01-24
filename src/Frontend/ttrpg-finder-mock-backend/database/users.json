@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1736679849602",
+    "username": "fez",
+    "email": "fez@fez",
+    "password": "password123",
+    "role": "business",
+    "organizationName": "fez fez",
+    "hostedGames": [
+      "12345",
+      "67890",
+      "12332"
+    ],
+    "appliedGames": [
+      "33445",
+      "55667"
+    ]
+  },
+  {
+    "id": "1736681238006",
+    "username": "greg",
+    "email": "greg'scakes_@gmail.com",
+    "password": "password456",
+    "role": "private",
+    "organizationName": null,
+    "hostedGames": [],
+    "appliedGames": [
+      "22334",
+      "44556"
+    ]
+  },
+  {
+    "id": "1736698400913",
+    "username": "goran",
+    "email": "gogi@goranmail.com",
+    "password": "gogica",
+    "role": "business",
+    "organizationName": "gogicaeats"
+  },
+  {
+    "id": "1736719556361",
+    "username": "OrganizacijaDva",
+    "email": "Organizacijadva@emial.mail",
+    "password": "OrganizacijaLozinkaDva",
+    "role": "business",
+    "organizationName": "TestnoImeOrganizacije"
+  }
+]

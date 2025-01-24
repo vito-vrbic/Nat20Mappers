@@ -1,0 +1,234 @@
+/* Imported Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* General Text Styling */
+div {
+   color: black;
+   font-weight: bold;
+   font-family: 'Roboto', sans-serif;
+}
+
+/* Ensure background image covers the entire screen */
+body,
+html {
+   margin: 0;
+   padding: 0;
+   font-family: 'Roboto', sans-serif;
+   height: 100%;
+   width: 100%;
+   overflow: hidden;
+   background-color: #232f44;
+   /* Default background color */
+}
+
+/* Container for the 'Sign Up' layout */
+.SignUpBox {
+   display: flex;
+   background-color: rgba(35, 47, 68, 0.8);
+   /* Darkened background with opacity */
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+   /* Subtle shadow for depth */
+   max-width: 450px;
+   /* Limit width for cleaner layout */
+   width: 100%;
+   height: 100vh;
+   /* Full screen height */
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+   /* Center the form */
+}
+
+/* Title for 'Sign Up' */
+.Title {
+   font-size: 36px;
+   color: #ffdd57;
+   /* Gold accent */
+   margin-bottom: 20px;
+   font-weight: bold;
+}
+.inputs{
+   display:flex;
+   flex-direction: column;
+}
+.inputs button{
+   margin-top:10px;
+   padding:10px;
+   font-weight: bold;
+   color:black;
+   font-size:20px;
+   border-radius:0.5rem;
+   background-color: #ffdd57;
+}
+
+/* Styling for input fields */
+.inputs input {
+   border-radius: 8px;
+   padding: 15px;
+   margin: 10px 0;
+   border: 1px solid #4e6272;
+   /* Subtle border for inputs */
+   background-color: #1d2630;
+   /* Dark background for inputs */
+   color: #f1f1f1;
+   /* Light text */
+   font-size: 16px;
+   width: 100%;
+   /* Ensure full width */
+}
+
+/* Category name above input field (example: Email) */
+.inputTag {
+   font-size: 18px;
+   margin-bottom: 8px;
+   color: #f1f1f1;
+}
+
+/* Placeholder text styling */
+.inputs input::placeholder {
+   color: #aaa;
+   font-weight: normal;
+}
+
+/* Password-specific styling */
+.input {
+   position: relative;
+}
+
+.input img {
+   position: absolute;
+   left: 250px;
+   bottom: 17px;
+   cursor: pointer;
+}
+.inputOptional{
+   padding-left:10px;
+   display:flex;
+   align-items: center;
+   gap:5px;
+}
+.inputOptional input {
+   flex-shrink: 0; 
+   width: 20px; 
+   height: 20px; 
+   cursor: pointer; 
+ }
+ 
+ .inputOptional div {
+   flex: 1; 
+   font-size: 16px;
+   color: #f1f1f1;
+ }
+
+.forgotPassword {
+   color: #ffdd57;
+   margin-top: 5px;
+   font-size: 14px;
+   cursor: pointer;
+}
+
+.forgotPassword:hover {
+   text-decoration: underline;
+}
+
+/* Styling for the submit button for signing up */
+.submit {
+   text-align: center;
+   align-items: center;
+   background: linear-gradient(135deg, #ffdd57, #e0c15d);
+   /* Gold gradient */
+   border-radius: 10px;
+   color: black;
+   font-size: 18px;
+   font-weight: bold;
+   margin: 20px 0;
+   padding: 15px;
+   width: 100%;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   /* Add subtle shadow */
+}
+
+/* Styling for the submit button when it's hovered */
+.submit:hover {
+   background: linear-gradient(135deg, #e0c15d, #ffdd57);
+   /* Reverse gradient */
+   transform: translateY(-4px);
+   /* Slight elevation effect */
+   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+   /* Enhance shadow */
+}
+
+/* Styling for the submit button when it's active */
+.submit:active {
+   background: linear-gradient(135deg, #ffdd57, #e0c15d);
+   /* Maintain gradient */
+   transform: translateY(2px);
+   /* Add slight "press" effect */
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+   /* Softer shadow */
+}
+
+/* Styling for the submit button when it's disabled */
+.submit:disabled {
+   background-color: #dcdcdc;
+   /* Disable color */
+   color: #b0b0b0;
+   /* Lighter text */
+   cursor: not-allowed;
+   opacity: 0.7;
+   box-shadow: none;
+   /* Remove shadow */
+}
+
+/* Styling the 'go to Login' section */
+.gotoLogin {
+   margin-top: 10px;
+   color: #f1f1f1;
+}
+
+.gotoLogin a {
+   color: #ffdd57;
+   /* Gold for the link */
+   text-decoration: none;
+}
+
+.gotoLogin a:hover {
+   color: #e0c15d;
+   /* Slightly lighter gold for hover */
+}
+
+/* Custom Google login button */
+.googleLoginButton {
+   cursor: pointer;
+   display:flex;
+   padding: 20px 20px 20px 60px;
+   border: none;
+   border-radius: 20px;
+   background-image: url("../assets/images/googleButton.png");
+   background-color: white;
+   background-repeat: no-repeat;
+   background-position: 12px 11px;
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+.googleLoginText{
+   color:gray;
+}
+
+/* Styling for error message */
+.errorMessage {
+   color: red;
+   font-size: 16px;
+   margin-top: 10px;
+   font-weight: bold;
+}

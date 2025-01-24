@@ -1,1 +1,0 @@
-This folder contains reusable UI components that are used on the TTRPGFinder frontend.

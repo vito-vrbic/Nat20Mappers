@@ -1,1 +1,0 @@
-This folder contains global styles that are used on the TTRPGFinder frontend.

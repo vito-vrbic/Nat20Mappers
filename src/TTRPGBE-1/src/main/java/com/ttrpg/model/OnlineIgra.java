@@ -4,16 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
 @Entity
-public class OnlineIgra extends Igra {
+@DiscriminatorValue("OnlineIgra") 
+public class OnlineIgra extends Igra{
 
-	@Column(name = "timezone", length = 20)
+	@Column(name="timezone",length=20)
 	private String timezone;
-
-	public String getTimezone() {
-		return timezone;
-	}
-
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
 }

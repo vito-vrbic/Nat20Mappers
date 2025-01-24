@@ -15,7 +15,7 @@ import com.ttrpg.service.IgraService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/games")
+@RequestMapping("/games")
 public class GameController {
 
     private final IgraService gameService;

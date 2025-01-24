@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/auth/login") // Postavlja osnovnu rutu za prijavu korisnika
+@RequestMapping("/auth/login") // Postavlja osnovnu rutu za prijavu korisnika
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class); // Logger za praćenje aktivnosti

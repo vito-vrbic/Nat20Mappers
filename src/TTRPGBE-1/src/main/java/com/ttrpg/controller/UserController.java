@@ -13,7 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

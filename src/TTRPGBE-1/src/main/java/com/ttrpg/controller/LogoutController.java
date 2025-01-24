@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ttrpg.model.Korisnik;
 
 @RestController
-@RequestMapping("api/auth/logout") // Definira osnovnu rutu za odjavu korisnika
+@RequestMapping("/auth/logout") // Definira osnovnu rutu za odjavu korisnika
 public class LogoutController {
 
     @PostMapping // Obrada POST zahtjeva za odjavu

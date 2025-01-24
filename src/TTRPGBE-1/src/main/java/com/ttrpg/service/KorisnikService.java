@@ -15,6 +15,8 @@ import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.repository.OrgRepository;
 import com.ttrpg.util.JwtUtil;
 
+import jakarta.transaction.Transactional;
+
 @Service  // Oznaka da je ovo servis klasa koja se koristi u Spring aplikaciji
 public class KorisnikService {
 
@@ -39,11 +41,13 @@ public class KorisnikService {
     }
 
     // Metoda za učitavanje početnih podataka (dva korisnika u bazu)
+    @Transactional
     public void sDataLoader() {
-        OrgProfil org= new OrgProfil(5, "business ralph", "0914682525", "Ralph is businessing all over the place", "beep", "boop", "bap");
+        OrgProfil org= new OrgProfil("business ralph", "0914682525", "Ralph is businessing all over the place", "beep", "boop", "bap");
         or.save(org);
         kr.save(new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple"));  // Spremanje korisnika u bazu
-        kr.save(new PoslovniKorisnik("Marko59","beb2@gmail.com","Apple2",org));  // Spremanje drugog korisnika u bazu
+        PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik("Marko59", "beb2@gmail.com", "Apple2",org);  // Spremanje drugog korisnika u bazu
+        kr.save(poslovniKorisnik);  // Spremanje drugog korisnika u bazu
     }
     
     public BusinessProfileDetailsDTO getProfileByUsername(String username) {

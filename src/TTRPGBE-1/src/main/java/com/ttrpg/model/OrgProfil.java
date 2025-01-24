@@ -45,7 +45,7 @@ public class OrgProfil {
 
     }
 
-    public OrgProfil(int companyId, String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, String companyUrl) {
+    public OrgProfil(String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, String companyUrl) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.companyPhone = companyPhone;

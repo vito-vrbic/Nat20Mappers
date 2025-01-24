@@ -28,8 +28,8 @@ public class PrivatniKorisnik extends Korisnik {
     public PrivatniKorisnik() {
     }
 
-    public PrivatniKorisnik(int userId, String username, String email, String password) {
-        super(userId, username, email, password);
+    public PrivatniKorisnik(int userId, String username, String password, String email) {
+        super(userId, username, password, email);
     }
 
     public PrivatniKorisnik(String username, String password, String email) {

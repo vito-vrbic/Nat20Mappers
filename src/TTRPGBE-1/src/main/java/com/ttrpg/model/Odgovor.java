@@ -3,6 +3,7 @@ package com.ttrpg.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 public class Odgovor {
@@ -73,6 +74,22 @@ public class Odgovor {
         }
         public void setPrijavaId(Prijava.PrijavaId prijavaId) {
             this.prijavaId = prijavaId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+
+            OdgovorId odgovorId = (OdgovorId) o;
+            return Objects.equals(getPitanjeId(), odgovorId.getPitanjeId()) && Objects.equals(getPrijavaId(), odgovorId.getPrijavaId()) && Objects.equals(getAnswerText(), odgovorId.getAnswerText());
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hashCode(getPitanjeId());
+            result = 31 * result + Objects.hashCode(getPrijavaId());
+            result = 31 * result + Objects.hashCode(getAnswerText());
+            return result;
         }
     }
 }

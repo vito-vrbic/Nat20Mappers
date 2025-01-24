@@ -1,16 +1,15 @@
 package com.ttrpg.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.ttrpg.model.PrivatniKorisnik;
+import com.ttrpg.model.*;
+import com.ttrpg.repository.IgraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ttrpg.dto.BusinessProfileDetailsDTO;
 import com.ttrpg.dto.BusinessProfileUpdateRequestDTO;
-import com.ttrpg.model.Korisnik;
-import com.ttrpg.model.OrgProfil;
-import com.ttrpg.model.PoslovniKorisnik;
 import com.ttrpg.repository.KorisnikRepository;
 import com.ttrpg.repository.OrgRepository;
 import com.ttrpg.util.JwtUtil;
@@ -25,6 +24,9 @@ public class KorisnikService {
 
     @Autowired
     OrgRepository or;
+
+    @Autowired
+    IgraRepository ir;
 
     // Metoda za autentifikaciju korisnika prema korisničkom imenu i lozinki
     public boolean authenticate(String username, String password) {
@@ -48,6 +50,45 @@ public class KorisnikService {
         kr.save(new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple"));  // Spremanje korisnika u bazu
         PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik("Marko59", "beb2@gmail.com", "Apple2",org);  // Spremanje drugog korisnika u bazu
         kr.save(poslovniKorisnik);  // Spremanje drugog korisnika u bazu
+        List<Igra> games = new ArrayList<>();
+
+        // Generic game without location
+        games.add(new Igra(
+                "Classic Fantasy Adventure", "online", poslovniKorisnik, true,
+                "medium", "4 hours", "2025-01-25T18:00:00", "Explore the classic fantasy world!",
+                "D&D 5e", false, 6, "Discord", true));
+
+        // Localized game inside Zagreb
+        MapLocation realLocation1 = new MapLocation(45.8150, 15.9819); // Coordinates for Zagreb
+        MapLocation fakeLocation1 = new MapLocation(45.8125, 15.9770); // Slightly different fake location
+
+        games.add(new LokaliziranaIgra(
+                "Zagreb Mystery Quest", "public", poslovniKorisnik, "medium",
+                "3 hours", "2025-01-26T14:00:00", "Solve a thrilling mystery in Zagreb!",
+                "Homebrew Rules", true, true, 5, "WhatsApp", true,
+                realLocation1, fakeLocation1));
+
+        // Exact location game inside Zagreb
+        MapLocation exactLocation1 = new MapLocation(45.8132, 15.9760); // Zagreb center
+
+        games.add(new TocnoLokacijskaIgra(
+                "Urban Chase in Zagreb", "private", poslovniKorisnik, "high",
+                "2 hours", "2025-01-27T16:00:00", "Catch the thief in Zagreb's streets!",
+                "Modern Chase System", true, 4, "Signal", false, true,
+                exactLocation1));
+
+        // Another localized game inside Zagreb
+        MapLocation realLocation2 = new MapLocation(45.8100, 15.9870); // Another Zagreb location
+        MapLocation fakeLocation2 = new MapLocation(45.8120, 15.9890); // Slightly different fake location
+
+        games.add(new LokaliziranaIgra(
+                "Zagreb Treasure Hunt", "public", poslovniKorisnik, "low",
+                "2.5 hours", "2025-01-28T11:00:00", "Find hidden treasures across Zagreb!",
+                "Custom Rules", false, true, 10, "Telegram", true,
+                realLocation2, fakeLocation2));
+        for(Igra game : games) {
+            ir.save(game);
+        }
     }
     
     public BusinessProfileDetailsDTO getProfileByUsername(String username) {

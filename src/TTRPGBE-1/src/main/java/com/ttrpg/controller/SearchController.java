@@ -86,7 +86,7 @@ public class SearchController {
             while (it.hasNext()) {
                 Igra igraIt = it.next();
                 if(igraIt instanceof TocnoLokacijskaIgra) {
-                    if(((TocnoLokacijskaIgra)igraIt).getLocation().inRadius(ml, radius)) {
+                    if(!(((TocnoLokacijskaIgra)igraIt).getLocation().inRadius(ml, radius))) {
                         it.remove();
                     }
                 }

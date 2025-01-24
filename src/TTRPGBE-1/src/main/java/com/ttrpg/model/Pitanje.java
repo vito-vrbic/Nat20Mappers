@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 @Getter
 @Entity
 public class Pitanje {
@@ -46,6 +48,21 @@ public class Pitanje {
         }
         public String getQuestionText() {
             return questionText;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+
+            PitanjeId pitanjeId = (PitanjeId) o;
+            return Objects.equals(getGameId(), pitanjeId.getGameId()) && Objects.equals(getQuestionText(), pitanjeId.getQuestionText());
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hashCode(getGameId());
+            result = 31 * result + Objects.hashCode(getQuestionText());
+            return result;
         }
     }
 

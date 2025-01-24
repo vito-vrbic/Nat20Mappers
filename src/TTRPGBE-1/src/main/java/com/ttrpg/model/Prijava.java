@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Prijava {
@@ -99,6 +100,21 @@ public class Prijava {
         }
         public void setUserId(int userId) {
             this.userId = userId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+
+            PrijavaId prijavaId = (PrijavaId) o;
+            return getUserId() == prijavaId.getUserId() && Objects.equals(getGameId(), prijavaId.getGameId());
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hashCode(getGameId());
+            result = 31 * result + getUserId();
+            return result;
         }
     }
 }

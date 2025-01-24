@@ -3,14 +3,14 @@ package com.ttrpg.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.*;
+@PrimaryKeyJoinColumn(name = "userId")
 @Entity
 public class PrivatniKorisnik extends Korisnik {
 
+    //@ManyToOne
+    //@JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false)
+    //private Korisnik korisnik;
     // OneToMany veza s entitetom 'Prijava', gdje 'privateUser' označava povezanu stranu
     //@OneToMany(mappedBy = "privateUser", cascade = CascadeType.ALL)  // Povezivanje s 'Prijava' entitetom
     //private List<Prijava> outgoingForms = new ArrayList<>();  // Lista svih prijava koje je korisnik poslao

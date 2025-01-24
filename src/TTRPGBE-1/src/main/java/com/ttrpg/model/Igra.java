@@ -1,12 +1,11 @@
 package com.ttrpg.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ttrpg.service.IgraService;
 import jakarta.persistence.*;
-
+@Inheritance(strategy = InheritanceType.JOINED) // Definira strategiju naslijeđivanja entiteta
 @Entity // Oznaka da je ovo JPA entitet
 @Table(name = "Igra") // Definira naziv tablice u bazi podataka
-@Inheritance(strategy = InheritanceType.JOINED) // Definira strategiju naslijeđivanja entiteta
+
 public class Igra {
 
 
@@ -33,7 +32,7 @@ public class Igra {
 
     @ManyToOne
     @JoinColumn(name = "userId",referencedColumnName = "userId", nullable = false)  // Foreign key to User
-    private Korisnik dungeonMaster;
+    private Korisnik createdBy;
 
     //@JsonProperty("createdBy") // Serijalizira ovaj atribut pod nazivom "createdBy"
     //private String createdBy; // Kreator igre (npr. korisnik ili poslovni entitet)
@@ -114,11 +113,11 @@ public class Igra {
     }
 
     public Korisnik getCreatedBy() {
-        return dungeonMaster;
+        return createdBy;
     }
 
     public void setCreatedBy(Korisnik createdBy) {
-        this.dungeonMaster = createdBy;
+        this.createdBy = createdBy;
     }
 
    public Boolean getApplicationRequired() {
@@ -208,14 +207,14 @@ public class Igra {
     // Konstruktor s parametrima
 
 
-    public Igra(Long id, String gameName, String availability, Korisnik dungeonMaster, Boolean applicationRequired,
+    public Igra(Long id, String gameName, String availability, Korisnik createdBy, Boolean applicationRequired,
                 String complexity, String estimatedLength, String startTimestamp,
                 String description, String ruleset, Boolean requiresForm, Integer maxPlayerCount,
                 String communicationChannel, Boolean isHomebrew) {
         this.id = id;
         this.gameName = gameName;
         this.availability = availability;
-        this.dungeonMaster = dungeonMaster;
+        this.createdBy = createdBy;
         this.applicationRequired = applicationRequired;
         this.complexity = complexity;
         this.estimatedLength = estimatedLength;
@@ -227,13 +226,13 @@ public class Igra {
         this.communicationChannel = communicationChannel;
         this.isHomebrew = isHomebrew;
     }
-    public Igra(String gameName, String availability, Korisnik dungeonMaster, Boolean applicationRequired,
+    public Igra(String gameName, String availability, Korisnik createdBy, Boolean applicationRequired,
                 String complexity, String estimatedLength, String startTimestamp,
                 String description, String ruleset, Boolean requiresForm, Integer maxPlayerCount,
                 String communicationChannel, Boolean isHomebrew) {
         this.gameName = gameName;
         this.availability = availability;
-        this.dungeonMaster = dungeonMaster;
+        this.createdBy = createdBy;
         this.applicationRequired = applicationRequired;
         this.complexity = complexity;
         this.estimatedLength = estimatedLength;

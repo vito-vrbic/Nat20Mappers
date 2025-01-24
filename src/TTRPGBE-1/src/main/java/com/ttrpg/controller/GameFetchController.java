@@ -71,7 +71,7 @@ public class GameFetchController {
                 List<Pitanje> pitanja= pitanjeRepository.findByIdGameId(igra.getId());
                 gameDTO.setFormQuestions(new ArrayList<String>());
                 for(Pitanje pitanje : pitanja) {
-                    gameDTO.addQuestion(pitanje.getQuestionText());
+                    gameDTO.addQuestion(pitanje.getId().getQuestionText());
                 }
                 if(igra instanceof OnlineIgra) {
                     gameDTO.setType("online");
@@ -132,7 +132,7 @@ public class GameFetchController {
                 List<Pitanje> pitanja= pitanjeRepository.findByIdGameId(igra.getId());
                 gameDTO.setFormQuestions(new ArrayList<String>());
                 for(Pitanje pitanje : pitanja) {
-                    gameDTO.addQuestion(pitanje.getQuestionText());
+                    gameDTO.addQuestion(pitanje.getId().getQuestionText());
                 }
                 if(igra instanceof OnlineIgra) {
                     gameDTO.setType("online");

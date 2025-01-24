@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Odgovor {
     @EmbeddedId
     private OdgovorId id;  // Composite primary key
-    private String answerText;
+    //private String answerText;
 
     @ManyToOne
     //@MapsId("prijavaId")
@@ -35,7 +35,7 @@ public class Odgovor {
     }
     public Odgovor(Pitanje pitanje, String answerText, Prijava prijava) {
         this.prijava = prijava;
-        this.answerText = answerText;
+        //this.answerText = answerText;
         this.pitanje = pitanje;
         this.id = new OdgovorId(pitanje.getId(), answerText, prijava.getPrijavaId());
     }

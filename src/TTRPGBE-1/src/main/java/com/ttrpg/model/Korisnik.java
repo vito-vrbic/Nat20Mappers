@@ -1,10 +1,10 @@
 package com.ttrpg.model;
 
 import jakarta.persistence.*;
-
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "Korisnik")  // Ime tablice u bazi podataka
-@Inheritance(strategy = InheritanceType.JOINED)  // Strategija naslijeđivanja
+//@Table(name = "Korisnik")  // Ime tablice u bazi podataka
+ // Strategija naslijeđivanja
 public class Korisnik {
 
     @Id  // Označava primarni ključ

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PitanjeRepository extends JpaRepository<Pitanje, Pitanje.PitanjeId> {
     public List<Pitanje> findByIdGameId(Long id);
-    public List<Pitanje> findByGameIdAndQuestionText(Long gameId, String questionText);
+    List<Pitanje> findById_GameIdAndId_QuestionText(Long gameId, String questionText);
 }

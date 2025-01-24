@@ -1,10 +1,8 @@
 package com.ttrpg.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+@PrimaryKeyJoinColumn(name = "userId")
 @Entity
 public class PoslovniKorisnik extends Korisnik {
     

@@ -47,7 +47,7 @@ public class GameApplyController {
             prijavaRepository.save(prijava);
             if(applyDTO.getAnswersToQuestions() != null) {
                 for(Map.Entry<String, String> entry: applyDTO.getAnswersToQuestions().entrySet()) {
-                    Pitanje pitanje = pitanjeRepository.findByGameIdAndQuestionText(applyDTO.getGameId(), entry.getKey()).getFirst();
+                    Pitanje pitanje = pitanjeRepository.findById_GameIdAndId_QuestionText(applyDTO.getGameId(), entry.getKey()).getFirst();
                     Odgovor odgovor = new Odgovor(pitanje, entry.getValue(), prijava);
                     odgovorRepository.save(odgovor);
                 }

@@ -11,16 +11,16 @@ public class Pitanje {
 
     @EmbeddedId
     private PitanjeId id;
-    private String questionText;
+    //private String questionText;
     @ManyToOne
-    //@MapsId("gameId")
+    @MapsId("gameId")
     @JoinColumn(name = "pitanjeGameId", referencedColumnName = "gameId", nullable = false)  // Foreign key to User
     private Igra game;
 
     public Pitanje(String questionText, Igra game) {
         this.id = new PitanjeId(game.getId(), questionText);
         this.game = game;
-        this.questionText = questionText;
+        //this.questionText = questionText;
     }
 
     public Pitanje() {

@@ -4,8 +4,6 @@
 
 ## Važne napomene
 Deployana stranica može biti nađena ovdje: https://nat20mappers.onrender.com/
-Login za stranicu: Marko58 (password: Apple), Marko59 (password: Apple2)
-
 
 ## Opis projekta
 

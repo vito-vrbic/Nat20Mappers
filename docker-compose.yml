@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15-alpine
+    container_name: ttrpg-database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lozinka
+      POSTGRES_DB: TTRPG_BASE_SECOND_EDITION
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+
+  backend:
+    build:
+      context: ./src/TTRPGBE-1
+    container_name: ttrpg-backend
+    ports:
+      - "5000:5000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/TTRPG_Base
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./src/Frontend/ttrpg-finder-frontend
+    container_name: ttrpg-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

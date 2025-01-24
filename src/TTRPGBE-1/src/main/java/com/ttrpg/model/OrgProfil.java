@@ -6,9 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.util.List;
 
 @Entity
 public class OrgProfil {
@@ -20,37 +18,44 @@ public class OrgProfil {
     @Column(nullable = false)
     private String companyName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String companyPhone;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String companyDes;
 
-    @Column(nullable = false) 
+    //@Column(nullable = false)
     private String companyWeb;
 
-    @Column(nullable = false)
-    private String companyAdress;
+    //@Column(nullable = false)
+    private String companyAddress;
+    private String companyLogo;
+
 
     // OneToMany veza sa slikama, gdje "orgProfil" u klasi Slika označava mappedBy
-    @OneToMany(mappedBy = "orgProfil", cascade = CascadeType.ALL)
-    private List<Slika> companyLogos;
+    //@OneToMany(mappedBy = "orgProfil", cascade = CascadeType.ALL)
+    //private List<Slika> companyLogos;
 
     // OneToOne veza s PoslovnimKorisnikom, mappedBy na polje business_user
-    @OneToOne
-    private PoslovniKorisnik business_user;
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PoslovniKorisnik businessUser;
 
     // Konstruktor, getter-i, setter-i, toString
-    public OrgProfil() {}
+    public OrgProfil() {
 
-    public OrgProfil(int companyId, String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, List<Slika> companyLogos) {
+    }
+
+    public OrgProfil(String companyName, String companyPhone, String companyDes, String companyWeb, String companyAdress, String companyUrl) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.companyPhone = companyPhone;
         this.companyDes = companyDes;
         this.companyWeb = companyWeb;
-        this.companyAdress = companyAdress;
-        this.companyLogos = companyLogos;
+        this.companyAddress = companyAdress;
+        this.companyLogo = companyUrl;
+    }
+    public OrgProfil(String companyName) {
+        this.companyName = companyName;
     }
 
     public int getCompanyId() {
@@ -89,24 +94,28 @@ public class OrgProfil {
         return companyWeb;
     }
 
-    public void setCompanyAdress(String companyAdress) {
-        this.companyAdress = companyAdress;
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 
     public String getCompanyAdress() {
-        return companyAdress;
+        return companyAddress;
     }
 
-    public void setLogo(Slika companyLogo) {
-        companyLogos.add(companyLogo);
+    public String getCompanyLogo() {
+        return companyLogo;
     }
 
-    public PoslovniKorisnik getBusiness_user() {
-        return business_user;
+    public void setCompanyLogo(String companyLogo) {
+        this.companyLogo = companyLogo;
     }
 
-    public void setBusiness_user(PoslovniKorisnik business_user) {
-        this.business_user = business_user;
+    public PoslovniKorisnik getBusinessUser() {
+        return businessUser;
+    }
+
+    public void setBusinessUser(PoslovniKorisnik business_user) {
+        this.businessUser = business_user;
     }
 
     @Override
@@ -117,7 +126,7 @@ public class OrgProfil {
                 + "companyPhone: '" + companyPhone + "', "
                 + "companyDes: '" + companyDes + "', "
                 + "companyWeb: '" + companyWeb + "', "
-                + "companyAdress: '" + companyAdress + "' "
+                + "companyAdress: '" + companyAddress + "' "
                 + "}"; // Metoda za ispis objekta kao string
     }
 }

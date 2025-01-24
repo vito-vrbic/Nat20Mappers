@@ -2,9 +2,10 @@ package com.ttrpg.model;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.io.Serializable;
-
+@Getter
 @Entity
 public class Pitanje {
 
@@ -12,7 +13,7 @@ public class Pitanje {
     private PitanjeId id;
     private String questionText;
     @ManyToOne
-    @JoinColumn(name = "gameId", nullable = false)  // Foreign key to User
+    @JoinColumn(name = "gameId", referencedColumnName = "gameId", nullable = false)  // Foreign key to User
     private Igra game;
 
     public Pitanje(String questionText, Igra game) {
@@ -25,7 +26,7 @@ public class Pitanje {
 
     }
     @Embeddable
-    public class PitanjeId implements Serializable {
+    public static class PitanjeId implements Serializable {
         private Long gameId;
         private String questionText;
 
@@ -36,6 +37,12 @@ public class Pitanje {
 
         public PitanjeId() {
 
+        }
+        public Long getGameId() {
+            return gameId;
+        }
+        public String getQuestionText() {
+            return questionText;
         }
     }
 

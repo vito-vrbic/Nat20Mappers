@@ -32,12 +32,12 @@ public class Prijava {
     }
 
     @ManyToOne
-    @JoinColumn(name = "gameId", insertable = false, updatable = false)
+    @JoinColumn(name = "prijavaGameId",referencedColumnName = "gameId", insertable = false, updatable = false)
     private Igra game;
 
 
     @ManyToOne
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "prijavaUserId",referencedColumnName = "userId" ,insertable = false, updatable = false)
     private PrivatniKorisnik privateUser; // Privatni korisnik koji je podnio prijavu
 
     // Default konstruktor
@@ -56,6 +56,12 @@ public class Prijava {
     // Getter za privatnog korisnika
     public PrivatniKorisnik getPrivateUser() {
         return privateUser;
+    }
+    public PrijavaId getPrijavaId() {
+        return id;
+    }
+    public void addAnswer(Odgovor answer) {
+        this.answers.add(answer);
     }
 
 

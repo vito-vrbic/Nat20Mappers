@@ -26,6 +26,17 @@ public class PrivatniKorisnik extends Korisnik {
     //    return outgoingForms;  // Vraća listu svih poslanih prijava
     //}
 
+    public PrivatniKorisnik() {
+    }
+
+    public PrivatniKorisnik(int userId, String username, String email, String password) {
+        super(userId, username, email, password);
+    }
+
+    public PrivatniKorisnik(String username, String password, String email) {
+        super(username, password, email);
+    }
+
     // Override metoda za ispis objekta PrivatniKorisnik u formatu: 'Private User { id: <userId>, username: <username>, password: <password> }'
     @Override
     public String toString() {

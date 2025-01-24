@@ -1,6 +1,8 @@
 package com.ttrpg.dto;
 
 import lombok.Data;
+
+import java.util.List;
 import java.util.Map;
 
 import com.ttrpg.model.MapLocation;
@@ -21,7 +23,7 @@ public class SaveGameEditRequestDTO {
     private String description;
     private String pravilnik;
     private boolean requiresForm;
-    private Map<String, String> formQuestions;
+    private List<Map<String, String>> formQuestions;
     private int currentPlayerCount;
     private int maxPlayerCount;
     private String communicationChannel;

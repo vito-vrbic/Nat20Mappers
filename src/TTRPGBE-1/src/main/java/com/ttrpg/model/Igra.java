@@ -32,7 +32,7 @@ public class Igra {
 
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)  // Foreign key to User
+    @JoinColumn(name = "userId",referencedColumnName = "userId", nullable = false)  // Foreign key to User
     private Korisnik dungeonMaster;
 
     //@JsonProperty("createdBy") // Serijalizira ovaj atribut pod nazivom "createdBy"

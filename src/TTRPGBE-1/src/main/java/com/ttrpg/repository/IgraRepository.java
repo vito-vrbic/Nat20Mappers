@@ -2,6 +2,7 @@ package com.ttrpg.repository;
 
 import java.util.List;
 
+import com.ttrpg.model.Korisnik;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,6 +53,7 @@ public interface IgraRepository extends JpaRepository<Igra, Long> {
             @Param("location") String location);*/
             
 	        List<Igra> findByGameNameContaining(@Param("gameName") String gameName);
-			List<Igra> findByCreatedBy(@Param("createdBy") String createdBy);
+			List<Igra> findByCreatedBy(Korisnik createdBy);
+			List<Igra> findGameById(Long id);
 			
 }

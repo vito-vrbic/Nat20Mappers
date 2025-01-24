@@ -6,11 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class OrgProfil {
@@ -42,7 +38,7 @@ public class OrgProfil {
 
     // OneToOne veza s PoslovnimKorisnikom, mappedBy na polje business_user
     @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private PoslovniKorisnik business_user;
+    private PoslovniKorisnik businessUser;
 
     // Konstruktor, getter-i, setter-i, toString
     public OrgProfil() {
@@ -57,6 +53,9 @@ public class OrgProfil {
         this.companyWeb = companyWeb;
         this.companyAddress = companyAdress;
         this.companyLogo = companyUrl;
+    }
+    public OrgProfil(String companyName) {
+        this.companyName = companyName;
     }
 
     public int getCompanyId() {
@@ -95,8 +94,8 @@ public class OrgProfil {
         return companyWeb;
     }
 
-    public void setCompanyAddress(String companyAdress) {
-        this.companyAddress = companyAdress;
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 
     public String getCompanyAdress() {
@@ -111,12 +110,12 @@ public class OrgProfil {
         this.companyLogo = companyLogo;
     }
 
-    public PoslovniKorisnik getBusiness_user() {
-        return business_user;
+    public PoslovniKorisnik getBusinessUser() {
+        return businessUser;
     }
 
-    public void setBusiness_user(PoslovniKorisnik business_user) {
-        this.business_user = business_user;
+    public void setBusinessUser(PoslovniKorisnik business_user) {
+        this.businessUser = business_user;
     }
 
     @Override

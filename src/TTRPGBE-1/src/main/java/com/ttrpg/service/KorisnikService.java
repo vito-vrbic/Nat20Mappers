@@ -2,6 +2,7 @@ package com.ttrpg.service;
 
 import java.util.List;
 
+import com.ttrpg.model.PrivatniKorisnik;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,10 @@ public class KorisnikService {
 
     // Metoda za učitavanje početnih podataka (dva korisnika u bazu)
     public void sDataLoader() {
-        kr.save(new Korisnik(1, "Marko58","beb1@gmail.com","Apple","Private"));  // Spremanje korisnika u bazu
-        kr.save(new Korisnik(2, "Marko59","beb2@gmail.com","Apple2","Business"));  // Spremanje drugog korisnika u bazu
+        OrgProfil org= new OrgProfil(5, "business ralph", "0914682525", "Ralph is businessing all over the place", "beep", "boop", "bap");
+        or.save(org);
+        kr.save(new PrivatniKorisnik(1, "Marko58", "beb1@gmail.com", "Apple"));  // Spremanje korisnika u bazu
+        kr.save(new PoslovniKorisnik("Marko59","beb2@gmail.com","Apple2",org));  // Spremanje drugog korisnika u bazu
     }
     
     public BusinessProfileDetailsDTO getProfileByUsername(String username) {
@@ -60,9 +63,10 @@ public class KorisnikService {
         // Mapiranje podataka u BusinessProfileDetails
         BusinessProfileDetailsDTO details = new BusinessProfileDetailsDTO();
         details.setUsername(poslovniKorisnik.getUsername());
-        details.setLogo(orgProfil.getCompanyLogos() != null && !orgProfil.getCompanyLogos().isEmpty() 
-            ? orgProfil.getCompanyLogos().get(orgProfil.getCompanyLogos().size() - 1).getImageUrl() 
-            : null); // Uzmi zadnji logo
+        //details.setLogo(orgProfil.getCompanyLogos() != null && !orgProfil.getCompanyLogos().isEmpty()
+        //    ? orgProfil.getCompanyLogos().get(orgProfil.getCompanyLogos().size() - 1).getImageUrl()
+        //    : null); // Uzmi zadnji logo
+        details.setLogo(orgProfil.getCompanyLogo());
         details.setCompanyPhone(orgProfil.getCompanyPhone());
         details.setCompanyDes(orgProfil.getCompanyDes());
         details.setCompanyWeb(orgProfil.getCompanyWeb());
@@ -80,6 +84,9 @@ public class KorisnikService {
             // Token je nevažeći ili istekao
             return false;
         }
+    }
+    public boolean isUsernameTaken(String username) {
+        return kr.findByUsername(username) != null && (long) kr.findByUsername(username).size() >0;
     }
 
     public BusinessProfileDetailsDTO updateProfile(String authToken, BusinessProfileUpdateRequestDTO updateRequest) {
@@ -99,11 +106,12 @@ public class KorisnikService {
         }
 
         // Ažuriraj podatke profila
-        if (updateRequest.getLogo() != null) {
-            Slika newLogo = new Slika(); // Pretpostavimo da `Slika` ima polje URL
-            newLogo.setImageUrl(updateRequest.getLogo());
-            orgProfil.getCompanyLogos().add(newLogo);
-        }
+        //if (updateRequest.getLogo() != null) {
+        //    Slika newLogo = new Slika(); // Pretpostavimo da `Slika` ima polje URL
+        //    newLogo.setImageUrl(updateRequest.getLogo());
+        //    orgProfil.getCompanyLogos().add(newLogo);
+        //}
+        orgProfil.setCompanyLogo(updateRequest.getLogo());
         if (updateRequest.getCompanyPhone() != null) {
             orgProfil.setCompanyPhone(updateRequest.getCompanyPhone());
         }
@@ -114,7 +122,7 @@ public class KorisnikService {
             orgProfil.setCompanyWeb(updateRequest.getCompanyWeb());
         }
         if (updateRequest.getCompanyAddress() != null) {
-            orgProfil.setCompanyAdress(updateRequest.getCompanyAddress());
+            orgProfil.setCompanyAddress(updateRequest.getCompanyAddress());
         }
 
         // Spremi ažurirani profil
@@ -131,12 +139,12 @@ public class KorisnikService {
         orgProfil.setCompanyPhone("987-654-3210");
         orgProfil.setCompanyDes("Innovators in the tech industry.");
         orgProfil.setCompanyWeb("https://dummycompany.com");
-        orgProfil.setCompanyAdress("456 Innovation Blvd, Tech City");
+        orgProfil.setCompanyAddress("456 Innovation Blvd, Tech City");
     
         // Dodaj logo kompanije
-        Slika logo = new Slika();
-        logo.setImageUrl("https://dummycompany.com/logo.png");
-        orgProfil.getCompanyLogos().add(logo);
+        //Slika logo = new Slika();
+        //logo.setImageUrl("https://dummycompany.com/logo.png");
+        orgProfil.setCompanyLogo("https://dummycompany.com/logo.png");
     
         // Spremi OrgProfil
         or.save(orgProfil); // Ovo osigurava da je OrgProfil spremljen prije reference
@@ -147,7 +155,7 @@ public class KorisnikService {
         poslovniKorisnik.setUsername("dummyBusinessUser");
         poslovniKorisnik.setPassword("password123");
         poslovniKorisnik.setEmail("dummybusiness@example.com");
-        poslovniKorisnik.setRole("Business");
+        //poslovniKorisnik.setRole("Business");
     
         // Poveži korisnika s profilom
         poslovniKorisnik.setCompany(orgProfil);

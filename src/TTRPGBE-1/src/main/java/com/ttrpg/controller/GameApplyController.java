@@ -35,13 +35,13 @@ public class GameApplyController {
     public ResponseEntity<?> applyToGame(@RequestBody ApplyDTO applyDTO) {
         try {
             String status= "Waiting";
-            Igra igra = igraRepository.findGameById(applyDTO.getGameId()).getFirst();
+            Igra igra = igraRepository.findGameById(applyDTO.getGameId()).get(0);
             logger.info("checking user");
 
-            if(korisnikRepository.findByUserId(applyDTO.getUserId()).getFirst() == null) {
+            if(korisnikRepository.findByUserId(applyDTO.getUserId()).get(0) == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("success", false, "message", "User not found"));
             }
-            Korisnik korisnik = korisnikRepository.findByUserId(applyDTO.getUserId()).getFirst();
+            Korisnik korisnik = korisnikRepository.findByUserId(applyDTO.getUserId()).get(0);
 
             if(!(korisnik instanceof PrivatniKorisnik)) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message","Unable to process application. Please try again later." ));
@@ -52,7 +52,7 @@ public class GameApplyController {
             prijavaRepository.save(prijava);
             if(applyDTO.getAnswersToQuestions() != null) {
                 for(Map.Entry<String, String> entry: applyDTO.getAnswersToQuestions().entrySet()) {
-                    Pitanje pitanje = pitanjeRepository.findById_GameIdAndId_QuestionText(applyDTO.getGameId(), entry.getKey()).getFirst();
+                    Pitanje pitanje = pitanjeRepository.findById_GameIdAndId_QuestionText(applyDTO.getGameId(), entry.getKey()).get(0);
                     Odgovor odgovor = new Odgovor(pitanje, entry.getValue(), prijava);
                     odgovorRepository.save(odgovor);
                 }

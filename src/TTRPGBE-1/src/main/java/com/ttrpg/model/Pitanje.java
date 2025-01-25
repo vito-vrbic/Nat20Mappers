@@ -65,6 +65,21 @@ public class Pitanje {
             return result;
         }
     }
+	public PitanjeId getId() {
+		return id;
+	}
+
+	public void setId(PitanjeId id) {
+		this.id = id;
+	}
+
+	public Igra getGame() {
+		return game;
+	}
+
+	public void setGame(Igra game) {
+		this.game = game;
+	}
 
 
 }

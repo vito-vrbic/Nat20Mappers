@@ -28,15 +28,18 @@ public class ApplicationDecisionController {
 
     @PostMapping
     public ResponseEntity<?> applicationDecision(@RequestBody DecisionDTO dto) {
+    	
+    	
+    	
         try {
-            Korisnik korisnik = korisnikRepository.findByUserId(dto.getUserId()).getFirst();
+            Korisnik korisnik = korisnikRepository.findByUserId(dto.getUserId()).get(0);
             if(!(korisnik instanceof PrivatniKorisnik)) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Map.of("message", "Failed to send decision"));
             }
             else {
                 PrivatniKorisnik privatniKorisnik = (PrivatniKorisnik) korisnik;
-                Prijava prijava = prijavaRepository.findByGameIdAndPrivateUser(dto.getGameId(), privatniKorisnik).getFirst();
+                Prijava prijava = prijavaRepository.findByGameIdAndPrivateUser(dto.getGameId(), privatniKorisnik).get(0);
                 if(dto.getDecision().equalsIgnoreCase("Accept") || dto.getDecision().equalsIgnoreCase("Deny")) {
                     if(dto.getDecision().equalsIgnoreCase("Accept"))
                         prijava.setStatus("Accepted");
@@ -57,4 +60,20 @@ public class ApplicationDecisionController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("message", "Failed to send decision"));
     }
+
+	public PrijavaRepository getPrijavaRepository() {
+		return prijavaRepository;
+	}
+
+	public void setPrijavaRepository(PrijavaRepository prijavaRepository) {
+		this.prijavaRepository = prijavaRepository;
+	}
+
+	public KorisnikRepository getKorisnikRepository() {
+		return korisnikRepository;
+	}
+
+	public void setKorisnikRepository(KorisnikRepository korisnikRepository) {
+		this.korisnikRepository = korisnikRepository;
+	}
 }

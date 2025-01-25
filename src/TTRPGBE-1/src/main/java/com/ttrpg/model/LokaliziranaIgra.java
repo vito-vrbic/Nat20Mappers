@@ -54,4 +54,20 @@ public class LokaliziranaIgra extends Igra {
     })
     private MapLocation fakeLocation;
 
+	public MapLocation getRealLocation() {
+		return realLocation;
+	}
+
+	public void setRealLocation(MapLocation realLocation) {
+		this.realLocation = realLocation;
+	}
+
+	public MapLocation getFakeLocation() {
+		return fakeLocation;
+	}
+
+	public void setFakeLocation(MapLocation fakeLocation) {
+		this.fakeLocation = fakeLocation;
+	}
+
 }

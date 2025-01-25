@@ -15,4 +15,24 @@ public class DecisionDTO {
     }
     public DecisionDTO() {
     }
+	public Long getGameId() {
+		return gameId;
+	}
+	public void setGameId(Long gameId) {
+		this.gameId = gameId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public String getDecision() {
+		return decision;
+	}
+	public void setDecision(String decision) {
+		this.decision = decision;
+	}
+    
+    
 }

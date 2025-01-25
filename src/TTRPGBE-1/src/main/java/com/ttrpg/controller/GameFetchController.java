@@ -59,7 +59,7 @@ public class GameFetchController {
             Claims claim = JwtUtil.validateJWT(tokenToParse.replace("Bearer ", ""));
             String username = claim.getSubject();
             System.out.println("Token valid! User: " + username);
-            Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();
+            Korisnik korisnik = korisnikRepository.findByUsername(username).get(0);
 
             if (korisnik == null) {
                 System.out.println("User not found in database!");
@@ -135,7 +135,7 @@ public class GameFetchController {
         try {
             Claims claim = JwtUtil.validateJWT(tokenToParse.replace("Bearer ", ""));
             String username = claim.getSubject();
-            Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();
+            Korisnik korisnik = korisnikRepository.findByUsername(username).get(0);
 
             if (korisnik == null) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -153,7 +153,7 @@ public class GameFetchController {
             fullGames.setGames(new ArrayList<>());
 
             for (Prijava prijava : applications) {
-                Igra igra = igraRepository.findGameById(prijava.getPrijavaId().getGameId()).getFirst();
+                Igra igra = igraRepository.findGameById(prijava.getPrijavaId().getGameId()).get(0);
                 if (igra == null)
                     continue;
 
@@ -210,7 +210,7 @@ public class GameFetchController {
         try {
             Claims claim = JwtUtil.validateJWT(tokenToParse.replace("Bearer ", ""));
             String username = claim.getSubject();
-            korisnik = korisnikRepository.findByUsername(username).getFirst();
+            korisnik = korisnikRepository.findByUsername(username).get(0);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Failed to find the user"));
         }

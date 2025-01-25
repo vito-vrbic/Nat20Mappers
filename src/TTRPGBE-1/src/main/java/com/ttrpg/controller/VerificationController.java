@@ -40,7 +40,7 @@ public class VerificationController {
             try {
                 Claims claims = JwtUtil.validateJWT(jwt);      //uključuje podatke poput koji je subjekt tokena, kada ističe,...
                 String username = claims.getSubject();          //claims uključuje i username koji je dekodiran iz jwta pa možemo tražiti usera u repozitoriju
-                Korisnik korisnik = korisnikRepository.findByUsername(username).getFirst();
+                Korisnik korisnik = korisnikRepository.findByUsername(username).get(0);
                 UserData userData = new UserData(String.valueOf(korisnik.getUserId()), korisnik.getUsername(), korisnik.getEmail());
                 if(korisnik instanceof PoslovniKorisnik) {
                     PoslovniKorisnik pk = (PoslovniKorisnik) korisnik;

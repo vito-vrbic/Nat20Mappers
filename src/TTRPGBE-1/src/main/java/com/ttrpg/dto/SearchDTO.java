@@ -28,4 +28,48 @@ public class SearchDTO {
         this.title = title;
         this.applicationRequired = applicationRequired;
     }
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public MapLocation getLocation() {
+		return location;
+	}
+	public void setLocation(MapLocation location) {
+		this.location = location;
+	}
+	public String getAvailability() {
+		return availability;
+	}
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public boolean isApplicationRequired() {
+		return applicationRequired;
+	}
+	public void setApplicationRequired(boolean applicationRequired) {
+		this.applicationRequired = applicationRequired;
+	}
+    
+    
 }

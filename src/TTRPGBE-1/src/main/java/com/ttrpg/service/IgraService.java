@@ -387,7 +387,7 @@ public class IgraService {
                     //        ? new MapLocation(request.getLocation().getLat(), request.getLocation().getLng())
                     //        : null);
                     game.setAvailability(request.getAvailability());
-                    game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).getFirst());
+                    game.setCreatedBy(korisnikRepository.findByUsername(request.getCreatedBy()).get(0));
                     game.setApplicationRequired(request.isApplicationRequired());
                     game.setComplexity(request.getComplexity());
                     game.setEstimatedLength(request.getEstimatedLength());

@@ -34,7 +34,7 @@ public class LoginController {
         // Provjerava jesu li korisničko ime i lozinka ispravni
         if (userService.authenticate(korisnik.getUsername(), korisnik.getPassword())) {
 
-            Korisnik trueKorisnik = korisnikRepository.findByUsername(korisnik.getUsername()).getFirst(); //dto ne sadrži sve podatke pa tražimo puni user
+            Korisnik trueKorisnik = korisnikRepository.findByUsername(korisnik.getUsername()).get(0); //dto ne sadrži sve podatke pa tražimo puni user
             // Generira privremeni token za korisnika
             String token = JwtUtil.generateJWT(korisnik.getUsername());   //token koji će se spremiti u lokalno spremište
             String companyName = null;

@@ -6,6 +6,25 @@ import lombok.Data;
 
 @Data
 public class ValidationResponseDTO {
-    private final String message;
-    private final UserData userData;
+    private  String message;
+    private  UserData userData;
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public UserData getUserData() {
+		return userData;
+	}
+	public void setUserData(UserData userData) {
+		this.userData = userData;
+	}
+	public ValidationResponseDTO(String message, UserData userData) {
+		super();
+		this.message = message;
+		this.userData = userData;
+	}
+    
+    
 }

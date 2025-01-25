@@ -24,4 +24,14 @@ public class TocnoLokacijskaIgra extends Igra {
         super(gameName, availability, dungeonMaster,applicationRequired, complexity, estimatedLength, startTimestamp, description, ruleset, requiresForm, maxPlayerCount, communicationChannel, isHomebrew);
         this.location = location;
     }
+
+	public MapLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(MapLocation location) {
+		this.location = location;
+	}
+    
+    
 }

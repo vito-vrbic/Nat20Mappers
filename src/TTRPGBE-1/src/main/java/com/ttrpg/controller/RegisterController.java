@@ -50,7 +50,7 @@ public class RegisterController {
             else if(registerDTO.getRole().equalsIgnoreCase("business") && registerDTO.getOrganizationName()!=null) {
                 OrgProfil orgProfil = new OrgProfil(registerDTO.getOrganizationName());
                 orgRepository.save(orgProfil);
-                PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik(registerDTO.getUsername(), registerDTO.getEmail(), registerDTO.getPassword(), orgProfil);
+                PoslovniKorisnik poslovniKorisnik = new PoslovniKorisnik(registerDTO.getUsername(), registerDTO.getPassword(), registerDTO.getEmail(), orgProfil);
                 korisnikRepository.save(poslovniKorisnik);
                 return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
             }

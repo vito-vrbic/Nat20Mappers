@@ -3,7 +3,7 @@
 > TTRPG Finder je web aplikacija koja omogućava lokalnoj zajednici da pronađe grupe za igranje tabletop role-playing igara (TTRPG-eva). Ovaj projekt ima za cilj olakšati lokalno povezivanje igrača, potaknuti zajedništvo među entuzijastima i u konačnici rasplamsati lokalnu TTRPG scenu.
 
 ## Važne napomene
-Deployana stranica može biti nađena ovdje: https://nat20mappers.onrender.com/
+Deployana stranica može biti nađena ovdje: https://nat20mappers-backend.onrender.com/
 
 ## Opis projekta
 

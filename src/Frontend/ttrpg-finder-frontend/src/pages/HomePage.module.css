@@ -1,0 +1,195 @@
+/* Base Styles */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+    overflow: hidden;
+    /* Prevent scrolling on larger screens */
+}
+
+/* Ensure the homePage takes up the full height of the viewport */
+.homePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    background-color: #232f44;
+    background-image: url('../assets/images/background-image.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    /* Take up full viewport height */
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    /* Prevent scroll on larger screens */
+}
+
+/* Welcome Text Section */
+.welcomeText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 55px;
+    /* Add margin from the top to prevent overlap from the navbar */
+    /* Or you could use padding-top instead: padding-top: 80px; */
+}
+
+.welcomeText h1 {
+    font-size: 3rem;
+    color: #fff;
+    margin: 0;
+}
+
+.welcomeText h2 {
+    font-size: 1.8rem;
+    color: #ffdd57;
+    /* Gold accent */
+    margin-top: 10px;
+}
+
+/* Horizontal Scroll with Navigation Arrows */
+.scrollContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60vh;
+    /* Adjust the height to fit the image */
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+    /* Prevent scroll */
+}
+
+/* Left/Right Arrows */
+.arrowButton {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    /* Adjust width */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    /* Make buttons invisible by default */
+    transition: opacity 0.3s ease;
+}
+
+.arrowButton:hover {
+    opacity: 1;
+    /* Make buttons visible on hover */
+}
+
+.arrowButton:first-of-type {
+    left: 10px;
+    /* Left button position */
+}
+
+.arrowButton:last-of-type {
+    right: 10px;
+    /* Right button position */
+}
+
+/* Scrollable Image Section */
+.scrollItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    /* Full width */
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    /* Prevent scroll */
+}
+
+.welcomeImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensure image covers the container */
+    border-radius: 8px;
+}
+
+/* Overlay Text on Image */
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background for text */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.description {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffdd57;
+    /* Gold accent color */
+    margin-bottom: 10px;
+}
+
+.descriptionText {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+
+    body,
+    html {
+        overflow: auto;
+        /* Allow scrolling on smaller screens */
+    }
+
+    .homePage {
+        height: auto;
+        /* Allow the homepage to extend with content */
+    }
+
+    .welcomeText h1 {
+        font-size: 2rem;
+    }
+
+    .welcomeText h2 {
+        font-size: 1.2rem;
+    }
+
+    .scrollContainer {
+        height: 50vh;
+        /* Reduce height on smaller screens */
+    }
+
+    .arrowButton {
+        font-size: 2rem;
+        width: 40px;
+        /* Adjust width on smaller screens */
+    }
+
+    .overlay {
+        width: 80%;
+    }
+}
